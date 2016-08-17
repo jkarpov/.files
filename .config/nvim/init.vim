@@ -111,9 +111,12 @@ set omnifunc=syntaxcomplete#Complete
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
+let g:necoghc_enable_detailed_browse = 1
+let g:deoplete#file#enable_buffer_path = 1
 
-let g:haskellmode_completion_ghc = 0
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+autocmd FileType purescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
+
 
 set t_Co=256
 

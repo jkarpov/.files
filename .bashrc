@@ -25,8 +25,8 @@ shopt -s checkwinsize
 shopt -s globstar
 
 # editor
-set -o vi
-export EDITOR="vim"
+set -o nvim
+export EDITOR="nvim"
 
 # remember last directory
 LAST_DIR=$HOME/.cache/last_dir
@@ -48,8 +48,8 @@ export NODE_PATH=$NODE_PATH:/usr/lib/node_modules/
 # aliases
 ########################
 alias sudo='sudo env PATH=$PATH'
-alias v='vim .'
-alias vi='vim'
+alias v='nvim .'
+alias vi='nvim'
 
 alias ls='ls --color=auto'
 alias ll='ls++'
@@ -60,18 +60,6 @@ alias grep='grep --color=auto -n'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-alias sqlite='sqlite3 -column -header'
-alias rscp='rsync -v -P -e ssh'
-alias clip='xclip -sel clip'
-
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
-
-# other custom configs
-[ -f ~/.bash_local ] && . ~/.bash_local
-
-
 export PATH=$PATH:$HOME/.rvm/bin:$GOPATH/bin:$HOME/.local/bin
-
 
 alias config='/usr/bin/git --git-dir=/home/dima/.linux/ --work-tree=/home/dima'
