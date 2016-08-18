@@ -1,73 +1,125 @@
-"dein Scripts-----------------------------
-if &compatible
-  set nocompatible               " Be iMproved
-endif
+set nocompatible              
 
-
-" Required:
+" ---------------
+" Dein
+" ---------------
 set runtimepath^=/home/dima/.vim/repos/github.com/Shougo/dein.vim
-
-" Required:
 call dein#begin(expand('/home/dima/.vim')) 
-
-" Let dein manage dein
-" Required:
 call dein#add('Shougo/dein.vim')
-
-" Add or remove your plugins here:
-call dein#add('Shougo/neosnippet.vim')
-call dein#add('Shougo/neosnippet-snippets')
-
-" window management
+" interface
 call dein#add('scrooloose/nerdtree')
+call dein#add('junegunn/fzf')
 call dein#add('roman/golden-ratio')
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
-
-call dein#add('godlygeek/csapprox')
-call dein#add('flazz/vim-colorschemes')
-
+call dein#add('altercation/vim-colors-solarized')
+" lang
+call dein#add('Shougo/neosnippet.vim')
+call dein#add('Shougo/neosnippet-snippets')
 call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
-
-" ---------------
-"  Languages
-" ---------------
 call dein#add('tpope/vim-fugitive')
-call dein#add('scrooloose/syntastic')
+call dein#add('neomake/neomake')
 call dein#add('fsharp/vim-fsharp')
 call dein#add('Shougo/deoplete.nvim')
 call dein#add('raichoo/purescript-vim')
 call dein#add('FrigoEU/psc-ide-vim')
-"call dein#add('eagletmt/ghcmod-vim')
-"call dein#add('eagletmt/neco-ghc')
-"call dein#add('Valloric/YouCompleteMe')
-
-"call dein#add('albfan/AutoComplPop')
-"call dein#add('Shougo/neocomplete')
-"call dein#add('Konfekt/FastFold')
-
-let g:syntastic_ocaml_checkers = ['merlin']
-
-
-
-
-" You can specify revision/branch/tag.
 call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
-
-" Required:
 call dein#end()
 
-" Required:
 filetype plugin indent on
-
-" If you want to install not installed plugins on startup.
 if dein#check_install()
   call dein#install()
 endif
 
-"End dein Scripts-------------------------
+
+" ---------------
+" Interface
+" ---------------
+set ruler
+set number
+set nowrap
+set laststatus=2
+set cmdheight=1
+set cursorcolumn
+set showmatch
+set matchtime=2
+set mousehide
+set mouse=a
+set noerrorbells
+set novisualbell
+set t_Co=256
+set background=dark
+colorscheme solarized
+let g:solarized_termcolors=256
+let g:solarized_termtrans=0
+let g:solarized_visibility='low'
+syntax enable
 
 
+" ---------------
+" Text format
+" ---------------
+set encoding=utf-8
+set cindent
+set autoindent
+set smarttab
+set expandtab
+set tabstop=2
+set backspace=2
+set shiftwidth=2
+set backspace=2
+
+
+" ---------------
+" Behavior
+" ---------------
+set splitbelow
+set splitright
+set hidden
+
+set backup
+set backupdir=~/.vim/backup
+set directory=~/.vim/temp
+set backspace=indent,eol,start
+
+set shiftround
+set ignorecase
+set smartcase
+set smarttab
+set hlsearch
+set incsearch
+
+set completeopt-=preview
+set omnifunc=syntaxcomplete#Complete
+
+let mapleader=","
+
+" ---------------
+" deoplete
+" ---------------
+let g:deoplete#enable_at_startup = 1
+let g:necoghc_enable_detailed_browse = 1
+let g:deoplete#file#enable_buffer_path = 1
+
+" deoplete tab-complete
+inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+autocmd FileType purescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
+
+" ---------------
+" neomake
+" ---------------
+autocmd! BufWritePost,BufEnter * Neomake
+let g:neomake_open_list = 2
+
+let g:neomake_warning_sign = {
+  \ 'text': 'W',
+  \ 'texthl': 'WarningMsg',
+  \ }
+let g:neomake_error_sign = {
+  \ 'text': 'E',
+  \ 'texthl': 'ErrorMsg',
+  \ }
 
 " ---------------
 " airline
@@ -82,14 +134,9 @@ let g:airline#extensions#paste#symbol = 'Þ'
 let g:airline#extensions#whitespace#symbol = 'Ξ'
 let g:airline_theme='ubaryd'
 
-
-" source: https://robots.thoughtbot.com/vim-splits-move-faster-and-more-naturally
-" http://joshldavis.com/2014/04/05/vim-tab-madness-buffers-vs-tabs/
- 
-" KEYS REMAPPING 
-" leader mapping
-let mapleader=","
-
+" ---------------
+" Key Bindings
+" ---------------
 " window movement
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
@@ -101,58 +148,6 @@ nmap <leader>l :bnext<CR>
 nmap <leader>h :bprevious<CR>
 nmap <leader>bq :bp <BAR> bd #<CR>
 nmap <leader>bl :ls<CR>
-
-"colorscheme 256-jungle
-colorscheme wombat256mod
-syntax enable
-set completeopt-=preview
-set omnifunc=syntaxcomplete#Complete
-
-
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
-let g:necoghc_enable_detailed_browse = 1
-let g:deoplete#file#enable_buffer_path = 1
-
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-autocmd FileType purescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
-
-
-set t_Co=256
-
-set splitbelow
-set splitright
-set hidden
-set nocompatible
-set nobackup
-set noswapfile
-set nowrap
-set tabstop=4 shiftwidth=4 expandtab
-set backspace=indent,eol,start
-
-set autoindent
-set copyindent
-set number
-set shiftwidth=4
-set shiftround
-set showmatch
-set ignorecase
-set smartcase
-set smarttab
-set hlsearch
-set incsearch
-set laststatus=2
-
-" deoplete tab-complete
-inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
-" ,<Tab> for regular tab
-inoremap <Leader><Tab> <Space><Space>
-
-
-" ---------------
-" Key Bindings
-" ---------------
-
 " purescript 
 au FileType purescript nmap <leader>t :PSCIDEtype<CR>
 au FileType purescript nmap <leader>s :PSCIDEapplySuggestion<CR>
@@ -163,6 +158,5 @@ au FileType purescript nmap <leader>p :PSCIDEpursuit<CR>
 au FileType purescript nmap <leader>c :PSCIDEcaseSplit<CR>
 au FileType purescript nmap <leader>qd :PSCIDEremoveImportQualifications<CR>
 au FileType purescript nmap <leader>qa :PSCIDEaddImportQualifications<CR><Paste>
-
 
 
