@@ -14,6 +14,7 @@ call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
 call dein#add('altercation/vim-colors-solarized')
 " lang
+call dein#add('euclio/vim-markdown-composer', {'on_ft':['md'], 'build': 'cargo build --release'})
 call dein#add('Shougo/neosnippet.vim')
 call dein#add('Shougo/neosnippet-snippets')
 call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
@@ -101,10 +102,16 @@ let g:deoplete#enable_at_startup = 1
 let g:necoghc_enable_detailed_browse = 1
 let g:deoplete#file#enable_buffer_path = 1
 
-" deoplete tab-complete
-inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+let g:deoplete#omni#input_patterns = {}
+let g:deoplete#omni#input_patterns.purescript = '[^. *\t]'
+let g:deoplete#omni#input_patterns.haskell = '[^. *\t]'
+set completeopt=longest,menuone
+"Amount of entries in completion popup
+set pumheight=10
+let g:deoplete#max_menu_width = 60
 autocmd FileType purescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
+inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
+
 
 " ---------------
 " neomake
@@ -160,3 +167,6 @@ au FileType purescript nmap <leader>qd :PSCIDEremoveImportQualifications<CR>
 au FileType purescript nmap <leader>qa :PSCIDEaddImportQualifications<CR><Paste>
 
 
+
+
+let g:markdown_composer_browser = "google-chrome-stable"
