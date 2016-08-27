@@ -169,4 +169,4 @@ au FileType purescript nmap <leader>qa :PSCIDEaddImportQualifications<CR><Paste>
 
 
 
-let g:markdown_composer_browser = "google-chrome-stable"
+"let g:markdown_composer_browser = "google-chrome-stable"
