@@ -19,7 +19,8 @@ call dein#add('Shougo/neosnippet.vim')
 call dein#add('Shougo/neosnippet-snippets')
 call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 call dein#add('tpope/vim-fugitive')
-call dein#add('neomake/neomake')
+"call dein#add('neomake/neomake')
+call dein#add('scrooloose/syntastic')
 call dein#add('Shougo/deoplete.nvim')
 call dein#add('raichoo/purescript-vim')
 call dein#add('FrigoEU/psc-ide-vim')
@@ -115,17 +116,35 @@ inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : deoplete#mappings#manual
 " ---------------
 " neomake
 " ---------------
-autocmd! BufWritePost,BufEnter * Neomake
-let g:neomake_open_list = 2
+"autocmd! BufWritePost,BufEnter * Neomake
+"let g:neomake_open_list = 2
+"
+"let g:neomake_warning_sign = {
+"  \ 'text': 'W',
+"  \ 'texthl': 'WarningMsg',
+"  \ }
+"let g:neomake_error_sign = {
+"  \ 'text': 'E',
+"  \ 'texthl': 'ErrorMsg',
+"  \ }
+"
 
-let g:neomake_warning_sign = {
-  \ 'text': 'W',
-  \ 'texthl': 'WarningMsg',
-  \ }
-let g:neomake_error_sign = {
-  \ 'text': 'E',
-  \ 'texthl': 'ErrorMsg',
-  \ }
+" ---------------
+" Quick spelling fix (first item in z= list)
+" ---------------
+function! QuickSpellingFix()
+  if &spell
+    normal 1z=
+  else
+    " Enable spelling mode and do the correction
+    set spell
+    normal 1z=
+    set nospell
+  endif
+endfunction
+
+command! QuickSpellingFix call QuickSpellingFix()
+nmap <silent> <leader>z :QuickSpellingFix<CR>
 
 " ---------------
 " airline
@@ -168,4 +187,4 @@ au FileType purescript nmap <leader>qa :PSCIDEaddImportQualifications<CR><Paste>
 
 
 
-"let g:markdown_composer_browser = "google-chrome-stable"
+let g:markdown_composer_browser = "google-chrome-stable"
