@@ -16,14 +16,17 @@ call dein#add('altercation/vim-colors-solarized')
 " lang
 call dein#add('euclio/vim-markdown-composer', {'on_ft':['md'], 'build': 'cargo build --release'})
 call dein#add('Shougo/neosnippet.vim')
+call dein#add('idris-hackers/idris-vim')
+call dein#add('scrooloose/syntastic')
 call dein#add('Shougo/neosnippet-snippets')
 call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 call dein#add('tpope/vim-fugitive')
-call dein#add('neomake/neomake')
+"call dein#add('neomake/neomake')
 call dein#add('Shougo/deoplete.nvim')
 call dein#add('raichoo/purescript-vim')
 call dein#add('FrigoEU/psc-ide-vim')
 call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
+call dein#add('zchee/deoplete-clang')
 call dein#end()
 
 filetype plugin indent on
@@ -69,7 +72,6 @@ set backspace=2
 set shiftwidth=2
 set backspace=2
 
-
 " ---------------
 " Behavior
 " ---------------
@@ -104,6 +106,7 @@ let g:deoplete#file#enable_buffer_path = 1
 let g:deoplete#omni#input_patterns = {}
 let g:deoplete#omni#input_patterns.purescript = '[^. *\t]'
 let g:deoplete#omni#input_patterns.haskell = '[^. *\t]'
+let g:deoplete#omni#input_patterns.idris = '[^. *\t]'
 set completeopt=longest,menuone
 "Amount of entries in completion popup
 set pumheight=10
@@ -111,21 +114,29 @@ let g:deoplete#max_menu_width = 60
 autocmd FileType purescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
 
+autocmd FileType c setlocal tabstop=4 shiftwidth=4
+
+
+" ---------------
+" C
+" ---------------
+let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
+let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
 
 " ---------------
 " neomake
 " ---------------
-autocmd! BufWritePost,BufEnter * Neomake
-let g:neomake_open_list = 2
-
-let g:neomake_warning_sign = {
-  \ 'text': 'W',
-  \ 'texthl': 'WarningMsg',
-  \ }
-let g:neomake_error_sign = {
-  \ 'text': 'E',
-  \ 'texthl': 'ErrorMsg',
-  \ }
+"autocmd! BufEnter,BufWritePost * Neomake
+"let g:neomake_open_list = 2
+"
+"let g:neomake_warning_sign = {
+"  \ 'text': 'W',
+"  \ 'texthl': 'WarningMsg',
+"  \ }
+"let g:neomake_error_sign = {
+"  \ 'text': 'E',
+"  \ 'texthl': 'ErrorMsg',
+"  \ }
 
 " ---------------
 " airline
@@ -167,5 +178,30 @@ au FileType purescript nmap <leader>qa :PSCIDEaddImportQualifications<CR><Paste>
 
 
 
+autocmd FileType purescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
-"let g:markdown_composer_browser = "google-chrome-stable"
+map <C-n> :NERDTreeToggle<CR>
+
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+
+
+
+" --------------
+" syntastic
+" --------------
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_ignore_files = ['^/usr/include/']
+let g:syntastic_c_check_header = 1
+let g:syntastic_c_compiler = 'gcc'
+let g:syntastic_c_compiler_options = '-std=gnu99 -Wall'
+
+
+let g:markdown_composer_browser = "google-chrome-stable"
