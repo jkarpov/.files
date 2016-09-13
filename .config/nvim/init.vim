@@ -23,6 +23,7 @@ call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 call dein#add('tpope/vim-fugitive')
 call dein#add('critiqjo/lldb.nvim')
 "call dein#add('neomake/neomake')
+call dein#add('scrooloose/syntastic')
 call dein#add('Shougo/deoplete.nvim')
 call dein#add('raichoo/purescript-vim')
 call dein#add('FrigoEU/psc-ide-vim')
@@ -124,20 +125,23 @@ autocmd FileType c setlocal tabstop=4 shiftwidth=4
 let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
 let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
 
+
 " ---------------
-" neomake
+" Quick spelling fix (first item in z= list)
 " ---------------
-"autocmd! BufEnter,BufWritePost * Neomake
-"let g:neomake_open_list = 2
-"
-"let g:neomake_warning_sign = {
-"  \ 'text': 'W',
-"  \ 'texthl': 'WarningMsg',
-"  \ }
-"let g:neomake_error_sign = {
-"  \ 'text': 'E',
-"  \ 'texthl': 'ErrorMsg',
-"  \ }
+function! QuickSpellingFix()
+  if &spell
+    normal 1z=
+  else
+    " Enable spelling mode and do the correction
+    set spell
+    normal 1z=
+    set nospell
+  endif
+endfunction
+
+command! QuickSpellingFix call QuickSpellingFix()
+nmap <silent> <leader>z :QuickSpellingFix<CR>
 
 " ---------------
 " airline
