@@ -48,13 +48,16 @@ export NODE_PATH=$NODE_PATH:/usr/lib/node_modules/
 # aliases
 ########################
 alias sudo='sudo env PATH=$PATH'
-alias v='nvim .'
+alias v='nvim'
 alias vi='nvim'
+alias vim='nvim'
 
 alias ls='ls --color=auto'
 alias ll='ls++'
 alias la='ls -A'
 alias l='ls -CF'
+
+alias xclip="xclip -selection c"
 
 alias grep='grep --color=auto -n'
 alias fgrep='fgrep --color=auto'

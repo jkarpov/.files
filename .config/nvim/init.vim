@@ -7,8 +7,8 @@ set runtimepath^=/home/dima/.vim/repos/github.com/Shougo/dein.vim
 call dein#begin(expand('/home/dima/.vim')) 
 call dein#add('Shougo/dein.vim')
 " interface
-call dein#add('scrooloose/nerdtree')
 call dein#add('junegunn/fzf')
+"call dein#add('junegunn/fzf.vim')
 call dein#add('roman/golden-ratio')
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
@@ -21,6 +21,7 @@ call dein#add('scrooloose/syntastic')
 call dein#add('Shougo/neosnippet-snippets')
 call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 call dein#add('tpope/vim-fugitive')
+call dein#add('critiqjo/lldb.nvim')
 "call dein#add('neomake/neomake')
 call dein#add('Shougo/deoplete.nvim')
 call dein#add('raichoo/purescript-vim')
@@ -180,11 +181,19 @@ au FileType purescript nmap <leader>qa :PSCIDEaddImportQualifications<CR><Paste>
 
 autocmd FileType purescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
-map <C-n> :NERDTreeToggle<CR>
 
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-
+""
+" lldb
+" "
+nmap <M-b> <Plug>LLBreakSwitch
+vmap <F2> <Plug>LLStdInSelected
+nnoremap <F4> :LLstdin<CR>
+nnoremap <F5> :LLmode debug<CR>
+nnoremap <S-F5> :LLmode code<CR>
+nnoremap <F8> :LL continue<CR>
+nnoremap <S-F8> :LL process interrupt<CR>
+nnoremap <F9> :LL print <C-R>=expand('<cword>')<CR>
+vnoremap <F9> :<C-U>LL print <C-R>=lldb#util#get_selection()<CR><CR>
 
 
 " --------------
