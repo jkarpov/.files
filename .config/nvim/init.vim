@@ -12,7 +12,7 @@ call dein#add('junegunn/fzf')
 call dein#add('roman/golden-ratio')
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
-call dein#add('altercation/vim-colors-solarized')
+"call dein#add('altercation/vim-colors-solarized')
 " lang
 call dein#add('euclio/vim-markdown-composer', {'on_ft':['md'], 'build': 'cargo build --release'})
 call dein#add('Shougo/neosnippet.vim')
@@ -45,7 +45,7 @@ set number
 set nowrap
 set laststatus=2
 set cmdheight=1
-set cursorcolumn
+"set cursorcolumn
 set showmatch
 set matchtime=2
 set mousehide
@@ -54,10 +54,12 @@ set noerrorbells
 set novisualbell
 set t_Co=256
 set background=dark
-colorscheme solarized
-let g:solarized_termcolors=256
-let g:solarized_termtrans=0
-let g:solarized_visibility='low'
+"colorscheme solarized
+silent! colorscheme desertEx-v2
+
+"let g:solarized_termcolors=256
+"let g:solarized_termtrans=0
+"let g:solarized_visibility='low'
 syntax enable
 
 
@@ -218,3 +220,9 @@ let g:syntastic_c_compiler_options = '-std=gnu99 -Wall'
 
 
 let g:markdown_composer_browser = "google-chrome-stable"
+
+
+nnoremap <leader>y "+yy
+
+
+
