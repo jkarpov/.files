@@ -55,19 +55,21 @@ plugins=(git colorize colored-man-pages archlinux cabal common-aliases copydir c
 
   #export PATH="/usr/local/sbin:/usr/local/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
   export PATH="/home/dima/.local/bin:/home/dima/.opam/4.02.3/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
+
+  export NODE_PATH=$NODE_PATH:/usr/lib/node_modules/
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+ You may need to manually set your language environment
+ export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='mvim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -84,5 +86,15 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# OPAM configuration
-. /home/dima/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+alias sudo='sudo env PATH=$PATH'
+
+export TERM=xterm-256color
+
+alias xclip="xclip -selection c"
+
+alias grep='grep --color=auto -n'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+alias config='/usr/bin/git --git-dir=$HOME/.linux/ --work-tree=$HOME $@'
