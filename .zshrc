@@ -61,10 +61,10 @@ plugins=(git colorize colored-man-pages archlinux cabal common-aliases copydir c
 
 source $ZSH/oh-my-zsh.sh
 
- You may need to manually set your language environment
+# You may need to manually set your language environment
  export LANG=en_US.UTF-8
 
-Preferred editor for local and remote sessions
+# Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
@@ -97,4 +97,4 @@ alias grep='grep --color=auto -n'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-alias config='/usr/bin/git --git-dir=$HOME/.linux/ --work-tree=$HOME $@'
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.linux/ --work-tree=$HOME $@'
