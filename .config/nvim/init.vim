@@ -12,7 +12,7 @@ call dein#add('junegunn/fzf')
 call dein#add('roman/golden-ratio')
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
-call dein#add('altercation/vim-colors-solarized')
+"call dein#add('altercation/vim-colors-solarized')
 " lang
 call dein#add('euclio/vim-markdown-composer', {'on_ft':['md'], 'build': 'cargo build --release'})
 call dein#add('Shougo/neosnippet.vim')
@@ -54,10 +54,10 @@ set noerrorbells
 set novisualbell
 set t_Co=256
 set background=dark
-colorscheme solarized
-let g:solarized_termcolors=256
-let g:solarized_termtrans=0
-let g:solarized_visibility='low'
+"colorscheme wombat
+"let g:solarized_termcolors=256
+"let g:solarized_termtrans=0
+"let g:solarized_visibility='low'
 syntax enable
 
 
