@@ -54,12 +54,7 @@ set noerrorbells
 set novisualbell
 set t_Co=256
 set background=dark
-"colorscheme solarized
 silent! colorscheme desertEx-v2
-
-"let g:solarized_termcolors=256
-"let g:solarized_termtrans=0
-"let g:solarized_visibility='low'
 syntax enable
 
 
