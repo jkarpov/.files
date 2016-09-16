@@ -1,10 +1,12 @@
-# Path to your oh-my-zsh installation.
-  export ZSH=/home/dima/.oh-my-zsh
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
+# Path to your oh-my-zsh installation.
+ZSH=/usr/share/oh-my-zsh/
+
+# Set name of the theme to load. Optionally, if you set this to "random"
+# it'll load a random theme each time that oh-my-zsh is loaded.
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="miloshadzic"
 
 # Uncomment the following line to use case-sensitive completion.
@@ -15,7 +17,7 @@ ZSH_THEME="miloshadzic"
 # HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
@@ -53,16 +55,10 @@ plugins=(git colorize colored-man-pages archlinux cabal common-aliases copydir c
 
 # User configuration
 
-  #export PATH="/usr/local/sbin:/usr/local/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
-  export PATH="/home/dima/.local/bin:/home/dima/.opam/4.02.3/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
-
-  export NODE_PATH=$NODE_PATH:/usr/lib/node_modules/
 # export MANPATH="/usr/local/man:$MANPATH"
 
-source $ZSH/oh-my-zsh.sh
-
 # You may need to manually set your language environment
- export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -70,6 +66,20 @@ if [[ -n $SSH_CONNECTION ]]; then
 else
   export EDITOR='mvim'
 fi
+
+
+# custom
+alias sudo='sudo env PATH=$PATH'
+
+export TERM=xterm-256color
+
+alias xclip="xclip -selection c"
+
+alias grep='grep --color=auto -n'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.linux/ --work-tree=$HOME $@'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -86,15 +96,9 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+ZSH_CACHE_DIR=$HOME/.oh-my-zsh-cache
+if [[ ! -d $ZSH_CACHE_DIR ]]; then
+  mkdir $ZSH_CACHE_DIR
+fi
 
-alias sudo='sudo env PATH=$PATH'
-
-export TERM=xterm-256color
-
-alias xclip="xclip -selection c"
-
-alias grep='grep --color=auto -n'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
-
-alias dotfiles='/usr/bin/git --git-dir=$HOME/.linux/ --work-tree=$HOME $@'
+source $ZSH/oh-my-zsh.sh
