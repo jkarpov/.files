@@ -6,5 +6,5 @@ git clone --bare https://github.com/ditadi/.linux.git $HOME/.linux
 function dotfiles {
   /usr/bin/git --git-dir=$HOME/.linux --work-tree=$HOME $@
 }
-dotfiles checkout
+dotfiles checkout -f
 dotfiles config status.showUntrackedFiles no
