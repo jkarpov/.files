@@ -9,6 +9,7 @@ call dein#add('Shougo/dein.vim')
 " interface
 call dein#add('junegunn/fzf')
 "call dein#add('junegunn/fzf.vim')
+call dein#add('scrooloose/nerdtree')
 call dein#add('roman/golden-ratio')
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
@@ -219,5 +220,15 @@ let g:markdown_composer_browser = "google-chrome-stable"
 
 nnoremap <leader>y "+yy
 
+map <C-n> :NERDTreeToggle<CR>
 
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd vimenter * NERDTree
+autocmd vimenter * wincmd p
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+let g:NERDTreeDirArrowExpandable = '►'
+let g:NERDTreeDirArrowCollapsible = '▼'
+let g:NERDTreeMinimalUI = 1
+let g:NERDTreeWinSize=30
 
