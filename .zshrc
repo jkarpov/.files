@@ -7,7 +7,7 @@ ZSH=/usr/share/oh-my-zsh/
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="miloshadzic"
+ZSH_THEME="bira"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -17,7 +17,7 @@ ZSH_THEME="miloshadzic"
 # HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-DISABLE_AUTO_UPDATE="true"
+DISABLE_AUTO_UPDATE="false"
 
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
@@ -64,14 +64,12 @@ export LANG=en_US.UTF-8
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='mvim'
+  export EDITOR='nvim'
 fi
 
 
 # custom
 alias sudo='sudo env PATH=$PATH'
-
-export TERM=xterm-256color
 
 alias xclip="xclip -selection c"
 
@@ -79,11 +77,16 @@ alias grep='grep --color=auto -n'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
+alias vim='nvim'
+alias vi='nvim'
+
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.linux/ --work-tree=$HOME $@'
+
+# Escape to normal mode with jj
+bindkey "jj" vi-cmd-mode
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
-
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
@@ -95,10 +98,7 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/.linux/ --work-tree=$HOME $@'
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-ZSH_CACHE_DIR=$HOME/.oh-my-zsh-cache
-if [[ ! -d $ZSH_CACHE_DIR ]]; then
-  mkdir $ZSH_CACHE_DIR
-fi
+#
+#export NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 source $ZSH/oh-my-zsh.sh
