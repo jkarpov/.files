@@ -30,6 +30,7 @@ call dein#add('zchee/deoplete-clang')
 call dein#add('arakashic/chromatica.nvim')
 
 call dein#add('neovimhaskell/haskell-vim')
+call dein#add('eagletmt/neco-ghc')
 "
 call dein#add('euclio/vim-markdown-composer', {'on_ft':['md'], 'build': 'cargo build --release'})
 call dein#add('Shougo/neosnippet.vim')
@@ -79,8 +80,8 @@ let g:neosolarized_italic = 1
 
 syntax enable
 set background=dark
-colorscheme NeoSolarized
-"colorscheme molokai
+"colorscheme NeoSolarized
+colorscheme molokai
 "colorscheme gruvbox
 
 
@@ -280,6 +281,14 @@ set updatetime=250
 
 :imap jj <Esc>
 
+" ---------------
+" Haskell
+" ---------------
+let g:necoghc_enable_detailed_browse = 1
+
+" Disable haskell-vim omnifunc
+let g:haskellmode_completion_ghc = 0
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
 
 
