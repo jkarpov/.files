@@ -13,8 +13,23 @@ call dein#add('Shougo/dein.vim')
 call dein#add('junegunn/fzf')
 "call dein#add('junegunn/fzf.vim')
 call dein#add('scrooloose/nerdtree')
+
+" git
+call dein#add('tpope/vim-fugitive')
+call dein#add('Xuyuanp/nerdtree-git-plugin')
+call dein#add('tiagofumo/vim-nerdtree-syntax-highlight')
+
+call dein#add('miyakogi/seiya.vim')
+
+
+"call dein#add('Yggdroot/indentLine')
+"
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
+
+call dein#add('tpope/vim-unimpaired')
+"call dein#add('Shougo/unite.vim')
+"call dein#add('Shougo/vimfiler')
 
 " themes
 call dein#add('tomasr/molokai')
@@ -38,7 +53,6 @@ call dein#add('idris-hackers/idris-vim')
 "call dein#add('scrooloose/syntastic')
 call dein#add('Shougo/neosnippet-snippets')
 call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
-call dein#add('tpope/vim-fugitive')
 call dein#add('critiqjo/lldb.nvim')
 call dein#add('neomake/neomake')
 call dein#add('Shougo/deoplete.nvim')
@@ -80,8 +94,8 @@ let g:neosolarized_italic = 1
 
 syntax enable
 set background=dark
-"colorscheme NeoSolarized
-colorscheme molokai
+colorscheme NeoSolarized
+"colorscheme molokai
 "colorscheme gruvbox
 
 
@@ -195,8 +209,8 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 " buffers
 nmap <leader>T :enew<cr>
-nmap <leader>l :bnext<CR>
-nmap <leader>h :bprevious<CR>
+nmap <leader>n :bnext<CR>
+nmap <leader>p :bprevious<CR>
 nmap <leader>bq :bp <BAR> bd #<CR>
 nmap <leader>bl :ls<CR>
 
@@ -256,17 +270,28 @@ let g:markdown_composer_browser = "chromium"
 " ---------------
 " NERD Tree
 " ---------------
-map <C-n> :NERDTreeToggle<CR>
 
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-autocmd vimenter * NERDTree
-autocmd vimenter * wincmd p
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-let g:NERDTreeDirArrowExpandable = '►'
-let g:NERDTreeDirArrowCollapsible = '▼'
-let g:NERDTreeMinimalUI = 1
-let g:NERDTreeWinSize=30
+let NERDTreeMapJumpFirstChild = ''
+map <silent> - :NERDTreeToggle<CR>
+" map <silent> - :VimFiler<CR>
+"let g:vimfiler_tree_leaf_icon = ' '
+"let g:vimfiler_tree_opened_icon = '▾'
+"let g:vimfiler_tree_closed_icon = '▸'
+"let g:vimfiler_file_icon = '-'
+"let g:vimfiler_marked_file_icon = '*'
+
+
+"map <C-n> :NERDTreeToggle<CR>
+"
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"autocmd vimenter * NERDTree
+"autocmd vimenter * wincmd p
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"let g:NERDTreeDirArrowExpandable = '►'
+"let g:NERDTreeDirArrowCollapsible = '▼'
+"let g:NERDTreeMinimalUI = 1
+"let g:NERDTreeWinSize=30
 
 " ---------------
 " Neomake
@@ -281,16 +306,10 @@ set updatetime=250
 
 :imap jj <Esc>
 
-" ---------------
-" Haskell
-" ---------------
-let g:necoghc_enable_detailed_browse = 1
 
-" Disable haskell-vim omnifunc
-let g:haskellmode_completion_ghc = 0
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+" Default value: ['ctermbg']
+let g:seiya_target_groups = has('nvim') ? ['guibg'] : ['ctermbg']
 
-
-
-
+:nnoremap <C-n> :bnext<CR>
+:nnoremap <C-p> :bprevious<CR>
 
