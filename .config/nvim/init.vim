@@ -31,6 +31,7 @@ call dein#add('arakashic/chromatica.nvim')
 
 call dein#add('neovimhaskell/haskell-vim')
 call dein#add('eagletmt/neco-ghc')
+call dein#add('eagletmt/ghcmod-vim')
 "
 call dein#add('euclio/vim-markdown-composer', {'on_ft':['md'], 'build': 'cargo build --release'})
 call dein#add('Shougo/neosnippet.vim')
@@ -80,9 +81,10 @@ let g:neosolarized_italic = 1
 
 syntax enable
 set background=dark
+"set background=light
 "colorscheme NeoSolarized
-colorscheme molokai
-"colorscheme gruvbox
+"colorscheme molokai
+colorscheme gruvbox
 
 
 " ---------------
@@ -134,19 +136,65 @@ let g:deoplete#omni#input_patterns = {}
 let g:deoplete#omni#input_patterns.purescript = '[^. *\t]'
 let g:deoplete#omni#input_patterns.haskell = '[^. *\t]'
 let g:deoplete#omni#input_patterns.idris = '[^. *\t]'
-set completeopt=longest,menuone
+"set completeopt=longest,menuone
 "Amount of entries in completion popup
-set pumheight=10
-let g:deoplete#max_menu_width = 60
+"set pumheight=10
+"let g:deoplete#max_menu_width = 60
 autocmd FileType purescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
 
-autocmd FileType c setlocal tabstop=4 shiftwidth=4
+
+
+" ---------------
+" Haskell
+" ---------------
+" Disable haskell-vim omnifunc
+let g:haskellmode_completion_ghc = 0
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+
+let g:necoghc_enable_detailed_browse = 1
+
+
+au FileType purescript nmap <leader>t :PSCIDEtype<CR>
+au FileType purescript nmap <leader>s :PSCIDEapplySuggestion<CR>
+au FileType purescript nmap <leader>a :PSCIDEaddTypeAnnotation<CR>
+au FileType purescript nmap <leader>i :PSCIDEimportIdentifier<CR>
+au FileType purescript nmap <leader>r :PSCIDEload<CR>
+au FileType purescript nmap <leader>p :PSCIDEpursuit<CR>
+au FileType purescript nmap <leader>c :PSCIDEcaseSplit<CR>
+au FileType purescript nmap <leader>qd :PSCIDEremoveImportQualifications<CR>
+au FileType purescript nmap <leader>qa :PSCIDEaddImportQualifications<CR><Paste>
+
+
+au FileType haskell nnoremap <buffer> <silent> <LocalLeader>t :GhcModType<CR>
+au FileType haskell nnoremap <buffer> <silent> <LocalLeader>tc :GhcModTypeClear<CR>
+au FileType haskell nnoremap <buffer> <silent> <LocalLeader>a :GhcModSigCodegen<CR>
+au FileType haskell nnoremap <buffer> <silent> <LocalLeader>i :GhcModInfo<CR>
+au FileType haskell nnoremap <buffer> <silent> <LocalLeader>ip :GhcModInfoPreview<CR>
+au FileType haskell nnoremap <buffer> <silent> <LocalLeader>e :GhcModExpand<CR>
+
+au FileType haskell nnoremap <buffer> <silent> <LocalLeader>c :GhcModSplitFunCase<CR>
+"nnoremap <buffer> <silent> <LocalLeader>r :call IdrisReload(0)<ENTER>
+"nnoremap <buffer> <silent> <LocalLeader>c :call IdrisCaseSplit()<ENTER>
+"nnoremap <buffer> <silent> <LocalLeader>d 0:call search(":")<ENTER>b:call IdrisAddClause(0)<ENTER>w
+"nnoremap <buffer> <silent> <LocalLeader>b 0:call IdrisAddClause(0)<ENTER>
+"nnoremap <buffer> <silent> <LocalLeader>m :call IdrisAddMissing()<ENTER>
+"nnoremap <buffer> <silent> <LocalLeader>md 0:call search(":")<ENTER>b:call IdrisAddClause(1)<ENTER>w
+"nnoremap <buffer> <silent> <LocalLeader>f :call IdrisRefine()<ENTER>
+"nnoremap <buffer> <silent> <LocalLeader>o :call IdrisProofSearch(0)<ENTER>
+"nnoremap <buffer> <silent> <LocalLeader>p :call IdrisProofSearch(1)<ENTER>
+"nnoremap <buffer> <silent> <LocalLeader>l :call IdrisMakeLemma()<ENTER>
+"nnoremap <buffer> <silent> <LocalLeader>e :call IdrisEval()<ENTER>
+"nnoremap <buffer> <silent> <LocalLeader>w 0:call IdrisMakeWith()<ENTER>
+"nnoremap <buffer> <silent> <LocalLeader>mc :call IdrisMakeCase()<ENTER>
+"nnoremap <buffer> <silent> <LocalLeader>i 0:call IdrisResponseWin()<ENTER>
+"nnoremap <buffer> <silent> <LocalLeader>h :call IdrisShowDoc()<ENTER>
 
 
 " ---------------
 " C
 " ---------------
+autocmd FileType c setlocal tabstop=4 shiftwidth=4
 let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
 let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
 
@@ -250,7 +298,7 @@ vnoremap <F9> :<C-U>LL print <C-R>=lldb#util#get_selection()<CR><CR>
 " ---------------
 " Markdown
 " ---------------
-let g:markdown_composer_browser = "chromium"
+let g:markdown_composer_browser = "firefox"
 
 
 " ---------------
@@ -280,15 +328,6 @@ autocmd! BufWritePost * Neomake
 set updatetime=250
 
 :imap jj <Esc>
-
-" ---------------
-" Haskell
-" ---------------
-let g:necoghc_enable_detailed_browse = 1
-
-" Disable haskell-vim omnifunc
-let g:haskellmode_completion_ghc = 0
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
 
 
