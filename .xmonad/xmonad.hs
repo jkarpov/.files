@@ -57,7 +57,6 @@ myManageHook = composeAll
     , title =? "Steam_Login"        --> doFloat
     , className =? "steam"          --> doFullFloat -- bigpicture-mode
     , title =? "Steam_Login"        --> doShift "four"
-au FileType haskell nnoremap <buffer> <silent> <LocalLeader>ip :GhcModInfoPreview<CR>
     , isFullscreen --> (doF W.focusDown <+> doFullFloat)
     ]
     where viewShift = doF . liftM2 (.) W.greedyView W.shift
