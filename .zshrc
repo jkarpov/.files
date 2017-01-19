@@ -79,6 +79,7 @@ alias egrep='egrep --color=auto'
 
 alias vim='nvim'
 alias vi='nvim'
+alias v='nvim'
 
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.linux/ --work-tree=$HOME $@'
 
@@ -100,5 +101,10 @@ bindkey "jj" vi-cmd-mode
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
 #export NVIM_TUI_ENABLE_TRUE_COLOR=1
+export LD_LIBRARY_PATH=/lib
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
+
 
 source $ZSH/oh-my-zsh.sh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

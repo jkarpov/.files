@@ -23,13 +23,13 @@ import qualified Data.Map as M
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal = "terminator"
+myTerminal = "terminator -b -m"
 
 ------------------------------------------------------------------------
 -- Workspaces
 -- The default number of workspaces (virtual screens) and their names.
 --
-myWorkspaces = ["1:web","2:code","3:shell","4:doc","five", "6", "7", "8", "9"] 
+myWorkspaces = ["1:code","2:shell","3:web","4:doc","five", "6", "7", "8", "9"] 
 
 myLauncher = "$(yeganesh -x -- -fn '-*-terminus-*-r-normal-*-*-120-*-*-*-*-iso8859-*' -nb '#000000' -nf '#FFFFFF' -sb '#7C7C7C' -sf '#CEFFAC')"
 
@@ -48,10 +48,10 @@ myLauncher = "$(yeganesh -x -- -fn '-*-terminus-*-r-normal-*-*-120-*-*-*-*-iso88
 -- 'className' and 'resource' are used below.
 --
 myManageHook = composeAll
-    [ className =? "chromium"       --> viewShift "1:web"
-    , className =? "Terminator"     --> viewShift "3:shell"
+    [ className =? "Chromium"       --> viewShift "3:web"
+    , className =? "Firefox"        --> viewShift "3:web" 
     , className =? "Zathura"        --> viewShift "4:doc"
-    , className =? "Steam"          --> doFloat
+    , className =? "Terminator"     --> viewShift "2:shell"
     , className =? "Download"       --> doFloat
     , className =? "Progress"       --> doFloat
     , title =? "Steam_Login"        --> doFloat
@@ -292,7 +292,8 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 -- per-workspace layout choices.
 --
 -- By default, do nothing.
-myStartupHook = return ()
+myStartupHook = do
+  spawn "feh --bg-fill -z ~/Pictures/Wallpapers"
 
 ------------------------------------------------------------------------
 -- Floats all windows in a certain workspace.
@@ -307,9 +308,11 @@ myLayouts = defaultLayouts
 
 main = do
  xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmobarrc"
+ spawn "xscreensaver -no-splash"
  xmonad $ defaults
       { manageHook = manageDocks <+> myManageHook
-      , layoutHook = avoidStruts $ myLayouts
+      , layoutHook = smartBorders myLayouts
+      , borderWidth = myBorderWidth
       , logHook = dynamicLogWithPP xmobarPP
            { ppOutput = hPutStrLn xmproc
            , ppTitle = xmobarColor "#657b83" "" . shorten 100

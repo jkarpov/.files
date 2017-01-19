@@ -66,3 +66,5 @@ alias egrep='egrep --color=auto'
 export PATH=$PATH:$HOME/.rvm/bin:$GOPATH/bin:$HOME/.local/bin
 
 alias config='/usr/bin/git --git-dir=$HOME/.linux/ --work-tree=$HOME $@'
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
