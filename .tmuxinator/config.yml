@@ -1,0 +1,16 @@
+# ~/.tmuxinator/config.yml
+
+name: config
+root: ~/
+
+# Controls whether the tmux session should be attached to automatically. Defaults to true.
+# attach: false
+
+windows:
+  - vim: nvim ~/.config/nvim/init.vim
+  - tmux: nvim ~/.tmux.conf
+  - zsh: nvim ~/.zshrc
+  - xmonad: nvim ~/.xmonad/xmonad.hs
+  - xmobar: nvim ~/.xmobarrc
+  - nixos: sudoedit /etc/nixos/configuration.nix
+  - wifi: sudoedit /etc/wpa_supplicant.conf

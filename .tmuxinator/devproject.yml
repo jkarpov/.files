@@ -1,0 +1,12 @@
+# ~/.tmuxinator/devproject.yml
+
+name: devproject
+root: ~/devproject
+
+windows:
+  - editor:
+      layout: main-horizontal
+      panes:
+        - nvim
+        - #empty, will just run plain bash
+  - console: #empty

@@ -1,8 +1,8 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=/opt/cuda/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-ZSH=/usr/share/oh-my-zsh/
+ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -51,7 +51,7 @@ DISABLE_AUTO_UPDATE="false"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colorize colored-man-pages archlinux cabal common-aliases copydir copyfilei dirhistory dirpersisthistory docker git-extras git-flow-avh git-flow stack vi-mode web-search)
+plugins=(tmux tmuxinator stack git colorize cabal common-aliases copydir copyfilei dirhistory dirpersisthistory docker git-extras git-flow-avh git-flow vi-mode web-search)
 
 # User configuration
 
@@ -81,7 +81,9 @@ alias vim='nvim'
 alias vi='nvim'
 alias v='nvim'
 
-alias dotfiles='/usr/bin/git --git-dir=$HOME/.linux/ --work-tree=$HOME $@'
+alias tmux="env TERM=xterm-256color tmux"
+
+alias dotfiles='git --git-dir=$HOME/.linux/ --work-tree=$HOME $@'
 
 # Escape to normal mode with jj
 bindkey "jj" vi-cmd-mode
@@ -103,6 +105,9 @@ bindkey "jj" vi-cmd-mode
 #export NVIM_TUI_ENABLE_TRUE_COLOR=1
 export LD_LIBRARY_PATH=/lib
 export QT_AUTO_SCREEN_SCALE_FACTOR=1
+
+# tmuxinator window naming
+export DISABLE_AUTO_TITLE=true
 
 
 source $ZSH/oh-my-zsh.sh

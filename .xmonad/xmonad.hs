@@ -12,7 +12,6 @@ import XMonad.Layout.Spiral
 import XMonad.Layout.PerWorkspace(onWorkspace)
 import XMonad.Layout.Tabbed
 import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.EZConfig(additionalKeys)
 import Control.Monad (liftM2)
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
@@ -23,7 +22,8 @@ import qualified Data.Map as M
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal = "terminator -b -m"
+--myTerminal = "terminator -b -m"
+myTerminal = "gnome-terminal"
 
 ------------------------------------------------------------------------
 -- Workspaces
@@ -60,7 +60,7 @@ myManageHook = composeAll
     , isFullscreen --> (doF W.focusDown <+> doFullFloat)
     ]
     where viewShift = doF . liftM2 (.) W.greedyView W.shift
-    --, isFullscreen                  --> doFullFloat ]
+--, isFullscreen                  --> doFullFloat ]
 
 ------------------------------------------------------------------------
 -- Layouts
@@ -307,8 +307,8 @@ myLayouts = defaultLayouts
 --main = xmonad =<< xmobar defaultConfig { terminal = "urxvt" }
 
 main = do
- xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmobarrc"
- spawn "xscreensaver -no-splash"
+ xmproc <- spawnPipe "/run/current-system/sw/bin/xmobar ~/.xmobarrc"
+ --spawn "xscreensaver -no-splash"
  xmonad $ defaults
       { manageHook = manageDocks <+> myManageHook
       , layoutHook = smartBorders myLayouts

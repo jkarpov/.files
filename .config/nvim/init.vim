@@ -1,17 +1,14 @@
-set nocompatible              
+set nocompatible
 
 
 " ---------------
 " Dein
 " ---------------
 set runtimepath^=~/.nvim/repos/github.com/Shougo/dein.vim
-call dein#begin(expand('~/.nvim')) 
+call dein#begin(expand('~/.nvim'))
 call dein#add('Shougo/dein.vim')
 
 " interface
-call dein#add('junegunn/fzf')
-call dein#add('junegunn/fzf.vim')
-call dein#add('scrooloose/nerdtree')
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
 call dein#add('ryanoasis/vim-devicons')
@@ -19,33 +16,31 @@ call dein#add('tpope/vim-unimpaired')
 call dein#add('tomasr/molokai')
 call dein#add('iCyMind/NeoSolarized')
 call dein#add('morhetz/gruvbox')
+call dein#add('ayu-theme/ayu-vim')
+
+call dein#add('christoomey/vim-tmux-navigator')
+call dein#add('tmux-plugins/vim-tmux')
 
 " git
 call dein#add('tpope/vim-fugitive')
 call dein#add('tpope/vim-sensible')
 call dein#add('tpope/vim-commentary')
-call dein#add('Xuyuanp/nerdtree-git-plugin')
-call dein#add('tiagofumo/vim-nerdtree-syntax-highlight')
 
 call dein#add('miyakogi/seiya.vim')
 
 
-"call dein#add('Yggdroot/indentLine')
-"call dein#add('Shougo/unite.vim')
+call dein#add('Shougo/denite.nvim')
 "call dein#add('Shougo/vimfiler')
 
 
 "util
 call dein#add('cazador481/fakeclip.neovim')
 call dein#add('airblade/vim-gitgutter')
-"call dein#add('vim-syntastic/syntastic')
 
 " lang
 call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 call dein#add('Shougo/deoplete.nvim')
 call dein#add('neomake/neomake')
-call dein#add('zchee/deoplete-clang')
-call dein#add('arakashic/chromatica.nvim')
 
 call dein#add('eagletmt/ghcmod-vim')
 call dein#add('eagletmt/neco-ghc')
@@ -53,13 +48,13 @@ call dein#add('neovimhaskell/haskell-vim')
 call dein#add('itchyny/vim-haskell-indent')
 call dein#add('mpickering/hlint-refactor-vim')
 
-call dein#add('euclio/vim-markdown-composer', {'on_ft':['md'], 'build': 'cargo build --release'})
 call dein#add('lervag/vimtex')
+
+call dein#add('LnL7/vim-nix')
 
 call dein#add('idris-hackers/idris-vim')
 call dein#add('Shougo/neosnippet.vim')
 call dein#add('Shougo/neosnippet-snippets')
-call dein#add('critiqjo/lldb.nvim')
 call dein#add('raichoo/purescript-vim')
 call dein#add('FrigoEU/psc-ide-vim')
 call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
@@ -98,16 +93,22 @@ let g:neosolarized_italic = 1
 
 let g:gruvbox_italic=1
 
-set background=dark
-"set background=light
+"set background=dark
+set background=light
 
-colorscheme molokai
-let g:airline_theme='molokai'
+"colorscheme molokai
+let g:airline_theme='monochrome'
 
- "colorscheme gruvbox
- "let g:airline_theme='gruvbox'
+"colorscheme gruvbox
+"let g:airline_theme='gruvbox'
 
-"colorscheme NeoSolarized
+colorscheme NeoSolarized
+"let g:airline_theme='solarized'
+
+"let ayucolor="mirage"
+"let ayucolor="dark"
+"let ayucolor="light"
+"colorscheme ayu
 "let g:airline_theme='solarized'
 
 
@@ -123,7 +124,8 @@ set tabstop=2
 set backspace=2
 set shiftwidth=2
 set backspace=2
-set inccommand=split
+set linespace=0
+"set inccommand=split
 
 " ---------------
 " Behavior
@@ -172,12 +174,13 @@ inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : deoplete#mappings#manual
 
 
 
+
 " ---------------
 " Haskell
 " ---------------
 
 
-let g:haddock_browser="chromium"
+"let g:haddock_browser="chromium"
 let g:haskellmode_completion_ghc = 0
 
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
@@ -277,52 +280,52 @@ nmap <silent> <leader>z :QuickSpellingFix<CR>
 " airline
 " ---------------
 
-
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
+"if !exists('g:airline_symbols')
+"  let g:airline_symbols = {}
+"endif
 "let g:airline_symbols.space = "\ua0"
 
-let g:airline_powerline_fonts = 1
+let g:airline_section_x = ''
+let g:airline_section_y = ''
+let g:airline_section_z = ''
+
+"
+"let g:airline_powerline_fonts = 0
 
 
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline_linecolumn_prefix = '¶ '
-let g:airline#extensions#branch#symbol = '⎇ '
-let g:airline#extensions#paste#symbol = 'Þ'
-let g:airline#extensions#whitespace#symbol = 'Ξ'
+"let g:airline#extensions#tabline#enabled = 0
+"let g:airline#extensions#tabline#fnamemod = ':t'
+"let g:airline_linecolumn_prefix = '¶ '
+"let g:airline#extensions#branch#symbol = '⎇ '
+"let g:airline#extensions#paste#symbol = 'Þ'
+"let g:airline#extensions#whitespace#symbol = 'Ξ'
 
 " ---------------
 " Key Bindings
 " ---------------
 " window movement
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+
+let g:tmux_navigator_no_mappings = 0
+" The following mappings work when nvim is NOT inside tmux
+nnoremap <S-Up>    :TmuxNavigateUp<CR>
+nnoremap <S-Down>  :TmuxNavigateDown<CR>
+nnoremap <S-Left>  :TmuxNavigateLeft<CR>
+nnoremap <S-Right> :TmuxNavigateRight<CR>
+" These mappings are used when nvim IS inside tmux
+nnoremap <C-W>k    :TmuxNavigateUp<CR>
+nnoremap <C-W>j    :TmuxNavigateDown<CR>
+nnoremap <C-W>h    :TmuxNavigateLeft<CR>
+nnoremap <C-W>l    :TmuxNavigateRight<CR>
+
+
+"nnoremap <silent> <BS> :TmuxNavigateLeft<cr>
+
 " buffers
 "nmap <leader>T :enew<cr>
 nmap <leader>bn :bnext<CR>
 nmap <leader>bp :bprevious<CR>
 nmap <leader>bq :bp <BAR> bd #<CR>
 nmap <leader>bl :ls<CR>
-
-
-
-
-" ---------------
-" LLVM Debugging
-" ---------------
-nmap <M-b> <Plug>LLBreakSwitch
-vmap <F2> <Plug>LLStdInSelected
-nnoremap <F4> :LLstdin<CR>
-nnoremap <F5> :LLmode debug<CR>
-nnoremap <S-F5> :LLmode code<CR>
-nnoremap <F8> :LL continue<CR>
-nnoremap <S-F8> :LL process interrupt<CR>
-nnoremap <F9> :LL print <C-R>=expand('<cword>')<CR>
-vnoremap <F9> :<C-U>LL print <C-R>=lldb#util#get_selection()<CR><CR>
 
 
 " --------------
@@ -354,29 +357,29 @@ vnoremap <F9> :<C-U>LL print <C-R>=lldb#util#get_selection()<CR><CR>
 " ---------------
 " Markdown
 " ---------------
-let g:markdown_composer_browser = "firefox"
+"let g:markdown_composer_browser = "chromium"
 
 
 " ---------------
 " NERD Tree
 " ---------------
-let NERDTreeMapJumpFirstChild = ''
-map <silent> - :NERDTreeToggle<CR>
+"let NERDTreeMapJumpFirstChild = ''
+"map <silent> - :NERDTreeToggle<CR>
 
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * silent NERDTree | wincmd p
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * silent NERDTree | wincmd p
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-let g:NERDTreeMinimalUI = 1
-let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
+"let g:NERDTreeMinimalUI = 1
+"let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
 
 
 
 " ---------------
 " Neomake
 " ---------------
-"autocmd! BufWritePost * Neomake
-autocmd InsertChange,TextChanged * update | Neomake
+autocmd! BufWritePost * Neomake
+"autocmd InsertChange,TextChanged * update | Neomake
 
 
 " ---------------
@@ -392,6 +395,7 @@ let g:seiya_target_groups = has('nvim') ? ['guibg'] : ['ctermbg']
 " ---------------
 " FZF
 " ---------------
+"
 
 if has('nvim')
   let $FZF_DEFAULT_OPTS .= ' --inline-info'
@@ -407,3 +411,6 @@ command! Plugs call fzf#run({
   \ 'sink':    'Explore'})
 
 
+
+" yaml
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
