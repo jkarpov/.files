@@ -1,9 +1,4 @@
-# Installation
-Assumes
-- Git is installed
-- User has .bashrc
-
-# New System
+# New System Installation
 ```shell
 alias config='/usr/bin/git --git-dir=$HOME/.linux/ --work-tree=$HOME'
 echo ".linux" >> .gitignore
