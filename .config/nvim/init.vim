@@ -52,6 +52,9 @@ call dein#add('lervag/vimtex')
 
 call dein#add('LnL7/vim-nix')
 
+call dein#add('sbdchd/neoformat')
+
+
 call dein#add('idris-hackers/idris-vim')
 call dein#add('Shougo/neosnippet.vim')
 call dein#add('Shougo/neosnippet-snippets')
@@ -102,13 +105,13 @@ let g:airline_theme='monochrome'
 "colorscheme gruvbox
 "let g:airline_theme='gruvbox'
 
-colorscheme NeoSolarized
+"colorscheme NeoSolarized
 "let g:airline_theme='solarized'
 
-"let ayucolor="mirage"
+let ayucolor="mirage"
 "let ayucolor="dark"
 "let ayucolor="light"
-"colorscheme ayu
+colorscheme ayu
 "let g:airline_theme='solarized'
 
 
