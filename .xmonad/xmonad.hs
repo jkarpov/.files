@@ -29,7 +29,7 @@ myTerminal = "gnome-terminal"
 -- Workspaces
 -- The default number of workspaces (virtual screens) and their names.
 --
-myWorkspaces = ["1:code","2:shell","3:web","4:doc","five", "6", "7", "8", "9"] 
+myWorkspaces = ["web","shell","config","pdf", "5", "6", "7", "8"] 
 
 myLauncher = "$(yeganesh -x -- -fn '-*-terminus-*-r-normal-*-*-120-*-*-*-*-iso8859-*' -nb '#000000' -nf '#FFFFFF' -sb '#7C7C7C' -sf '#CEFFAC')"
 
@@ -48,10 +48,10 @@ myLauncher = "$(yeganesh -x -- -fn '-*-terminus-*-r-normal-*-*-120-*-*-*-*-iso88
 -- 'className' and 'resource' are used below.
 --
 myManageHook = composeAll
-    [ className =? "Chromium"       --> viewShift "3:web"
-    , className =? "Firefox"        --> viewShift "3:web" 
-    , className =? "Zathura"        --> viewShift "4:doc"
-    , className =? "Terminator"     --> viewShift "2:shell"
+    [ className =? "Chromium"       --> viewShift "web"
+    , className =? "Firefox"        --> viewShift "web" 
+    , className =? "Zathura"        --> viewShift "config"
+    , className =? "Terminator"     --> viewShift "shell"
     , className =? "Download"       --> doFloat
     , className =? "Progress"       --> doFloat
     , title =? "Steam_Login"        --> doFloat
@@ -100,7 +100,7 @@ tabConfig = defaultTheme {
 xmobarTitleColor = "green"
 
 -- Color of current workspace in xmobar.
-xmobarCurrentWorkspaceColor = "#CEFFAC"
+xmobarCurrentWorkspaceColor = "#008000"
 
 -- Width of the window border in pixels.
 myBorderWidth = 1
@@ -293,7 +293,7 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 --
 -- By default, do nothing.
 myStartupHook = do
-  spawn "feh --bg-fill -z ~/Pictures/Wallpapers"
+  spawn "feh --bg-fill -z ~/pic/wallpaper"
 
 ------------------------------------------------------------------------
 -- Floats all windows in a certain workspace.

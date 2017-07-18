@@ -7,7 +7,7 @@ ZSH=$HOME/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="bira"
+ZSH_THEME="af-magic"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -83,7 +83,7 @@ alias v='nvim'
 
 alias tmux="env TERM=xterm-256color tmux"
 
-alias dotfiles='git --git-dir=$HOME/.linux/ --work-tree=$HOME $@'
+alias dotfile='git --git-dir=$HOME/.linux/ --work-tree=$HOME $@'
 
 # Escape to normal mode with jj
 bindkey "jj" vi-cmd-mode
