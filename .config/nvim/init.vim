@@ -37,6 +37,14 @@ call dein#add('Shougo/denite.nvim')
 call dein#add('cazador481/fakeclip.neovim')
 call dein#add('airblade/vim-gitgutter')
 
+call dein#add('diepm/vim-rest-console')
+
+" ./install --all so the interactive script doesn't block
+" you can check the other command line options  in the install file
+call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 }) 
+call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
+
+
 " lang
 call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 call dein#add('Shougo/deoplete.nvim')
@@ -96,8 +104,8 @@ let g:neosolarized_italic = 1
 
 let g:gruvbox_italic=1
 
-"set background=dark
-set background=light
+set background=dark
+"set background=light
 
 "colorscheme molokai
 let g:airline_theme='monochrome'
@@ -108,8 +116,8 @@ let g:airline_theme='monochrome'
 "colorscheme NeoSolarized
 "let g:airline_theme='solarized'
 
-let ayucolor="mirage"
-"let ayucolor="dark"
+"let ayucolor="mirage"
+let ayucolor="dark"
 "let ayucolor="light"
 colorscheme ayu
 "let g:airline_theme='solarized'
@@ -418,20 +426,20 @@ nnoremap <Leader>g+ :Silent Git stash pop<CR>:e<CR>o
 " FZF
 " ---------------
 "
-
-if has('nvim')
-  let $FZF_DEFAULT_OPTS .= ' --inline-info'
-endif
+"
+"//if has('nvim')
+"//  let $FZF_DEFAULT_OPTS .= ' --inline-info'
+"//endif
 
 nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":FZF\<cr>"
 
 
-command! Plugs call fzf#run({
-  \ 'source':  map(sort(keys(g:plugs)), 'g:plug_home."/".v:val'),
-  \ 'options': '--delimiter / --nth -1',
-  \ 'down':    '~40%',
-  \ 'sink':    'Explore'})
-
+"//command! Plugs call fzf#run({
+"//  \ 'source':  map(sort(keys(g:plugs)), 'g:plug_home."/".v:val'),
+"//  \ 'options': '--delimiter / --nth -1',
+"//  \ 'down':    '~40%',
+"//  \ 'sink':    'Explore'})
+"/
 
 
 " yaml
