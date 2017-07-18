@@ -9,14 +9,15 @@ call dein#begin(expand('~/.nvim'))
 call dein#add('Shougo/dein.vim')
 
 " interface
-call dein#add('vim-airline/vim-airline')
-call dein#add('vim-airline/vim-airline-themes')
+"call dein#add('vim-airline/vim-airline')
+"call dein#add('vim-airline/vim-airline-themes')
 call dein#add('ryanoasis/vim-devicons')
 call dein#add('tpope/vim-unimpaired')
 call dein#add('tomasr/molokai')
 call dein#add('iCyMind/NeoSolarized')
 call dein#add('morhetz/gruvbox')
 call dein#add('ayu-theme/ayu-vim')
+call dein#add('jacoborus/tender.vim')
 
 call dein#add('christoomey/vim-tmux-navigator')
 call dein#add('tmux-plugins/vim-tmux')
@@ -36,6 +37,8 @@ call dein#add('Shougo/denite.nvim')
 "util
 call dein#add('cazador481/fakeclip.neovim')
 call dein#add('airblade/vim-gitgutter')
+call dein#add('junegunn/fzf', { 'build': './install', 'rtp': '' })
+call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
 
 call dein#add('diepm/vim-rest-console')
 
@@ -55,6 +58,8 @@ call dein#add('eagletmt/neco-ghc')
 call dein#add('neovimhaskell/haskell-vim')
 call dein#add('itchyny/vim-haskell-indent')
 call dein#add('mpickering/hlint-refactor-vim')
+
+call dein#add('jez/vim-better-sml')
 
 call dein#add('lervag/vimtex')
 
@@ -96,6 +101,7 @@ set mousehide
 set mouse=a
 "set noerrorbells
 "set novisualbell
+"
 set termguicolors
 
 let g:neosolarized_bold = 1
@@ -108,7 +114,7 @@ set background=dark
 "set background=light
 
 "colorscheme molokai
-let g:airline_theme='monochrome'
+"let g:airline_theme='monochrome'
 
 "colorscheme gruvbox
 "let g:airline_theme='gruvbox'
@@ -122,6 +128,7 @@ let ayucolor="dark"
 colorscheme ayu
 "let g:airline_theme='solarized'
 
+"colorscheme ratazii
 
 " ---------------
 " Text format
@@ -444,3 +451,17 @@ nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\
 
 " yaml
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
+
+
+
+augroup mySyntastic
+  " tell syntastic to always stick any detected errors into the location-list
+  au FileType sml let g:syntastic_always_populate_loc_list = 1
+
+  " automatically open and/or close the location-list
+  au FileType sml let g:syntastic_auto_loc_list = 1
+augroup END
+
+" press <Leader>S (i.e., \S) to not automatically check for errors
+nnoremap <Leader>S :SyntasticToggleMode<CR>
