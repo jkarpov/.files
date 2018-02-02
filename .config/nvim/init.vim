@@ -4,85 +4,48 @@ set nocompatible
 " ---------------
 " Dein
 " ---------------
-set runtimepath^=~/.nvim/repos/github.com/Shougo/dein.vim
-call dein#begin(expand('~/.nvim'))
-call dein#add('Shougo/dein.vim')
 
 " interface
-"call dein#add('vim-airline/vim-airline')
-"call dein#add('vim-airline/vim-airline-themes')
-call dein#add('ryanoasis/vim-devicons')
-call dein#add('tpope/vim-unimpaired')
-call dein#add('tomasr/molokai')
-call dein#add('iCyMind/NeoSolarized')
-call dein#add('morhetz/gruvbox')
-call dein#add('ayu-theme/ayu-vim')
-call dein#add('jacoborus/tender.vim')
-
-call dein#add('christoomey/vim-tmux-navigator')
-call dein#add('tmux-plugins/vim-tmux')
+"call dein#add('ryanoasis/vim-devicons')
+"call dein#add('tpope/vim-unimpaired')
+"call dein#add('iCyMind/NeoSolarized')
+"call dein#add('ayu-theme/ayu-vim')
+"call dein#add('jacoborus/tender.vim')
 
 " git
-call dein#add('tpope/vim-fugitive')
-call dein#add('tpope/vim-sensible')
-call dein#add('tpope/vim-commentary')
+"call dein#add('tpope/vim-sensible')
+"call dein#add('tpope/vim-commentary')
 
-call dein#add('miyakogi/seiya.vim')
+"call dein#add('miyakogi/seiya.vim')
 
 
-call dein#add('Shougo/denite.nvim')
+"call dein#add('Shougo/denite.nvim')
 "call dein#add('Shougo/vimfiler')
 
 
 "util
-call dein#add('cazador481/fakeclip.neovim')
-call dein#add('airblade/vim-gitgutter')
-call dein#add('junegunn/fzf', { 'build': './install', 'rtp': '' })
-call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
-
-call dein#add('diepm/vim-rest-console')
-
-" ./install --all so the interactive script doesn't block
-" you can check the other command line options  in the install file
-call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 }) 
-call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
+"call dein#add('airblade/vim-gitgutter')
+"call dein#add('diepm/vim-rest-console')
 
 
 " lang
-call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
-call dein#add('Shougo/deoplete.nvim')
-call dein#add('neomake/neomake')
+"
+"call dein#add('w0rp/ale')
+"call dein#add('itchyny/vim-haskell-indent')
+""call dein#add('mpickering/hlint-refactor-vim')
+"
+"call dein#add('jez/vim-better-sml')
+"
+""call dein#add('lervag/vimtex')
+"
+"
+"call dein#add('idris-hackers/idris-vim')
+"call dein#add('raichoo/purescript-vim')
+"call dein#add('FrigoEU/psc-ide-vim')
 
-call dein#add('eagletmt/ghcmod-vim')
-call dein#add('eagletmt/neco-ghc')
-call dein#add('neovimhaskell/haskell-vim')
-call dein#add('itchyny/vim-haskell-indent')
-call dein#add('mpickering/hlint-refactor-vim')
-
-call dein#add('jez/vim-better-sml')
-
-call dein#add('lervag/vimtex')
-
-call dein#add('LnL7/vim-nix')
-
-call dein#add('sbdchd/neoformat')
-
-
-call dein#add('idris-hackers/idris-vim')
-call dein#add('Shougo/neosnippet.vim')
-call dein#add('Shougo/neosnippet-snippets')
-call dein#add('raichoo/purescript-vim')
-call dein#add('FrigoEU/psc-ide-vim')
-call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
-
-
-call dein#end()
 
 syntax on
 filetype plugin indent on
-if dein#check_install()
-  call dein#install()
-endif
 
 
 " ---------------
@@ -93,7 +56,7 @@ set number
 set nowrap
 set laststatus=2
 set cmdheight=1
-autocmd BufEnter * set cursorline
+autocmd BufEnter * set nocursorline
 autocmd BufLeave * set nocursorline
 set showmatch
 set matchtime=2
@@ -101,31 +64,31 @@ set mousehide
 set mouse=a
 "set noerrorbells
 "set novisualbell
-"
-set termguicolors
-
-let g:neosolarized_bold = 1
-let g:neosolarized_underline = 0
-let g:neosolarized_italic = 1
-
-let g:gruvbox_italic=1
+"set termguicolors
 
 set background=dark
-"set background=light
 
-"colorscheme molokai
+colorscheme molokai
+hi Normal guibg=NONE ctermbg=NONE
+highlight clear LineNr
+highlight clear SignColumn
+highlight LineNr ctermfg=DarkGrey
 "let g:airline_theme='monochrome'
 
 "colorscheme gruvbox
 "let g:airline_theme='gruvbox'
+"let g:gruvbox_italic=1
 
 "colorscheme NeoSolarized
 "let g:airline_theme='solarized'
+"let g:neosolarized_bold = 1
+"let g:neosolarized_underline = 0
+"let g:neosolarized_italic = 1
 
+"colorscheme ayu
 "let ayucolor="mirage"
-let ayucolor="dark"
+"let ayucolor="dark"
 "let ayucolor="light"
-colorscheme ayu
 "let g:airline_theme='solarized'
 
 "colorscheme ratazii
@@ -154,7 +117,7 @@ set hidden
 
 set backup
 set backupdir=~/.nvim/backup
-"set directory=~/.vim/temp
+set directory=~/.nvim/temp
 set backspace=indent,eol,start
 
 set shiftround
@@ -163,6 +126,7 @@ set smartcase
 set smarttab
 set hlsearch
 set incsearch
+set relativenumber
 
 set completeopt-=preview
 set omnifunc=syntaxcomplete#Complete
@@ -183,12 +147,29 @@ let g:deoplete#omni#input_patterns = {}
 let g:deoplete#omni#input_patterns.purescript = '[^. *\t]'
 let g:deoplete#omni#input_patterns.haskell = '[^. *\t]'
 let g:deoplete#omni#input_patterns.idris = '[^. *\t]'
-"set completeopt=longest,menuone
+
+set completeopt=longest,menuone
 "Amount of entries in completion popup
 "set pumheight=10
+"
 let g:deoplete#max_menu_width = -1
-autocmd FileType purescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
+"autocmd FileType purescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
+
 inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
+"imap <expr><TAB>
+"	 \ neosnippet#expandable_or_jumpable() ?
+"	 \    "\<Plug>(neosnippet_expand_or_jump)" :
+"         \ 	  pumvisible() ? "\<C-n>" : "\<TAB>"
+"
+" deoplete tab-complete
+"inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+
+
+"ultisnips
+let g:UltiSnipsExpandTrigger="<c-tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsEditSplit="vertical"
 
 
 
@@ -196,7 +177,6 @@ inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : deoplete#mappings#manual
 " ---------------
 " Haskell
 " ---------------
-
 
 "let g:haddock_browser="chromium"
 let g:haskellmode_completion_ghc = 0
@@ -209,15 +189,14 @@ autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 let g:necoghc_enable_detailed_browse = 1
 
 
+au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>ti :GhcModInfoPreview<CR>
+au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>te :GhcModExpand<CR>
 au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>tt :GhcModType<CR>
 au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>tc :GhcModTypeClear<CR>
-au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>i :GhcModExpand<CR>
 au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>ta :GhcModTypeInsert<CR>
 
-au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>a :GhcModSigCodegen<CR>
-au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>ip :GhcModInfoPreview<CR>
-au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>e :GhcModExpand<CR>
-au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>c :GhcModSplitFunCase<CR>
+au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>sg :GhcModSigCodegen<CR>
+au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>s :GhcModSplitFunCase<CR>
 
 
 
@@ -227,7 +206,8 @@ let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
 let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
 let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
 let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
-let g:haskell_indent_disable = 1
+let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
+
 
 
 " ---------------
@@ -268,12 +248,12 @@ autocmd FileType purescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 " ---------------
 " C
 " ---------------
-autocmd FileType c setlocal tabstop=4 shiftwidth=4
-let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
-let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
-
-let g:chromatica#libclang_path = '/usr/lib/'
-let g:chromatica#highlight_feature_level = 1
+"autocmd FileType c setlocal tabstop=4 shiftwidth=4
+"let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
+"let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
+"
+"let g:chromatica#libclang_path = '/usr/lib/'
+"let g:chromatica#highlight_feature_level = 1
 
 
 
@@ -294,29 +274,6 @@ endfunction
 command! QuickSpellingFix call QuickSpellingFix()
 nmap <silent> <leader>z :QuickSpellingFix<CR>
 
-" ---------------
-" airline
-" ---------------
-
-"if !exists('g:airline_symbols')
-"  let g:airline_symbols = {}
-"endif
-"let g:airline_symbols.space = "\ua0"
-
-let g:airline_section_x = ''
-let g:airline_section_y = ''
-let g:airline_section_z = ''
-
-"
-"let g:airline_powerline_fonts = 0
-
-
-"let g:airline#extensions#tabline#enabled = 0
-"let g:airline#extensions#tabline#fnamemod = ':t'
-"let g:airline_linecolumn_prefix = '¶ '
-"let g:airline#extensions#branch#symbol = '⎇ '
-"let g:airline#extensions#paste#symbol = 'Þ'
-"let g:airline#extensions#whitespace#symbol = 'Ξ'
 
 " ---------------
 " Key Bindings
@@ -345,59 +302,15 @@ nmap <leader>bp :bprevious<CR>
 nmap <leader>bq :bp <BAR> bd #<CR>
 nmap <leader>bl :ls<CR>
 
+nmap <leader>ep <Plug>(ale_previous_wrap)
+nmap <leader>en <Plug>(ale_next_wrap)
 
-" --------------
-" Syntastic
-" --------------
 
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_loc_list_height = 5
-"let g:syntastic_auto_loc_list = 0
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 1
-"let g:syntastic_javascript_checkers = ['eslint']
-"
-"let g:syntastic_error_symbol = '✖'
-"let g:syntastic_style_error_symbol = '✖'
-"let g:syntastic_warning_symbol = 'ℹ'
-"let g:syntastic_style_warning_symbol = 'ℹ'
-"
-"highlight link SyntasticErrorSign SignColumn
-"highlight link SyntasticWarningSign SignColumn
-"highlight link SyntasticStyleErrorSign SignColumn
-"highlight link SyntasticStyleWarningSign SignColumn
-"
 
 " ---------------
 " Markdown
 " ---------------
 "let g:markdown_composer_browser = "chromium"
-
-
-" ---------------
-" NERD Tree
-" ---------------
-"let NERDTreeMapJumpFirstChild = ''
-"map <silent> - :NERDTreeToggle<CR>
-
-"autocmd StdinReadPre * let s:std_in=1
-"autocmd VimEnter * silent NERDTree | wincmd p
-"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-"let g:NERDTreeMinimalUI = 1
-"let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
-
-
-
-" ---------------
-" Neomake
-" ---------------
-autocmd! BufWritePost * Neomake
-"autocmd InsertChange,TextChanged * update | Neomake
 
 
 " ---------------
@@ -407,61 +320,85 @@ set updatetime=250
 
 imap jj <Esc>
 
-let g:seiya_target_groups = has('nvim') ? ['guibg'] : ['ctermbg']
 
-
-"
-" git
-" "
+" ---------------
+" Git
+" ---------------
 nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gd :Gdiff<CR>
+nnoremap <Leader>gD :Gdiff<CR>
 nnoremap <Leader>gb :Gblame<CR>
 nnoremap <Leader>gL :exe ':!cd ' . expand('%:p:h') . '; git la'<CR>
 nnoremap <Leader>gl :exe ':!cd ' . expand('%:p:h') . '; git las'<CR>
-nnoremap <Leader>gh :Silent Glog<CR>
-nnoremap <Leader>gH :Silent Glog<CR>:set nofoldenable<CR>
+nnoremap <Leader>gh :silent Glog<CR>:set nofoldenable<CR>
+nnoremap <Leader>gH :silent Glog<CR>
+nnoremap <Leader>ge :Gedit<CR>
 nnoremap <Leader>gr :Gread<CR>
 nnoremap <Leader>gw :Gwrite<CR>
 nnoremap <Leader>gp :Git push<CR>
-nnoremap <Leader>g- :Silent Git stash<CR>:e<CR>
-nnoremap <Leader>g+ :Silent Git stash pop<CR>:e<CR>o
-
-
-
+nnoremap <Leader>g- :silent Git stash<CR>:e<CR>
+nnoremap <Leader>g+ :silent Git stash pop<CR>:e<CR>o
 
 " ---------------
 " FZF
 " ---------------
-"
-"
-"//if has('nvim')
-"//  let $FZF_DEFAULT_OPTS .= ' --inline-info'
-"//endif
-
 nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":FZF\<cr>"
 
+" ---------------
+" Goyo - distraction free editing
+" ---------------
+let g:goyo_height = 88
+let g:goyo_width = 100
 
-"//command! Plugs call fzf#run({
-"//  \ 'source':  map(sort(keys(g:plugs)), 'g:plug_home."/".v:val'),
-"//  \ 'options': '--delimiter / --nth -1',
-"//  \ 'down':    '~40%',
-"//  \ 'sink':    'Explore'})
-"/
+" Leader shortcut for enabling Goyo
+nnoremap <Leader>f :Goyo<CR>
+
+" Ensure :q quits when Goyo is active
+function! s:goyo_enter()
+  let b:quitting = 0
+  let b:quitting_bang = 0
+  autocmd QuitPre <buffer> let b:quitting = 1
+  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
+  Limelight
+  set noshowmode
+  set noshowcmd
+endfunction
+
+function! s:goyo_leave()
+  " Quit Vim if this is the only remaining buffer
+  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+    if b:quitting_bang
+      qa!
+    else
+      qa
+    endif
+  endif
+  Limelight!
+  set showmode
+  set showcmd
+endfunction
+
+autocmd! User GoyoEnter call <SID>goyo_enter()
+autocmd! User GoyoLeave call <SID>goyo_leave()
+
+let g:ledger_bin="hledger"
+autocmd BufEnter,BufNew *.hledger* set filetype=ledger
 
 
-" yaml
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+"----
+" Ale
+""-----
+highlight clear ALEErrorSign
+highlight clear ALEWarningSign
+let g:ale_sign_column_always = 1
 
 
+set hidden
+
+let g:LanguageClient_serverCommands = {
+      \ 'haskell': ['hie', '--lsp'], 
+      \ }
 
 
-augroup mySyntastic
-  " tell syntastic to always stick any detected errors into the location-list
-  au FileType sml let g:syntastic_always_populate_loc_list = 1
-
-  " automatically open and/or close the location-list
-  au FileType sml let g:syntastic_auto_loc_list = 1
-augroup END
-
-" press <Leader>S (i.e., \S) to not automatically check for errors
-nnoremap <Leader>S :SyntasticToggleMode<CR>
+set guicursor=
+set termguicolors

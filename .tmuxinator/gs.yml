@@ -1,0 +1,50 @@
+# ~/.tmuxinator/gs.yml
+
+name: gs
+root: ~/code/utilities
+
+# Optional tmux socket
+# socket_name: foo
+
+# Runs before everything. Use it to start daemons etc.
+# pre: sudo /etc/rc.d/mysqld start
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+# pre_window: rbenv shell 2.0.0-p247
+
+# Pass command line options to tmux. Useful for specifying a different tmux.conf.
+# tmux_options: -f ~/.tmux.mac.conf
+
+# Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
+# tmux_command: byobu
+
+# select
+startup_window: code
+
+# select vim pane as default
+startup_pane: 1
+
+# Controls whether the tmux session should be attached to automatically. Defaults to true.
+# attach: false
+
+# Runs after everything. Use it to attach to tmux with custom options etc.
+# post: tmux -CC attach -t gs
+
+windows:
+  - code:
+    #layout: main-horizontal
+      layout: main-vertical
+      #layout: 32f5,154x136,0,0[154x22,0,0,64,154x84,0,23,67,154x28,0,108,68]
+      # Synchronize all panes of this window, can be enabled before or after the pane commands run.
+      # 'before' represents legacy functionality and will be deprecated in a future release, in favour of 'after'
+      # synchronize: after
+      panes:
+        - code :
+          - nixshell.sh
+          - $EDITOR .
+        - clear
+        - test :
+          - ./nixshell.sh
+            #- cabal repl
+            #- ':clear'
+  - server: clear

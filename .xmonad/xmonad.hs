@@ -1,6 +1,8 @@
 import System.IO
 import System.Exit
+import Prelude
 import XMonad
+import Data.Ratio
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -8,9 +10,12 @@ import XMonad.Hooks.SetWMName
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
 import XMonad.Layout.SimplestFloat
+import XMonad.Layout.SimpleFloat
 import XMonad.Layout.Spiral
 import XMonad.Layout.PerWorkspace(onWorkspace)
 import XMonad.Layout.Tabbed
+import XMonad.Actions.FloatKeys
+import XMonad.Layout.Spacing
 import XMonad.Util.Run(spawnPipe)
 import Control.Monad (liftM2)
 import qualified XMonad.StackSet as W
@@ -19,19 +24,15 @@ import qualified Data.Map as M
 
 ------------------------------------------------------------------------
 -- Terminal
--- The preferred terminal program, which is used in a binding below and by
--- certain contrib modules.
---
---myTerminal = "terminator -b -m"
-myTerminal = "gnome-terminal"
+myTerminal = "urxvt"
+myStatusBar = "xmobar -x0 /home/dima/.xmonad/xmobar.conf"
 
 ------------------------------------------------------------------------
 -- Workspaces
 -- The default number of workspaces (virtual screens) and their names.
---
 myWorkspaces = ["web","shell","config","pdf", "5", "6", "7", "8"] 
 
-myLauncher = "$(yeganesh -x -- -fn '-*-terminus-*-r-normal-*-*-120-*-*-*-*-iso8859-*' -nb '#000000' -nf '#FFFFFF' -sb '#7C7C7C' -sf '#CEFFAC')"
+myLauncher = "$(yeganesh -x -- -nb '#000000' -nf '#FFFFFF' -sb '#7C7C7C' -sf '#CEFFAC')"
 
 ------------------------------------------------------------------------
 -- Window rules
@@ -57,7 +58,7 @@ myManageHook = composeAll
     , title =? "Steam_Login"        --> doFloat
     , className =? "steam"          --> doFullFloat -- bigpicture-mode
     , title =? "Steam_Login"        --> doShift "four"
-    , isFullscreen --> (doF W.focusDown <+> doFullFloat)
+    --, isFullscreen --> (doF W.focusDown <+> doFullFloat)
     ]
     where viewShift = doF . liftM2 (.) W.greedyView W.shift
 --, isFullscreen                  --> doFullFloat ]
@@ -73,12 +74,11 @@ myManageHook = composeAll
 -- which denotes layout choice.
 
 defaultLayouts = avoidStruts (
-    Tall 1 (3/100) (1/2) |||
+    smartSpacingWithEdge 20 $ Tall 1 (3/100) (1/2) |||
     Mirror (Tall 1 (3/100) (1/2)) |||
     spiral (6/7)) |||
     noBorders (fullscreenFull Full)
 
---defaultLayouts = (tiled Tall ||| (tiled Wide ||| Full)) ||| tabbed shrinkText tabConfig
 
 ------------------------------------------------------------------------
 -- Colors and borders
@@ -86,24 +86,8 @@ defaultLayouts = avoidStruts (
 myNormalBorderColor = "#002b36"
 myFocusedBorderColor = "#657b83"
 
--- Colors for text and backgrounds of each tab when in "Tabbed" layout.
-tabConfig = defaultTheme {
-    activeBorderColor = "#7C7C7C",
-    activeTextColor = "#CEFFAC",
-    activeColor = "#000000",
-    inactiveBorderColor = "#7C7C7C",
-    inactiveTextColor = "#EEEEEE",
-    inactiveColor = "#000000"
-}
-
--- Color of current window title in xmobar.
-xmobarTitleColor = "green"
-
--- Color of current workspace in xmobar.
-xmobarCurrentWorkspaceColor = "#008000"
-
 -- Width of the window border in pixels.
-myBorderWidth = 1
+myBorderWidth = 0
 
 
 ------------------------------------------------------------------------
@@ -129,12 +113,44 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s -e 'mv $f ~dima/Pictures/Screenshots'")
   , ((0, xK_Print), spawn "scrot -e 'mv $f ~dima/Pictures/Screenshots'")
 
--- Lock the screen using xscreensaver.
+  -- Lock the screen using slock.
   , ((modMask .|. controlMask, xK_l),
-     spawn "xscreensaver-command -lock")
+     spawn "slock")
 
+  -- Make window larger wile keeping bottom left corner fixed
+  , ((modMask, xK_s),
+      withFocused (keysResizeWindow (100,100) (1,1)))
+
+  -- Make window smaller wile keeping bottom left corner fixed
+  , ((modMask, xK_d),
+      withFocused (keysResizeWindow (-100,-100) (1,1)))
+
+  -- Make window smaller wile keeping bottom left corner fixed
+  , ((modMask, xK_d),
+      withFocused (keysResizeWindow (-100,-100) (1,1)))
+
+  , ((modMask, xK_a),
+      withFocused (keysMoveWindowTo (1920,1080) (1%2,1%2)))
+
+
+  -- Move window to the left
+  , ((modMask .|. shiftMask, xK_h),
+      withFocused (keysMoveWindow (-100, 0)))
+
+  -- Move window to the right
+  , ((modMask .|. shiftMask, xK_l),
+      withFocused (keysMoveWindow (100, 0)))
+
+  -- Move window down
+  , ((modMask .|. shiftMask, xK_j),
+      withFocused (keysMoveWindow (0, 100)))
+
+  -- Move window up
+  , ((modMask .|. shiftMask, xK_k),
+      withFocused (keysMoveWindow (0, -100)))
+
+  -- Spawn dmenu
   , ((modMask, xK_p),
-     --spawn "exe=`dmenu_path_c | yeganesh` && eval \"exec $exe\"")
      spawn myLauncher)
 
   -- Mute volume.
@@ -149,21 +165,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask .|. controlMask, xK_k),
      spawn "amixer -q set Master 5%+")
 
-  -- Audio previous.
-  , ((0, 0x1008FF16),
-     spawn "")
-
-  -- Play/pause.
-  , ((0, 0x1008FF14),
-     spawn "")
-
-  -- Audio next.
-  , ((0, 0x1008FF17),
-     spawn "")
-
-  -- Eject CD tray.
-  , ((0, 0x1008FF2C),
-     spawn "eject -T")
 
   --------------------------------------------------------------------
   -- "Standard" xmonad key bindings
@@ -186,8 +187,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      refresh)
 
   -- Move focus to the next window.
-  , ((modMask, xK_Tab),
-     windows W.focusDown)
+  --, ((modMask, xK_Tab),
+   --  windows W.focusDown )
+     --windows W.focusUp >> windows W.shiftMaster)
+     --windows W.focusUp >> windows W.shiftMaster)
 
   -- Move focus to the next window.
   , ((modMask, xK_j),
@@ -204,14 +207,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Swap the focused window and the master window.
   , ((modMask, xK_Return),
      windows W.swapMaster)
-
-  -- Swap the focused window with the next window.
-  , ((modMask .|. shiftMask, xK_j),
-     windows W.swapDown )
-
-  -- Swap the focused window with the previous window.
-  , ((modMask .|. shiftMask, xK_k),
-     windows W.swapUp )
 
   -- Shrink the master area.
   , ((modMask, xK_h),
@@ -233,9 +228,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask, xK_period),
      sendMessage (IncMasterN (-1)))
 
-  -- Toggle the status bar gap.
-  -- TODO: update this binding with avoidStruts, ((modMask, xK_b),
-
   -- Quit xmonad.
   , ((modMask .|. shiftMask, xK_q),
      io (exitWith ExitSuccess))
@@ -243,7 +235,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Restart xmonad.
   , ((modMask, xK_q),
      restart "xmonad" True)
+
   ]
+
   ++
 
   -- mod-[1..9], Switch to workspace N
@@ -266,7 +260,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 -- Focus rules
 -- True if your focus should follow your mouse cursor.
 myFocusFollowsMouse :: Bool
-myFocusFollowsMouse = False
+myFocusFollowsMouse = True
 
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
   [
@@ -293,7 +287,7 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 --
 -- By default, do nothing.
 myStartupHook = do
-  spawn "feh --bg-fill -z ~/pic/wallpaper"
+  spawn "feh --bg-fill -z ~/pics/wallpaper"
 
 ------------------------------------------------------------------------
 -- Floats all windows in a certain workspace.
@@ -307,48 +301,29 @@ myLayouts = defaultLayouts
 --main = xmonad =<< xmobar defaultConfig { terminal = "urxvt" }
 
 main = do
- xmproc <- spawnPipe "/run/current-system/sw/bin/xmobar ~/.xmobarrc"
+ xmproc <- spawnPipe "/run/current-system/sw/bin/xmobar ~/.xmonad/xmobar.conf"
  --spawn "xscreensaver -no-splash"
- xmonad $ defaults
-      { manageHook = manageDocks <+> myManageHook
-      , layoutHook = smartBorders myLayouts
-      , borderWidth = myBorderWidth
-      , logHook = dynamicLogWithPP xmobarPP
-           { ppOutput = hPutStrLn xmproc
-           , ppTitle = xmobarColor "#657b83" "" . shorten 100
-           , ppCurrent = xmobarColor "#c0c0c0" "" . wrap "" ""
-           , ppSep     = xmobarColor "#c0c0c0" "" " | "
-           , ppUrgent  = xmobarColor "#ff69b4" ""
-           , ppLayout = const "" -- to disable the layout info on xmobar
-           }
-     }
-
-
-------------------------------------------------------------------------
--- Combine it all together
--- A structure containing your configuration settings, overriding
--- fields in the default config. Any you don't override, will
--- use the defaults defined in xmonad/XMonad/Config.hs
---
--- No need to modify this.
---
-defaults = defaultConfig {
+ xmonad $ docks defaultConfig
+   { manageHook = myManageHook
+   , layoutHook = myLayouts
+   , borderWidth = myBorderWidth
+   , logHook = dynamicLogWithPP xmobarPP
+         { ppOutput = hPutStrLn xmproc
+         , ppLayout = const "" -- to disable the layout info on xmobar
+         }
     -- simple stuff
-    terminal = myTerminal,
-    focusFollowsMouse = myFocusFollowsMouse,
-    borderWidth = myBorderWidth,
-    modMask = myModMask,
-    workspaces = myWorkspaces,
-    normalBorderColor = myNormalBorderColor,
-    focusedBorderColor = myFocusedBorderColor,
+   , terminal = myTerminal
+   , focusFollowsMouse = myFocusFollowsMouse
+   , modMask = myModMask
+   , workspaces = myWorkspaces
+   , normalBorderColor = myNormalBorderColor
+   , focusedBorderColor = myFocusedBorderColor
 
     -- key bindings
-    keys = myKeys,
-    mouseBindings = myMouseBindings,
+   , keys = myKeys
+   , mouseBindings = myMouseBindings
 
     -- hooks, layouts
-    -- defaultLayouts = smartBorders $ myLayout,
-    layoutHook = smartBorders $ myLayouts,
-    manageHook = myManageHook,
-    startupHook = myStartupHook
-}
+   , startupHook = myStartupHook
+   }
+

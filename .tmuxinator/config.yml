@@ -7,10 +7,11 @@ root: ~/
 # attach: false
 
 windows:
-  - vim: nvim ~/.config/nvim/init.vim
-  - tmux: nvim ~/.tmux.conf
-  - zsh: nvim ~/.zshrc
+  - nixos: nvim /etc/nixos/configuration.nix
+  - nixpkgs: nvim ~/.config/nixpkgs/config.nix
   - xmonad: nvim ~/.xmonad/xmonad.hs
-  - xmobar: nvim ~/.xmobarrc
-  - nixos: sudoedit /etc/nixos/configuration.nix
-  - wifi: sudoedit /etc/wpa_supplicant.conf
+  - xmobar: nvim ~/.xmonad/xmobar.conf
+  - nvim: nvim ~/.config/nvim/init.vim
+  - zsh: nvim ~/.zshrc
+  - tmux: nvim ~/.tmux.conf
+  - mux: ranger ~/.tmuxinator
