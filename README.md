@@ -1,17 +1,14 @@
-# Source
-[Hacker News](http://news.ycombinator.com/item?id=11070797 "Hacker News")
+## Dotfiles managed by git
 
-[Atlassian Blog](https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/ "Blog")
-
-# New System Installation
 ```shell
-alias config='/usr/bin/git --git-dir=$HOME/.linux/ --work-tree=$HOME'
+alias dot='/usr/bin/git --git-dir=$HOME/.linux/ --work-tree=$HOME'
+dot config status.showUntrackedFiles no
 echo ".linux" >> .gitignore
 git clone --bare https://github.com/ditadi/.linux $HOME/.linux
-alias dotfile='/usr/bin/git --git-dir=$HOME/.linux/ --work-tree=$HOME'
-dotfile checkout
+alias dot='/usr/bin/git --git-dir=$HOME/.linux/ --work-tree=$HOME'
+dot checkout
 ```
 
-
-
+## References
+[1] [Hacker News](http://news.ycombinator.com/item?id=11070797 "Hacker News")
 
