@@ -1,6 +1,6 @@
-# ~/.tmuxinator/config.yml
+# ~/.tmuxinator/dot.yml
 
-name: config
+name: dot
 root: ~/
 
 # Controls whether the tmux session should be attached to automatically. Defaults to true.

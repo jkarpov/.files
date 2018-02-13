@@ -44,11 +44,19 @@ in
                 "vim-unimpaired"
                 "vim-ledger"
                 "tmux-navigator"
-                "gruvbox"
-                "molokai"
-                "Solarized"
+
+                #themes
                 "goyo"
                 "limelight-vim"
+                "seiya"
+                "neo-solarized"
+                "solarized8"
+                "ayu"
+                "molokai"
+                "monodark"
+                "mopkai"
+                "gruvbox-haskell"
+
                 "vim-trailing-whitespace"
                 "deoplete-nvim"
                 "ale"

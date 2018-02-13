@@ -1,52 +1,19 @@
 set nocompatible
 
 
-" ---------------
-" Dein
-" ---------------
-
-" interface
-"call dein#add('ryanoasis/vim-devicons')
-"call dein#add('tpope/vim-unimpaired')
-"call dein#add('iCyMind/NeoSolarized')
-"call dein#add('ayu-theme/ayu-vim')
-"call dein#add('jacoborus/tender.vim')
 
 " git
-"call dein#add('tpope/vim-sensible')
 "call dein#add('tpope/vim-commentary')
 
-"call dein#add('miyakogi/seiya.vim')
-
-
-"call dein#add('Shougo/denite.nvim')
-"call dein#add('Shougo/vimfiler')
-
-
-"util
-"call dein#add('airblade/vim-gitgutter')
 "call dein#add('diepm/vim-rest-console')
 
 
 " lang
-"
-"call dein#add('w0rp/ale')
-"call dein#add('itchyny/vim-haskell-indent')
-""call dein#add('mpickering/hlint-refactor-vim')
-"
-"call dein#add('jez/vim-better-sml')
-"
 ""call dein#add('lervag/vimtex')
-"
-"
-"call dein#add('idris-hackers/idris-vim')
-"call dein#add('raichoo/purescript-vim')
-"call dein#add('FrigoEU/psc-ide-vim')
-
 
 syntax on
+syntax enable
 filetype plugin indent on
-
 
 " ---------------
 " Interface
@@ -62,34 +29,42 @@ set showmatch
 set matchtime=2
 set mousehide
 set mouse=a
-"set noerrorbells
-"set novisualbell
-"set termguicolors
+set noerrorbells
+set novisualbell
+set guicursor=
+set termguicolors
+"set background=dark
+set background=light
 
-set background=dark
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
-colorscheme molokai
-hi Normal guibg=NONE ctermbg=NONE
-highlight clear LineNr
-highlight clear SignColumn
-highlight LineNr ctermfg=DarkGrey
-"let g:airline_theme='monochrome'
+"colorscheme molokai
+"colorscheme monodark
+"highlight clear LineNr
+"highlight clear SignColumn
+"highlight LineNr ctermfg=DarkGrey
 
-"colorscheme gruvbox
-"let g:airline_theme='gruvbox'
 "let g:gruvbox_italic=1
+"colorscheme gruvbox
 
-"colorscheme NeoSolarized
-"let g:airline_theme='solarized'
 "let g:neosolarized_bold = 1
 "let g:neosolarized_underline = 0
-"let g:neosolarized_italic = 1
+"let g:neosolarized_italic = 0
+"let g:neosolarized_contrast = "high"
+"let g:solarized_visibility = "high"
+"let g:solarized_extra_hi_groups=1
+"let g:airline_theme='solarized'
+"colorscheme NeoSolarized
+"let g:solarized_use16 = 1
+"colorscheme solarized8
+colorscheme mopkai
 
-"colorscheme ayu
 "let ayucolor="mirage"
 "let ayucolor="dark"
 "let ayucolor="light"
 "let g:airline_theme='solarized'
+"colorscheme ayu
 
 "colorscheme ratazii
 
@@ -318,7 +293,7 @@ nmap <leader>en <Plug>(ale_next_wrap)
 " ---------------
 set updatetime=250
 
-imap jj <Esc>
+"imap jj <Esc>
 
 
 " ---------------
@@ -393,12 +368,17 @@ highlight clear ALEWarningSign
 let g:ale_sign_column_always = 1
 
 
-set hidden
-
 let g:LanguageClient_serverCommands = {
       \ 'haskell': ['hie', '--lsp'], 
       \ }
 
+let g:seiya_auto_enable=1
+let g:seiya_target_groups = has('nvim') ? ['guibg'] : ['ctermbg']
 
-set guicursor=
-set termguicolors
+highlight Type gui=bold
+highlight operator gui=bold
+highlight Operator gui=bold
+highlight Structure gui=bold
+"highlight Keyword gui=bold
+
+

@@ -15,7 +15,9 @@ import XMonad.Layout.Spiral
 import XMonad.Layout.PerWorkspace(onWorkspace)
 import XMonad.Layout.Tabbed
 import XMonad.Actions.FloatKeys
+import XMonad.Actions.SpawnOn
 import XMonad.Layout.Spacing
+import XMonad.Util.SpawnOnce
 import XMonad.Util.Run(spawnPipe)
 import Control.Monad (liftM2)
 import qualified XMonad.StackSet as W
@@ -24,13 +26,13 @@ import qualified Data.Map as M
 
 ------------------------------------------------------------------------
 -- Terminal
-myTerminal = "urxvt"
-myStatusBar = "xmobar -x0 /home/dima/.xmonad/xmobar.conf"
+myTerminal = "kitty --title='Shell' --class='Shell'"
+myStatusBar = "xmobar -x0 ~/.xmonad/xmobar.conf"
 
 ------------------------------------------------------------------------
 -- Workspaces
 -- The default number of workspaces (virtual screens) and their names.
-myWorkspaces = ["web","shell","config","pdf", "5", "6", "7", "8"] 
+myWorkspaces = ["www","term","comm","dot", "5", "6", "7", "8"]
 
 myLauncher = "$(yeganesh -x -- -nb '#000000' -nf '#FFFFFF' -sb '#7C7C7C' -sf '#CEFFAC')"
 
@@ -49,15 +51,14 @@ myLauncher = "$(yeganesh -x -- -nb '#000000' -nf '#FFFFFF' -sb '#7C7C7C' -sf '#C
 -- 'className' and 'resource' are used below.
 --
 myManageHook = composeAll
-    [ className =? "Chromium"       --> viewShift "web"
-    , className =? "Firefox"        --> viewShift "web" 
-    , className =? "Zathura"        --> viewShift "config"
-    , className =? "Terminator"     --> viewShift "shell"
+    [ className =? "Chromium"       --> viewShift "www"
+    , className =? "Firefox"        --> viewShift "www"
+    , className =? "Comm"           --> viewShift "comm"
+    , className =? "Dot"            --> viewShift "dot"
+    , className =? "kitty"          --> viewShift "term"
+    , className =? "Shell"          --> viewShift "term"
     , className =? "Download"       --> doFloat
     , className =? "Progress"       --> doFloat
-    , title =? "Steam_Login"        --> doFloat
-    , className =? "steam"          --> doFullFloat -- bigpicture-mode
-    , title =? "Steam_Login"        --> doShift "four"
     --, isFullscreen --> (doF W.focusDown <+> doFullFloat)
     ]
     where viewShift = doF . liftM2 (.) W.greedyView W.shift
@@ -74,7 +75,7 @@ myManageHook = composeAll
 -- which denotes layout choice.
 
 defaultLayouts = avoidStruts (
-    smartSpacingWithEdge 20 $ Tall 1 (3/100) (1/2) |||
+    smartSpacingWithEdge 20 $
     Mirror (Tall 1 (3/100) (1/2)) |||
     spiral (6/7)) |||
     noBorders (fullscreenFull Full)
@@ -130,7 +131,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
       withFocused (keysResizeWindow (-100,-100) (1,1)))
 
   , ((modMask, xK_a),
-      withFocused (keysMoveWindowTo (1920,1080) (1%2,1%2)))
+      withFocused (keysMoveWindowTo (1920,24) (1%2,0)))
 
 
   -- Move window to the left
@@ -186,11 +187,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask, xK_n),
      refresh)
 
-  -- Move focus to the next window.
-  --, ((modMask, xK_Tab),
+  -- Move focus to the next window and shift to master
+  , ((modMask, xK_Tab),
    --  windows W.focusDown )
-     --windows W.focusUp >> windows W.shiftMaster)
-     --windows W.focusUp >> windows W.shiftMaster)
+     windows W.focusUp >> windows W.shiftMaster)
 
   -- Move focus to the next window.
   , ((modMask, xK_j),
@@ -288,6 +288,10 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 -- By default, do nothing.
 myStartupHook = do
   spawn "feh --bg-fill -z ~/pics/wallpaper"
+  spawnOn "comm" "kitty --title='Communication' --class='Comm' zsh -ic 'mux comm'"
+  spawnOn "dot" "kitty --title='System Configuration' --class='Dot' zsh -ic 'mux dot'"
+  spawnOn "term" "kitty --title='Shell' zsh -ic 'ranger'"
+  spawnOn "www" "firefox"
 
 ------------------------------------------------------------------------
 -- Floats all windows in a certain workspace.
@@ -298,11 +302,8 @@ myLayouts = defaultLayouts
 ------------------------------------------------------------------------
 -- Run xmonad with all the defaults we set up.
 --
---main = xmonad =<< xmobar defaultConfig { terminal = "urxvt" }
-
 main = do
  xmproc <- spawnPipe "/run/current-system/sw/bin/xmobar ~/.xmonad/xmobar.conf"
- --spawn "xscreensaver -no-splash"
  xmonad $ docks defaultConfig
    { manageHook = myManageHook
    , layoutHook = myLayouts
