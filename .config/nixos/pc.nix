@@ -17,7 +17,7 @@ in
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+      ./pc-hardware.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -320,7 +320,7 @@ in
   };
 
   ## Enable CUPS to print documents.
-  # services.printing.enable = true;
+  ## services.printing.enable = true;
 
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "18.03";
