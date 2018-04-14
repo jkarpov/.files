@@ -64,6 +64,7 @@ in
                 "nvim-completion-manager"
                 "vim-nix"
                 "vim2nix"
+                "latex-live-preview"
 
                 #{ name = "vim-airline"; }
                 #{ name = "vim-auto-save"; }

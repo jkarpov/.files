@@ -10,6 +10,7 @@ import XMonad.Hooks.SetWMName
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
 import XMonad.Layout.SimplestFloat
+import XMonad.Layout.ThreeColumns
 import XMonad.Layout.SimpleFloat
 import XMonad.Layout.Spiral
 import XMonad.Layout.PerWorkspace(onWorkspace)
@@ -59,6 +60,9 @@ myManageHook = composeAll
     , className =? "Shell"          --> viewShift "term"
     , className =? "Download"       --> doFloat
     , className =? "Progress"       --> doFloat
+    , title =? "Steam_Login"        --> doFloat
+    , className =? "steam"          --> doFloat -- bigpicture-mode
+    , className =? "Steam"          --> doFloat -- bigpicture-mode
     --, isFullscreen --> (doF W.focusDown <+> doFullFloat)
     ]
     where viewShift = doF . liftM2 (.) W.greedyView W.shift
@@ -76,6 +80,7 @@ myManageHook = composeAll
 
 defaultLayouts = avoidStruts (
     smartSpacingWithEdge 20 $
+    ThreeColMid 1 (3/100) (3/4) |||
     Mirror (Tall 1 (3/100) (1/2)) |||
     spiral (6/7)) |||
     noBorders (fullscreenFull Full)
@@ -166,17 +171,12 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask .|. controlMask, xK_k),
      spawn "amixer -q set Master 5%+")
 
-
-  --------------------------------------------------------------------
-  -- "Standard" xmonad key bindings
-  --
-
   -- Close focused window.
   , ((modMask .|. shiftMask, xK_c),
      kill)
 
   -- Cycle through the available layout algorithms.
-  , ((modMask, xK_space),
+   , ((modMask, xK_n),
      sendMessage NextLayout)
 
   -- Reset the layouts on the current workspace to default.
@@ -184,8 +184,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      setLayout $ XMonad.layoutHook conf)
 
   -- Resize viewed windows to the correct size.
-  , ((modMask, xK_n),
-     refresh)
+  --, ((modMask, xK_n),
+  --   refresh)
 
   -- Move focus to the next window and shift to master
   , ((modMask, xK_Tab),

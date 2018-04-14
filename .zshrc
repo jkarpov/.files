@@ -5,6 +5,8 @@ export PATH=$HOME/.cabal/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH
 # User configuration
 export LANG=en_US.UTF-8
 #export TERM=xterm
+#export GDK_SCALE=2
+
 
 
 # Preferred editor for local and remote sessions

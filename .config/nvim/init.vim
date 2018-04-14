@@ -58,13 +58,13 @@ let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 "colorscheme NeoSolarized
 "let g:solarized_use16 = 1
 "colorscheme solarized8
-colorscheme mopkai
+"colorscheme mopkai
 
-"let ayucolor="mirage"
+let ayucolor="mirage"
 "let ayucolor="dark"
 "let ayucolor="light"
 "let g:airline_theme='solarized'
-"colorscheme ayu
+colorscheme ayu
 
 "colorscheme ratazii
 
@@ -164,14 +164,14 @@ autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 let g:necoghc_enable_detailed_browse = 1
 
 
-au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>ti :GhcModInfoPreview<CR>
+au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>tp :GhcModInfoPreview<CR>
 au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>te :GhcModExpand<CR>
 au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>tt :GhcModType<CR>
 au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>tc :GhcModTypeClear<CR>
-au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>ta :GhcModTypeInsert<CR>
+au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>ti :GhcModTypeInsert<CR>
 
-au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>sg :GhcModSigCodegen<CR>
-au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>s :GhcModSplitFunCase<CR>
+au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>tg :GhcModSigCodegen<CR>
+au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>ts :GhcModSplitFunCase<CR>
 
 
 
@@ -382,3 +382,8 @@ highlight Structure gui=bold
 "highlight Keyword gui=bold
 
 
+"set foldmethod=indent
+"set foldlevel=5
+"set foldclose=all
+
+let g:livepreview_previewer = 'zathura'
