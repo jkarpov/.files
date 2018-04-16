@@ -35,6 +35,6 @@
   swapDevices = [ { device = "/dev/partitions/swap"; } ];
 
   nix.maxJobs = lib.mkDefault 4;
-  powerManagement.cpuFreqGovernor = "powersave";
+  powerManagement.cpuFreqGovernor = "ondemand";
 
 }
