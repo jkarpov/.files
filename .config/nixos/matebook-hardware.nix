@@ -12,6 +12,29 @@
   boot.kernelModules = [ "kvm-intel""wl" ];
   boot.extraModulePackages = [ ];
 
+  # File systems
+  fileSystems."/" = {
+    label = "root";
+    device = "/dev/partitions/fsroot";
+    fsType = "btrfs";
+    options = [ "subvol=root" ];
+  };
+
+  fileSystems."/home" = {
+    label = "home";
+    device = "/dev/partitions/fsroot";
+    fsType = "btrfs";
+    options = [ "subvol=home" ];
+  };
+
+  fileSystems."/boot" =
+  { device = "/dev/disk/by-uuid/5806-A791";
+    fsType = "vfat";
+  };
+
+  swapDevices = [ { device = "/dev/partitions/swap"; } ];
+
   nix.maxJobs = lib.mkDefault 4;
   powerManagement.cpuFreqGovernor = "powersave";
+
 }
