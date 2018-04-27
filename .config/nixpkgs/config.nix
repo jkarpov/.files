@@ -2,15 +2,16 @@
 
 let
   plugins = pkgs.callPackage ./plugins.nix {};
+
 in
 {
-  allowUnfree = true;
 
+  allowUnfree = true;
 
   packageOverrides = pkgs: rec {
 
     #weechat = pkgs.weechat.override { extraBuildInputs = [ pkgs.python27Packages.websocket_client ]; };
-    xpra = pkgs.xpra.override { };
+    #xpra = pkgs.xpra.override { };
 
     neovim = pkgs.neovim.override {
       vimAlias = true;
@@ -55,6 +56,7 @@ in
                 "molokai"
                 "monodark"
                 "mopkai"
+                "github-colorscheme"
                 "gruvbox-haskell"
 
                 "vim-trailing-whitespace"
@@ -64,7 +66,11 @@ in
                 "nvim-completion-manager"
                 "vim-nix"
                 "vim2nix"
+                #"vim-markdown"
+                "vim-pandoc"
+                "vim-pandoc-syntax"
                 "latex-live-preview"
+                "csv"
 
                 #{ name = "vim-airline"; }
                 #{ name = "vim-auto-save"; }
@@ -80,6 +86,8 @@ in
                 "ghcmod"
                 "neco-ghc"
                 "vim-stylish-haskell"
+                "hlint-refactor"
+                "Tagbar"
                 #"vim-textobj-haskell"
               #{ name = "lushtags"; }
               ];

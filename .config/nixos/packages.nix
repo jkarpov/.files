@@ -23,7 +23,7 @@ in
 
   networking = {
     networkmanager.enable = true;
-    firewall.enable = true;
+    firewall.enable = false;
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -105,6 +105,7 @@ in
       nerdfonts
       vistafonts
       terminus_font
+      latinmodern-math
     ];
   };
 
@@ -137,23 +138,14 @@ in
           "vi-mode"
           "dirhistory"
           "dirpersisthistory"
-          "zsh-autosuggestions"
           "colored-man-pages"
           "colorize"
           "pass"
+          "vi-mode"
         ];
       };
       shellInit = ''
         unsetopt beep
-      '';
-      interactiveShellInit = ''
-        export HISTSIZE=1000
-        export SAVEHIST=50000
-        export KEYTIMEOUT=10
-        setopt autocd extended_glob
-        setopt hist_ignore_space
-        setopt hist_ignore_dups
-        unsetopt share_history
       '';
     };
   };
@@ -168,13 +160,84 @@ in
     neomutt msmtp notmuch notmuch-mutt
     pass gnupg scrot zip
     unzip alsaUtils
-    ranger texlive.combined.scheme-basic
+    ranger
     rubber w3m
 
     git nodejs gnumake cabal2nix
     dmenu firefox spotify
     slack zathura xorg.xkbcomp
     signal-desktop
+
+    (texlive.combine {
+        inherit (texlive)
+
+        #scheme-minimal # plain
+        #scheme-basic   # + latex
+        #scheme-small   # + xetex
+        scheme-medium  # + packages
+        #scheme-full    # + more packages
+
+
+        adjustbox
+        algorithm2e
+        anyfontsize
+        babel
+        babel-greek
+        booktabs
+        boondox
+        bussproofs
+        caption
+        cbfonts
+        ccicons
+        cleveref
+        cmap
+        collectbox
+        collection-fontsrecommended
+        collection-pictures
+        comment
+        dejavu
+        doublestroke
+        draftwatermark
+        enumitem
+        environ
+        etoolbox
+        euenc
+        everypage
+        filehook
+        float
+        fontaxes
+        fontspec
+        gfsartemisia
+        gfsbaskerville
+        gfsdidot
+        gfsneohellenic
+        greek-fontenc
+        greektex
+        inconsolata
+        latexmk
+        libertine
+        listings
+        mathpartir
+        mdwtools
+        metafont
+        microtype
+        ms
+        mweights
+        ncctools
+        newtx
+        relsize
+        soul
+        stmaryrd
+        textcase
+        totpages
+        trimspaces
+        ucs
+        upquote
+        xcolor
+        xetex
+        xstring
+        ;
+})
 
     (pkgs.haskell.packages.ghc822.ghcWithPackages (self : [
       self.cabal-install

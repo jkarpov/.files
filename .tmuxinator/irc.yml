@@ -31,4 +31,4 @@ root: ~/
 # post: tmux -CC attach -t irc
 
 windows:
-  - chat: weechat
+  - chat: irssi

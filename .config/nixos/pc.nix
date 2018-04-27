@@ -25,9 +25,9 @@
 
   services.xserver = {
     videoDrivers = [ "nvidia" ];
-    #screenSection = ''
-    #$  Option         "metamodes" "nvidia-auto-select +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On}"
-    #'';
+    screenSection = ''
+      Option         "metamodes" "nvidia-auto-select +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On}"
+    '';
   };
 
   virtualisation.docker.enable = true;

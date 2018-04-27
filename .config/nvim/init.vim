@@ -33,40 +33,53 @@ set noerrorbells
 set novisualbell
 set guicursor=
 set termguicolors
-"set background=dark
-set background=light
+set background=dark
+"set background=light
 
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
 "colorscheme molokai
+let g:seiya_auto_enable=0
+if &diff
+  let g:seiya_auto_enable=0
+  colorscheme github
+endif
 "colorscheme monodark
-"highlight clear LineNr
-"highlight clear SignColumn
-"highlight LineNr ctermfg=DarkGrey
 
 "let g:gruvbox_italic=1
 "colorscheme gruvbox
 
 "let g:neosolarized_bold = 1
-"let g:neosolarized_underline = 0
-"let g:neosolarized_italic = 0
-"let g:neosolarized_contrast = "high"
-"let g:solarized_visibility = "high"
+"let g:neosolarized_underline = 1
+"let g:neosolarized_italic = 1
+"let g:neosolarized_contrast = "medium"
+"let g:solarized_visibility = "medium"
 "let g:solarized_extra_hi_groups=1
 "let g:airline_theme='solarized'
-"colorscheme NeoSolarized
+colorscheme NeoSolarized
 "let g:solarized_use16 = 1
 "colorscheme solarized8
+"
 "colorscheme mopkai
 
-let ayucolor="mirage"
+"let ayucolor="mirage"
 "let ayucolor="dark"
 "let ayucolor="light"
 "let g:airline_theme='solarized'
-colorscheme ayu
+"colorscheme ayu
+"
+"highlight clear LineNr
+"highlight clear SignColumn
+"highlight LineNr ctermfg=DarkGrey
 
 "colorscheme ratazii
+"
+"autocmd BufEnter * colorscheme molokai
+"autocmd BufEnter *.hs colorscheme NeoSolarized
+"autocmd BufEnter *.hs SeiyaDisable
+"autocmd BufEnter *.cabal colorscheme NeoSolarized
+"autocmd BufEnter *.cabal SeiyaDisable
 
 " ---------------
 " Text format
@@ -89,6 +102,8 @@ set linespace=0
 set splitbelow
 set splitright
 set hidden
+set noswapfile
+set nobackup
 
 set backup
 set backupdir=~/.nvim/backup
@@ -182,6 +197,46 @@ let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
 let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
 let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
 let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
+
+" tags
+
+" Automatically generate tags for haskell files
+"augroup tags
+"au BufWritePost *.hs            silent !haskdogs
+"au BufWritePost *.hsc           silent !haskdogs
+"augroup END
+
+let g:tagbar_type_haskell = {
+    \ 'ctagsbin'  : 'hasktags',
+    \ 'ctagsargs' : '-x -c -o-',
+    \ 'kinds'     : [
+        \  'm:modules:0:1',
+        \  'd:data: 0:1',
+        \  'd_gadt: data gadt:0:1',
+        \  't:type names:0:1',
+        \  'nt:new types:0:1',
+        \  'c:classes:0:1',
+        \  'cons:constructors:1:1',
+        \  'c_gadt:constructor gadt:1:1',
+        \  'c_a:constructor accessors:1:1',
+        \  'ft:function types:1:1',
+        \  'fi:function implementations:0:1',
+        \  'o:others:0:1'
+    \ ],
+    \ 'sro'        : '.',
+    \ 'kind2scope' : {
+        \ 'm' : 'module',
+        \ 'c' : 'class',
+        \ 'd' : 'data',
+        \ 't' : 'type'
+    \ },
+    \ 'scope2kind' : {
+        \ 'module' : 'm',
+        \ 'class'  : 'c',
+        \ 'data'   : 'd',
+        \ 'type'   : 't'
+    \ }
+\ }
 
 
 
@@ -285,7 +340,7 @@ nmap <leader>en <Plug>(ale_next_wrap)
 " ---------------
 " Markdown
 " ---------------
-"let g:markdown_composer_browser = "chromium"
+let g:markdown_composer_browser = "firefox"
 
 
 " ---------------
@@ -300,6 +355,7 @@ set updatetime=250
 " Git
 " ---------------
 nnoremap <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gc :Gcommit<CR>
 nnoremap <Leader>gd :Gdiff<CR>
 nnoremap <Leader>gD :Gdiff<CR>
 nnoremap <Leader>gb :Gblame<CR>
@@ -311,8 +367,12 @@ nnoremap <Leader>ge :Gedit<CR>
 nnoremap <Leader>gr :Gread<CR>
 nnoremap <Leader>gw :Gwrite<CR>
 nnoremap <Leader>gp :Git push<CR>
-nnoremap <Leader>g- :silent Git stash<CR>:e<CR>
-nnoremap <Leader>g+ :silent Git stash pop<CR>:e<CR>o
+nnoremap <Leader>ss :silent Git stash<CR>:e<CR>
+nnoremap <Leader>sa :silent Git stash apply<CR>:e<CR>o
+nnoremap <Leader>sp :silent Git stash pop<CR>:e<CR>o
+nnoremap <Leader>sl :Git stash list<CR>:e<CR>o
+
+set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
 " ---------------
 " FZF
@@ -372,7 +432,6 @@ let g:LanguageClient_serverCommands = {
       \ 'haskell': ['hie', '--lsp'], 
       \ }
 
-let g:seiya_auto_enable=1
 let g:seiya_target_groups = has('nvim') ? ['guibg'] : ['ctermbg']
 
 highlight Type gui=bold

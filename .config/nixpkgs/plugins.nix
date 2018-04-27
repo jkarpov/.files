@@ -82,5 +82,14 @@ in {
     };
     dependencies = [];
   };
+  "github-colorscheme" = buildVimPlugin { 
+    name = "github-colorscheme";
+    src = fetchgit {
+      url = "https://github.com/endel/vim-github-colorscheme.git";
+      rev = "37b0ca027f638f3349ed8fb99c54ab65b8e65c04";
+      sha256 = "0j3m4hd3sykjk7vs96yh82lmfgga5n6r5b0vqzjg1r2sgyxzig05";
+    };
+    dependencies = [];
+  };
 }
 

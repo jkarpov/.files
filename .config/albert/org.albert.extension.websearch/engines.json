@@ -16,5 +16,35 @@
         "name": "Wolfram Alpha",
         "trigger": "=",
         "url": "https://www.wolframalpha.com/input/?i=%s"
+    },
+    {
+        "iconPath": "/home/dima/.config/albert/org.albert.extension.websearch/{b6ef6847-9dc3-4457-85d0-e8ad733ef428}.",
+        "name": "Hackage",
+        "trigger": "hackage",
+        "url": "https://hackage.haskell.org/packages/search?terms=%s"
+    },
+    {
+        "iconPath": "/home/dima/.config/albert/org.albert.extension.websearch/{f1519fdb-311c-4627-be2a-1eb4003dabe0}.",
+        "name": "Hoogle Haskell Type Search",
+        "trigger": "hoogle",
+        "url": "https://www.haskell.org/hoogle/?hoogle=%s"
+    },
+    {
+        "iconPath": "/home/dima/.config/albert/org.albert.extension.websearch/{7c813924-c2ca-4b9d-a263-52d20aa521db}.",
+        "name": "Hayoo Haskell Search",
+        "trigger": "hayoo",
+        "url": "https://hayoo.fh-wedel.de/?query=%s"
+    },
+    {
+        "iconPath": "/home/dima/.config/albert/org.albert.extension.websearch/{d0aff01f-763e-4ed7-a580-34c32a02480b}.",
+        "name": "NixOS Options",
+        "trigger": "nixo",
+        "url": "https://nixos.org/nixos/options.html#%s"
+    },
+    {
+        "iconPath": "/home/dima/.config/albert/org.albert.extension.websearch/{9b72b054-3c8a-4d7a-8b83-43c6170c1d13}.",
+        "name": "Nix Packages",
+        "trigger": "nix",
+        "url": "https://nixos.org/nixos/packages.html#%s"
     }
 ]

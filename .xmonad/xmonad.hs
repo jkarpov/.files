@@ -27,13 +27,13 @@ import qualified Data.Map as M
 
 ------------------------------------------------------------------------
 -- Terminal
-myTerminal = "kitty --title='Shell' --class='Shell'"
+myTerminal = "kitty"
 myStatusBar = "xmobar -x0 ~/.xmonad/xmobar.conf"
 
 ------------------------------------------------------------------------
 -- Workspaces
 -- The default number of workspaces (virtual screens) and their names.
-myWorkspaces = ["www","term","comm","dot", "5", "6", "7", "8"]
+myWorkspaces = ["shell", "web", "dev", "media", "5", "6", "7"]
 
 myLauncher = "$(yeganesh -x -- -nb '#000000' -nf '#FFFFFF' -sb '#7C7C7C' -sf '#CEFFAC')"
 
@@ -52,17 +52,16 @@ myLauncher = "$(yeganesh -x -- -nb '#000000' -nf '#FFFFFF' -sb '#7C7C7C' -sf '#C
 -- 'className' and 'resource' are used below.
 --
 myManageHook = composeAll
-    [ className =? "Chromium"       --> viewShift "www"
-    , className =? "Firefox"        --> viewShift "www"
-    , className =? "Comm"           --> viewShift "comm"
-    , className =? "Dot"            --> viewShift "dot"
-    , className =? "kitty"          --> viewShift "term"
-    , className =? "Shell"          --> viewShift "term"
+    [ className =? "Chromium"       --> viewShift "web"
+    , className =? "Firefox"        --> viewShift "web"
+    , className =? "Media"          --> viewShift "media"
+    , className =? "Shell"          --> viewShift "shell"
+    , className =? "Dev"            --> viewShift "dev"
     , className =? "Download"       --> doFloat
     , className =? "Progress"       --> doFloat
-    , title =? "Steam_Login"        --> doFloat
-    , className =? "steam"          --> doFloat -- bigpicture-mode
-    , className =? "Steam"          --> doFloat -- bigpicture-mode
+    --, title =? "Steam_Login"        --> doFloat
+    --, className =? "steam"          --> doFloat -- bigpicture-mode
+    --, className =? "Steam"          --> doFloat -- bigpicture-mode
     --, isFullscreen --> (doF W.focusDown <+> doFullFloat)
     ]
     where viewShift = doF . liftM2 (.) W.greedyView W.shift
@@ -288,10 +287,14 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 -- By default, do nothing.
 myStartupHook = do
   spawn "feh --bg-fill -z ~/pics/wallpaper"
-  spawnOn "comm" "kitty --title='Communication' --class='Comm' zsh -ic 'mux comm'"
-  spawnOn "dot" "kitty --title='System Configuration' --class='Dot' zsh -ic 'mux dot'"
-  spawnOn "term" "kitty --title='Shell' zsh -ic 'ranger'"
-  spawnOn "www" "firefox"
+  spawn "albert"
+  spawnOn "shell" "kitty --title='email' --class=Shell zsh -ic 'mux comm'"
+  spawnOn "shell" "kitty --title='dot files' --class='Shell' zsh -ic 'mux dot'"
+  spawnOn "shell" "kitty --title='htop' --class='Shell' zsh -ic 'htop'"
+  spawnOn "dev" "kitty --title=code --class='Dev' zsh -ic 'cd ~/code && ranger'"
+  spawnOn "media" "spotify --force-device-scale-factor=1.5"
+  spawnOn "web" "firefox"
+
 
 ------------------------------------------------------------------------
 -- Floats all windows in a certain workspace.
