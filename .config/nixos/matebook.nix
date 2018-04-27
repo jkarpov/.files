@@ -25,6 +25,8 @@
     };
   } ];
 
+  time.timeZone = "US/Central";
+
   networking.hostName = "matebook";
 
   hardware.bluetooth.enable = true;
@@ -35,5 +37,9 @@
     enable = true;
     palmDetect = true;
     twoFingerScroll = true;
-  }
+  };
+
+  environment.systemPackages = with pkgs; [
+    xorg.xbacklight
+  ];
 }
