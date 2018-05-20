@@ -251,7 +251,7 @@ in
   environment.etc."X11/keymap.xkb".source = keymap;
 
   system.stateVersion = "18.03";
-  system.autoUpgrade.enable = true;
-  system.autoUpgrade.channel = https://nixos.org/channels/nixos-unstable;
+  #system.autoUpgrade.enable = true;
+  #system.autoUpgrade.channel = https://nixos.org/channels/nixos-unstable;
 
 }

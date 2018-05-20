@@ -4,6 +4,7 @@ import Prelude
 import XMonad
 import Data.Ratio
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
@@ -33,7 +34,7 @@ myStatusBar = "xmobar -x0 ~/.xmonad/xmobar.conf"
 ------------------------------------------------------------------------
 -- Workspaces
 -- The default number of workspaces (virtual screens) and their names.
-myWorkspaces = ["shell", "web", "dev", "media", "5", "6", "7"]
+myWorkspaces = ["web", "dev", "sh", "media", "5", "6", "7"]
 
 myLauncher = "$(yeganesh -x -- -nb '#000000' -nf '#FFFFFF' -sb '#7C7C7C' -sf '#CEFFAC')"
 
@@ -55,7 +56,7 @@ myManageHook = composeAll
     [ className =? "Chromium"       --> viewShift "web"
     , className =? "Firefox"        --> viewShift "web"
     , className =? "Media"          --> viewShift "media"
-    , className =? "Shell"          --> viewShift "shell"
+    , className =? "sh"          --> viewShift "sh"
     , className =? "Dev"            --> viewShift "dev"
     , className =? "Download"       --> doFloat
     , className =? "Progress"       --> doFloat
@@ -288,12 +289,12 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 myStartupHook = do
   spawn "feh --bg-fill -z ~/pics/wallpaper"
   spawn "albert"
-  spawnOn "shell" "kitty --title='email' --class=Shell zsh -ic 'mux comm'"
-  spawnOn "shell" "kitty --title='dot files' --class='Shell' zsh -ic 'mux dot'"
-  spawnOn "shell" "kitty --title='htop' --class='Shell' zsh -ic 'htop'"
-  spawnOn "dev" "kitty --title=code --class='Dev' zsh -ic 'cd ~/code && ranger'"
-  spawnOn "media" "spotify --force-device-scale-factor=1.5"
-  spawnOn "web" "firefox"
+  spawnOnce "kitty --title='email' --class=sh zsh -ic 'mux comm'"
+  spawnOnce "kitty --title='dot files' --class='sh' zsh -ic 'mux dot'"
+  spawnOnce "kitty --title='htop' --class='sh' zsh -ic 'htop'"
+  spawnOnce "kitty --class='Dev' zsh -ic 'cd ~/code && ranger'"
+  spawnOnce "spotify --class='Media' --force-device-scale-factor=1.5"
+  spawnOnce "firefox"
 
 
 ------------------------------------------------------------------------
@@ -307,7 +308,7 @@ myLayouts = defaultLayouts
 --
 main = do
  xmproc <- spawnPipe "/run/current-system/sw/bin/xmobar ~/.xmonad/xmobar.conf"
- xmonad $ docks defaultConfig
+ xmonad $ ewmh $ docks defaultConfig
    { manageHook = myManageHook
    , layoutHook = myLayouts
    , borderWidth = myBorderWidth

@@ -3,6 +3,7 @@
 let
   plugins = pkgs.callPackage ./plugins.nix {};
 
+
 in
 {
 
@@ -12,6 +13,8 @@ in
 
     #weechat = pkgs.weechat.override { extraBuildInputs = [ pkgs.python27Packages.websocket_client ]; };
     #xpra = pkgs.xpra.override { };
+
+
 
     neovim = pkgs.neovim.override {
       vimAlias = true;
