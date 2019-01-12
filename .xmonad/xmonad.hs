@@ -289,11 +289,6 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 myStartupHook = do
   spawn "feh --bg-fill -z ~/photo/wallpaper"
   spawn "albert"
-  spawnOnce "kitty --title='email' --class=sh zsh -ic 'mux comm'"
-  spawnOnce "kitty --title='dot files' --class='sh' zsh -ic 'mux dot'"
-  spawnOnce "kitty --title='htop' --class='sh' zsh -ic 'htop'"
-  spawnOnce "kitty --class='Dev' zsh -ic 'cd ~/code && ranger'"
-  spawnOnce "spotify --class='Media' --force-device-scale-factor=1.5"
   spawnOnce "firefox"
 
 
