@@ -34,6 +34,7 @@ set novisualbell
 set guicursor=
 set termguicolors
 set background=dark
+set noshowmode
 "set background=light
 
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -57,17 +58,17 @@ endif
 "let g:solarized_visibility = "medium"
 "let g:solarized_extra_hi_groups=1
 "let g:airline_theme='solarized'
-colorscheme NeoSolarized
+"colorscheme NeoSolarized
 "let g:solarized_use16 = 1
 "colorscheme solarized8
 "
 "colorscheme mopkai
 
 "let ayucolor="mirage"
-"let ayucolor="dark"
+let ayucolor="dark"
 "let ayucolor="light"
 "let g:airline_theme='solarized'
-"colorscheme ayu
+colorscheme ayu
 "
 "highlight clear LineNr
 "highlight clear SignColumn
@@ -430,14 +431,16 @@ let g:ale_sign_column_always = 1
 
 let g:LanguageClient_serverCommands = {
       \ 'haskell': ['hie', '--lsp'], 
+      \ 'fsharp': ['dotnet', '/home/ditadi/github/fsharp-language-server/src/FSharpLanguageServer/bin/Release/netcoreapp2.0/FSharpLanguageServer.dll'],
+      \ 'python': ['pyls']
       \ }
 
 let g:seiya_target_groups = has('nvim') ? ['guibg'] : ['ctermbg']
 
-highlight Type gui=bold
-highlight operator gui=bold
-highlight Operator gui=bold
-highlight Structure gui=bold
+"highlight Type gui=bold
+"highlight operator gui=bold
+"highlight Operator gui=bold
+"highlight Structure gui=bold
 "highlight Keyword gui=bold
 
 
@@ -446,3 +449,24 @@ highlight Structure gui=bold
 "set foldclose=all
 
 let g:livepreview_previewer = 'zathura'
+
+function SetLSPShortcuts()
+  nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
+  nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
+  nnoremap <leader>lf :call LanguageClient#textDocument_formatting()<CR>
+  nnoremap <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
+  nnoremap <leader>lx :call LanguageClient#textDocument_references()<CR>
+  nnoremap <leader>la :call LanguageClient_workspace_applyEdit()<CR>
+  nnoremap <leader>lc :call LanguageClient#textDocument_completion()<CR>
+  nnoremap <leader>lh :call LanguageClient#textDocument_hover()<CR>
+  nnoremap <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
+  nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
+endfunction()
+
+augroup LSP
+  autocmd!
+  autocmd FileType cpp,c,fsharp,python call SetLSPShortcuts()
+augroup END
+
+let g:echodoc#enable_at_startup = 1
+

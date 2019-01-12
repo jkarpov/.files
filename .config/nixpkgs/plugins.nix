@@ -91,5 +91,14 @@ in {
     };
     dependencies = [];
   };
+  "fsharp-vim" = buildVimPlugin { 
+    name = "fsharp-vim";
+    src = fetchgit {
+      url = "https://github.com/kongo2002/fsharp-vim.git";
+      rev = "64aec6089558ec290287a9c935b53feeedd0c974";
+      sha256 = "0whbjmgavhn84w353s724m2191q49m8z61xvzrlm61xcz5mygnr2";
+    };
+    dependencies = [];
+  };
 }
 

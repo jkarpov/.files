@@ -8,33 +8,32 @@
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
-  boot.kernelModules = [ "kvm-intel""wl" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
+  boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  # File systems
-  fileSystems."/" = {
-    label = "root";
-    device = "/dev/partitions/fsroot";
-    fsType = "btrfs";
-    options = [ "subvol=root" ];
-  };
-
-  fileSystems."/home" = {
-    label = "home";
-    device = "/dev/partitions/fsroot";
-    fsType = "btrfs";
-    options = [ "subvol=home" ];
-  };
+  fileSystems."/" =
+    { device = "mypool/nixos";
+      fsType = "zfs";
+    };
 
   fileSystems."/boot" =
-  { device = "/dev/disk/by-uuid/5806-A791";
-    fsType = "vfat";
-  };
+    { device = "/dev/disk/by-uuid/E13D-6568";
+      fsType = "vfat";
+    };
 
-  swapDevices = [ { device = "/dev/partitions/swap"; } ];
+  fileSystems."/home" =
+    { device = "mypool/home";
+      fsType = "zfs";
+    };
 
-  nix.maxJobs = lib.mkDefault 4;
-  powerManagement.cpuFreqGovernor = "ondemand";
+  fileSystems."/tmp" =
+    { device = "mypool/tmp";
+      fsType = "zfs";
+    };
 
+  swapDevices = [ ];
+
+  nix.maxJobs = lib.mkDefault 8;
+  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 }

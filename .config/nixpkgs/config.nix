@@ -2,14 +2,14 @@
 
 let
   plugins = pkgs.callPackage ./plugins.nix {};
-
-
 in
 {
 
   allowUnfree = true;
 
   packageOverrides = pkgs: rec {
+
+    ml = pkgs.python35.withPackages (ps: with ps; [ scikitlearn numpy pandas matplotlib ]);
 
     #weechat = pkgs.weechat.override { extraBuildInputs = [ pkgs.python27Packages.websocket_client ]; };
     #xpra = pkgs.xpra.override { };
@@ -69,6 +69,8 @@ in
                 "nvim-completion-manager"
                 "vim-nix"
                 "vim2nix"
+                "fsharp-vim"
+                "echodoc-vim"
                 #"vim-markdown"
                 "vim-pandoc"
                 "vim-pandoc-syntax"

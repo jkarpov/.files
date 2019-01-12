@@ -1,21 +1,19 @@
 { config, pkgs, ... }:
 {
-  users.defaultUserShell = "/run/current-system/sw/bin/zsh";
 
-  users.extraUsers.dima = {
+  users.extraUsers.ditadi = {
     uid = 1000;
     isNormalUser = true;
-    name = "dima";
-    group = "dima";
+    name = "ditadi";
+    group = "ditadi";
     extraGroups = [
-      "wheel" "disk" "audio" "video" "network-manager" "systemd-journal"
+      "wheel" "disk" "audio" "video" "network-manager" "systemd-journal" "docker"
     ];
     createHome = true;
-    home = "/home/dima";
-    shell = "/run/current-system/sw/bin/zsh";
+    home = "/home/ditadi";
   };
 
-  users.extraGroups.dima = {
+  users.extraGroups.ditadi = {
     gid = 1000;
   };
 }

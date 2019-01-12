@@ -52,7 +52,7 @@ in
     };
     compton = {
       enable = true;
-      fade = true;
+      fade = false;
       shadow = true;
       fadeDelta = 4;
       extraOptions = ''
@@ -61,7 +61,7 @@ in
       '';
     };
     redshift = {
-      enable = true;
+      enable = false;
       latitude = "41.9";
       longitude = "-87.6";
     };
@@ -102,7 +102,7 @@ in
       powerline-fonts
       ttf_bitstream_vera
       dejavu_fonts
-      nerdfonts
+      #nerdfonts
       vistafonts
       terminus_font
       latinmodern-math
@@ -239,12 +239,9 @@ in
         ;
 })
 
-    (pkgs.haskell.packages.ghc822.ghcWithPackages (self : [
+    (pkgs.haskellPackages.ghcWithPackages (self : [
       self.cabal-install
-      self.cabal-helper
       self.xmobar
-      self.yeganesh
-      self.ghc
      ]))
   ];
 
