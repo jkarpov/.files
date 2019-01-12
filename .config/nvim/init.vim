@@ -57,17 +57,17 @@ endif
 "let g:solarized_visibility = "medium"
 "let g:solarized_extra_hi_groups=1
 "let g:airline_theme='solarized'
-colorscheme NeoSolarized
+"colorscheme NeoSolarized
 "let g:solarized_use16 = 1
 "colorscheme solarized8
 "
 "colorscheme mopkai
 
 "let ayucolor="mirage"
-"let ayucolor="dark"
+let ayucolor="dark"
 "let ayucolor="light"
 "let g:airline_theme='solarized'
-"colorscheme ayu
+colorscheme ayu
 "
 "highlight clear LineNr
 "highlight clear SignColumn
@@ -133,10 +133,10 @@ let maplocalleader=","
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#file#enable_buffer_path = 1
 
-let g:deoplete#omni#input_patterns = {}
-let g:deoplete#omni#input_patterns.purescript = '[^. *\t]'
-let g:deoplete#omni#input_patterns.haskell = '[^. *\t]'
-let g:deoplete#omni#input_patterns.idris = '[^. *\t]'
+"let g:deoplete#omni#input_patterns = {}
+"let g:deoplete#omni#input_patterns.purescript = '[^. *\t]'
+"let g:deoplete#omni#input_patterns.haskell = '[^. *\t]'
+"let g:deoplete#omni#input_patterns.idris = '[^. *\t]'
 
 set completeopt=longest,menuone
 "Amount of entries in completion popup
@@ -446,3 +446,27 @@ highlight Structure gui=bold
 "set foldclose=all
 
 let g:livepreview_previewer = 'zathura'
+
+nnoremap <LEADER>zm :call fzf#vim#marks(!0)<CR>
+
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
+
+nnoremap // :Rg<Cr>
+
+
+" omnicompletes
+" set omni function for clang family
+au FileType c,cpp,objc,objcpp setl omnifunc=clang_complete#ClangComplete
+
+" use settings from deoplete docs
+let g:clang_complete_auto = 0
+let g:clang_auto_select = 0
+let g:clang_omnicppcomplete_compliance = 0
+let g:clang_make_default_keymappings = 0
+let g:deoplete#sources#clang#libclang_path = $CLANG_LIB
+let g:deoplete#sources#clang#clang_header = $CLANG_HDR

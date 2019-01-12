@@ -91,5 +91,23 @@ in {
     };
     dependencies = [];
   };
+  "fsharp-vim" = buildVimPlugin { 
+    name = "fsharp-vim";
+    src = fetchgit {
+      url = "https://github.com/kongo2002/fsharp-vim";
+      rev = "64aec6089558ec290287a9c935b53feeedd0c974";
+      sha256 = "0whbjmgavhn84w353s724m2191q49m8z61xvzrlm61xcz5mygnr2";
+    };
+    dependencies = [];
+  };
+  "lldb" = buildVimPlugin { 
+    name = "lldb";
+    src = fetchgit {
+      url = "https://github.com/dbgx/lldb.nvim";
+      rev = "56dfc2d9452909f93e98b43328035213f6a5eaf7";
+      sha256 = "1mkjhh17321klr3z7kp3n7vfbbdrp4r04nw962zidv925ymgvdhw";
+    };
+    dependencies = [];
+  };
 }
 

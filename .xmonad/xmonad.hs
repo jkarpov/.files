@@ -287,7 +287,7 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 --
 -- By default, do nothing.
 myStartupHook = do
-  spawn "feh --bg-fill -z ~/pics/wallpaper"
+  spawn "feh --bg-fill -z ~/photo/wallpaper"
   spawn "albert"
   spawnOnce "kitty --title='email' --class=sh zsh -ic 'mux comm'"
   spawnOnce "kitty --title='dot files' --class='sh' zsh -ic 'mux dot'"
