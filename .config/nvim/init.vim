@@ -134,10 +134,10 @@ let maplocalleader=","
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#file#enable_buffer_path = 1
 
-let g:deoplete#omni#input_patterns = {}
-let g:deoplete#omni#input_patterns.purescript = '[^. *\t]'
-let g:deoplete#omni#input_patterns.haskell = '[^. *\t]'
-let g:deoplete#omni#input_patterns.idris = '[^. *\t]'
+"let g:deoplete#omni#input_patterns = {}
+"let g:deoplete#omni#input_patterns.purescript = '[^. *\t]'
+"let g:deoplete#omni#input_patterns.haskell = '[^. *\t]'
+"let g:deoplete#omni#input_patterns.idris = '[^. *\t]'
 
 set completeopt=longest,menuone
 "Amount of entries in completion popup
@@ -469,4 +469,3 @@ augroup LSP
 augroup END
 
 let g:echodoc#enable_at_startup = 1
-
