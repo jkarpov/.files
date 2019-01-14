@@ -48,8 +48,8 @@
     };
     redshift = {
       enable = true;
-      latitude = "41.9";
-      longitude = "-87.6";
+      latitude = "29.8";
+      longitude = "-95.4";
     };
     xserver = {
       enable = true;
