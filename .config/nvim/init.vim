@@ -468,4 +468,4 @@ augroup LSP
   autocmd FileType cpp,c,fsharp,python call SetLSPShortcuts()
 augroup END
 
-let g:echodoc#enable_at_startup = 1
+"let g:echodoc#enable_at_startup = 1
