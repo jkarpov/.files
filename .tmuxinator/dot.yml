@@ -9,14 +9,15 @@ root: ~/
 windows:
   - tmux:
       layout: main-vertical
+      root: $HOME
       panes:
       - ranger ~/.tmuxinator
       - $EDITOR ~/.tmux.conf
   - xmonad:
       layout: main-vertical
+      root: $HOME/.xmonad
       panes:
-        - $EDITOR ~/.xmonad/xmonad.hs
-        - $EDITOR ~/.xmonad/xmobar.conf
+        - ranger
   - nix:
       layout: main-vertical
       panes:

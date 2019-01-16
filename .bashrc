@@ -7,6 +7,7 @@ PS1="\n\[\033[0;37m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033
 
 alias mux='tmuxinator'
 alias dot='git --git-dir=$HOME/.files/ --work-tree=$HOME'
+alias r='ranger'
 
 export LANG=en_US.UTF-8
 
@@ -16,14 +17,14 @@ set editing-mode vi
 set -o vi
 
 
-# remember last directory
-LAST_DIR=$HOME/.cache/last_dir
-function cd()
-{
-  builtin cd "$@"
-  pwd > $LAST_DIR
+#ranger
+ranger() {
+    if [ -z "$RANGER_LEVEL" ]; then
+        /usr/bin/ranger "$@"
+    else
+        exit
+    fi
 }
-[ -f $LAST_DIR ] && cd `cat $LAST_DIR`
 
 
 # If set, the pattern "**" used in a pathname expansion context will

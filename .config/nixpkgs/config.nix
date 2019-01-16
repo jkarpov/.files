@@ -40,6 +40,7 @@ in
                 "vimproc-vim"
 
                 "neoformat"
+                "vim-trailing-whitespace"
                 "gundo"
                 "UltiSnips"
                 "vim-snippets"

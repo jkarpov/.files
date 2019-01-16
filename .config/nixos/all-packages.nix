@@ -113,7 +113,7 @@
     neomutt msmtp notmuch notmuch-mutt
     pass gnupg scrot zip unzip alsaUtils
     ranger rubber git nodejs gnumake cabal2nix
-    dmenu
+    dmenu fuse
 
     firefox spotify
     slack zathura
