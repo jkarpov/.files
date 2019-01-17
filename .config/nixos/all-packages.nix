@@ -9,6 +9,8 @@
   networking = {
     networkmanager.enable = true;
     firewall.enable = true;
+    firewall.allowedTCPPorts = [ 139 445 ];
+    firewall.allowedUDPPorts = [ 137 138 ];
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -24,6 +26,7 @@
   services = {
     timesyncd.enable = true;
     #printing.enable = true;
+    samba.enable = true;
     openssh = {
       enable = true;
       permitRootLogin = "no";
@@ -124,8 +127,8 @@
         #scheme-minimal # plain
         #scheme-basic   # + latex
         #scheme-small   # + xetex
-        scheme-medium  # + packages
-        #scheme-full    # + more packages
+        #scheme-medium  # + packages
+        scheme-full    # + more packages
         adjustbox algorithm2e anyfontsize
         babel babel-greek booktabs boondox
         bussproofs caption cbfonts ccicons

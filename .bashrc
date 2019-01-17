@@ -17,14 +17,6 @@ set editing-mode vi
 set -o vi
 
 
-#ranger
-ranger() {
-    if [ -z "$RANGER_LEVEL" ]; then
-        /usr/bin/ranger "$@"
-    else
-        exit
-    fi
-}
 
 
 # If set, the pattern "**" used in a pathname expansion context will
@@ -36,13 +28,13 @@ shopt -s globstar
 shopt -s checkwinsize
 
 # history
-export HISTSIZE=1000
-export SAVEHIST=1000
+export HISTSIZE=10000
+export SAVEHIST=10000
 
 # Save and reload the history after each command finishes
-export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
-export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
+HISTCONTROL=ignoredups:erasedups
 shopt -s histappend # append to history, don't overwrite it
+PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
 
 # fzf
 export FZF_DEFAULT_OPTS="--extended --color=light --reverse"

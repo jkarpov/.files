@@ -7,28 +7,24 @@ root: ~/
 # attach: false
 
 windows:
-  - tmux:
+  - vim:
+      root: ~/.config
       layout: main-vertical
-      root: $HOME
+      panes:
+        - $EDITOR nvim/init.vim
+  - nix:
+      root: ~/.config/
+      layout: main-vertical
+      panes:
+        - cd nixos && ranger
+  - tmux:
+      root: ~
+      layout: main-vertical
       panes:
       - ranger ~/.tmuxinator
       - $EDITOR ~/.tmux.conf
   - xmonad:
-      layout: main-vertical
-      root: $HOME/.xmonad
-      panes:
-        - ranger
-  - nix:
+      root: ~/.xmonad
       layout: main-vertical
       panes:
-        - $EDITOR ~/.config/nixos/packages.nix
-        - $EDITOR ~/.config/nixpkgs/config.nix
-        - $EDITOR ~/.config/nixpkgs/plugins.nix
-        - $EDITOR ~/.config/nixos/pc.nix
-        - $EDITOR ~/.config/nixos/matebook.nix
-  - config:
-      layout: main-vertical
-      panes:
-        - $EDITOR ~/.config/nvim/init.vim
-        - $EDITOR ~/.config/kitty/kitty.conf
-        - $EDITOR ~/.zshrc
+        -
