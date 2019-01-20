@@ -94,6 +94,7 @@
 
   programs = {
     ssh.startAgent = false;
+    bash.enableCompletion = true;
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
@@ -110,7 +111,7 @@
     slim slock albert
 
     # cli
-    kitty zsh tmuxinator
+    kitty zsh tmuxinator bash-completion
     htop xclip wget tree
     feh jq weechat hledger
     neomutt msmtp notmuch notmuch-mutt
@@ -127,8 +128,8 @@
         #scheme-minimal # plain
         #scheme-basic   # + latex
         #scheme-small   # + xetex
-        #scheme-medium  # + packages
-        scheme-full    # + more packages
+        scheme-medium  # + packages
+        #scheme-full    # + more packages
         adjustbox algorithm2e anyfontsize
         babel babel-greek booktabs boondox
         bussproofs caption cbfonts ccicons

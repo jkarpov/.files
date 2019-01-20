@@ -472,3 +472,8 @@ autocmd FileType cpp,c,fsharp,python call SetLSPShortcuts()
 "let g:echodoc#enable_at_startup = 1
 "
 :imap jj <Esc>
+
+noremap <Leader>y "*y
+noremap <Leader>p "*p
+noremap <Leader>Y "+y
+noremap <Leader>P "+p

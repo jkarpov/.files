@@ -17,6 +17,9 @@ set editing-mode vi
 set -o vi
 
 
+bind 'set show-all-if-ambiguous on'
+bind 'TAB:menu-complete'
+
 
 
 # If set, the pattern "**" used in a pathname expansion context will
