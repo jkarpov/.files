@@ -1,6 +1,7 @@
 [user]
 	email = dmitriy@tadyshev.com
 	name = Dmitriy Tadyshev
+	signingkey = 3762F98A01D3E704C1CCCF5F2605552C1DF82E49
 [merge]
   tool = vimdiff
 [mergetool]
@@ -13,3 +14,5 @@
 	prompt = false
 [alias]
 	d = difftool
+[commit]
+	gpgsign = true
