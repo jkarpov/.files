@@ -106,6 +106,8 @@
       vistafonts
       terminus_font
       latinmodern-math
+      cm_unicode
+      bakoma_ttf
     ];
   };
 

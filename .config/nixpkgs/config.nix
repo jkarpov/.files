@@ -8,10 +8,17 @@ in
 
   packageOverrides = pkgs: rec {
 
-    ml = pkgs.python35.withPackages (ps: with ps; [ scikitlearn numpy pandas matplotlib ]);
+    #ml = pkgs.python35.withPackages (ps: with ps; [ scikitlearn numpy pandas matplotlib ]);
 
     #weechat = pkgs.weechat.override { extraBuildInputs = [ pkgs.python27Packages.websocket_client ]; };
     #xpra = pkgs.xpra.override { };
+
+    haskellPackages = pkgs.haskellPackages.override {
+      overrides = self: super:
+      {
+        pandoc-citeproc = pkgs.haskell.lib.dontCheck super.pandoc-citeproc;
+      };
+    };
 
     neovim = pkgs.neovim.override {
       vimAlias = true;
