@@ -430,7 +430,7 @@ let g:ale_sign_column_always = 1
 
 
 let g:LanguageClient_serverCommands = {
-      \ 'haskell': ['hie', '--lsp'], 
+      \ 'haskell': ['hie', '--lsp'],
       \ 'fsharp': ['dotnet', '/home/ditadi/github/fsharp-language-server/src/FSharpLanguageServer/bin/Release/netcoreapp2.0/FSharpLanguageServer.dll'],
       \ 'python': ['pyls']
       \ }
@@ -467,7 +467,7 @@ augroup LSP
   autocmd!
   autocmd FileType cpp,c,fsharp,python call SetLSPShortcuts()
 augroup END
-autocmd FileType cpp,c,fsharp,python call SetLSPShortcuts()
+autocmd FileType haskell,cpp,c,fsharp,python call SetLSPShortcuts()
 
 "let g:echodoc#enable_at_startup = 1
 "

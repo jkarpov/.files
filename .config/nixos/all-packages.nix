@@ -14,6 +14,23 @@
   };
 
   nixpkgs.config.allowUnfree = true;
+  nix = {
+      binaryCaches = [
+        "https://cache.nixos.org/"
+        "https://cachix.cachix.org"
+        "https://nixcache.reflex-frp.org"
+        "http://hydra.qfpl.io"
+        "https://hie-nix.cachix.org"
+      ];
+      binaryCachePublicKeys = [
+        "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI="
+        "qfpl.io:xME0cdnyFcOlMD1nwmn6VrkkGgDNLLpMXoMYl58bz5g="
+        "hie-nix.cachix.org-1:EjBSHzF6VmDnzqlldGXbi0RM3HdjfTU3yDRi9Pd0jTY="
+        "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM="
+      ];
+      trustedUsers = [ "root" "ditadi" ];
+  };
+
 
   hardware = {
     enableAllFirmware = true;
@@ -92,34 +109,16 @@
     ];
   };
 
-  programs = {
-    ssh.startAgent = false;
-    bash.enableCompletion = true;
-    gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-    };
-    vim.defaultEditor = true;
-    tmux = {
-      enable = true;
-      keyMode = "vi";
-      customPaneNavigationAndResize = true;
-    };
-  };
 
   environment.systemPackages = with pkgs; [
     slim slock albert
 
     # cli
-    kitty zsh tmuxinator bash-completion
-    htop xclip wget tree
-    feh jq weechat hledger
-    neomutt msmtp notmuch notmuch-mutt
-    pass gnupg scrot zip unzip alsaUtils
-    ranger rubber git nodejs gnumake cabal2nix
+    gnupg
+    nodejs gnumake cabal2nix
     dmenu fuse
 
-    firefox spotify
+    spotify
     slack zathura
     signal-desktop
 
@@ -128,8 +127,8 @@
         #scheme-minimal # plain
         #scheme-basic   # + latex
         #scheme-small   # + xetex
-        scheme-medium  # + packages
-        #scheme-full    # + more packages
+        #scheme-medium  # + packages
+        scheme-full    # + more packages
         adjustbox algorithm2e anyfontsize
         babel babel-greek booktabs boondox
         bussproofs caption cbfonts ccicons
