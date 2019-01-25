@@ -89,6 +89,8 @@
       vistafonts
       terminus_font
       latinmodern-math
+      cm_unicode
+      bakoma_ttf
     ];
   };
 
@@ -128,8 +130,8 @@
         #scheme-minimal # plain
         #scheme-basic   # + latex
         #scheme-small   # + xetex
-        scheme-medium  # + packages
-        #scheme-full    # + more packages
+        #scheme-medium  # + packages
+        scheme-full    # + more packages
         adjustbox algorithm2e anyfontsize
         babel babel-greek booktabs boondox
         bussproofs caption cbfonts ccicons
