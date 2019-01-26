@@ -34,6 +34,22 @@ in
     home-manager.enable = true;
     firefox.enable = true;
     feh.enable = true;
+    bash = {
+      enable = true;
+      enableAutojump = true;
+      historyControl = [ "erasedups" ];
+      historyIgnore = [ "ls" "cd" "exit" ];
+      profileExtra = "if [ -f ~/.bashrc ]; then\n . ~/.bashrc\n fi";
+      shellAliases = {
+        ".." = "cd ..";
+        "ll" = "ls -l";
+        "mux" = "tmuxinator";
+        "dot" = "git --git-dir=$HOME/.files/ --work-tree=$HOME";
+        "r" = "ranger";
+        "d" = "kitty +kitten diff";
+      };
+      initExtra = builtins.readFile ../bash/bashrc;
+    };
     autorandr = {
      enable = true;
      profiles = {
