@@ -4,7 +4,6 @@
   boot.cleanTmpDir = true;
 
   security.sudo.wheelNeedsPassword = false;
-  security.wrappers = { slock = { source = "${pkgs.slock}/bin/slock"; }; };
 
   networking = {
     networkmanager.enable = true;
@@ -42,52 +41,10 @@
 
   services = {
     timesyncd.enable = true;
-    #printing.enable = true;
-    samba.enable = true;
-    openssh = {
-      enable = true;
-      permitRootLogin = "no";
-      passwordAuthentication = false;
-      ports = [ 22 2222 ];
-    };
-    #offlineimap = {
-    #  install = true;
-    #  enable = true;
-    #  path = [ pkgs.python pkgs.gnupg pkgs.pass pkgs.bash ];
-    #  onCalendar = "*:0/2";
-    #};
-    compton = {
-      enable = true;
-      fade = false;
-      shadow = true;
-      fadeDelta = 4;
-      extraOptions = ''
-        clear-shadow = true;
-        no-dock-shadow = true;
-      '';
-    };
-    redshift = {
-      enable = true;
-      latitude = "29.8";
-      longitude = "-95.4";
-    };
     xserver = {
       enable = true;
-      layout = "us";
       xkbOptions = "ctrl:nocaps";
-      exportConfiguration = true;
-      windowManager = {
-        default = "xmonad";
-        xmonad.enable = true;
-        xmonad.enableContribAndExtras = true;
-      };
-      displayManager.slim = {
-        enable = true;
-        theme = pkgs.fetchurl {
-          url = "https://github.com/edwtjo/nixos-black-theme/archive/v1.0.tar.gz";
-          sha256 = "13bm7k3p6k7yq47nba08bn48cfv536k4ipnwwp1q1l2ydlp85r9d";
-        };
-      }; };
+    };
   };
 
   fonts = {
@@ -106,24 +63,11 @@
       vistafonts
       terminus_font
       latinmodern-math
-      cm_unicode
-      bakoma_ttf
     ];
   };
 
 
   environment.systemPackages = with pkgs; [
-    slim slock albert
-
-    # cli
-    gnupg
-    nodejs gnumake cabal2nix
-    dmenu fuse
-
-    spotify
-    slack zathura
-    signal-desktop
-
     (texlive.combine {
         inherit (texlive)
         #scheme-minimal # plain
@@ -147,13 +91,5 @@
         stmaryrd textcase totpages trimspaces
         ucs upquote xcolor xetex xstring ;
     })
-
-    (pkgs.haskellPackages.ghcWithPackages (self : [
-      self.cabal-install
-      #self.cabal-helper
-      self.xmobar
-      #self.yeganesh
-      #self.ghc
-     ]))
   ];
 }
