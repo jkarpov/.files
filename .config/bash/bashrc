@@ -32,7 +32,7 @@ export SAVEHIST=10000
 # Save and reload the history after each command finishes
 HISTCONTROL=ignoredups:erasedups
 shopt -s histappend # append to history, don't overwrite it
-PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
+#PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
 
 # fzf
 export FZF_DEFAULT_OPTS="--extended --color=light --reverse"
@@ -40,5 +40,3 @@ if command -v fzf-share >/dev/null; then
   source "$(fzf-share)/key-bindings.bash"
   source "$(fzf-share)/completion.bash"
 fi
-
-ranger

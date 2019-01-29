@@ -13,6 +13,7 @@ import XMonad.Prompt
 import XMonad.Actions.SpawnOn
 import XMonad.Util.SpawnOnce
 import XMonad.Util.Run(spawnPipe)
+import XMonad.Util.EZConfig(removeKeys)
 import System.IO
 
 
@@ -36,7 +37,7 @@ main = do
     , layoutHook = modifiers layouts
     , focusedBorderColor = "#586e75"
     , normalBorderColor = "#000000"
-    --, logHook = dynamicLogWithPP xmobarPP
+    , startupHook = myStartupHook
     , logHook = dynamicLogWithPP sjanssenPP
          { ppOutput = hPutStrLn xmproc
          , ppLayout = const "" -- to disable the layout info on xmobar
@@ -45,11 +46,12 @@ main = do
                 <+> manageSpawn
                 <+> (isFullscreen --> doFullFloat)
                 <+> (className =? "Kodi" --> doShift "tv")
-    }
+    } `removeKeys` [(mod1Mask, xK_space)]
  where
     tiled     = HintedTile 1 0.03 0.5 TopLeft
     layouts   = (tiled Tall ||| (tiled Wide ||| Full)) ||| ThreeColMid 1 (3/100) (3/4)
     modifiers = avoidStruts . smartBorders
+    myStartupHook = spawn "@albert@"
     mykeys (XConfig {modMask = modm}) = M.fromList $
         [((modm .|. shiftMask, xK_Return), spawnHere =<< asks (terminal . config))
         ,((modm .|. shiftMask, xK_c     ), kill1)

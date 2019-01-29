@@ -1,31 +1,36 @@
 { config, pkgs, ... }:
 let
-  lockCmd = "xlock -erasedelay 0";
+  lockCmd = "xlock -mode blank -erasedelay 0";
 in
 {
+
+  #nixpkgs.overlays = [ (import ./overlays)];
+
+  #xdg.configFile."nixpkgs/config.nix".source = ./config.nix;
 
   home.username = "ditadi";
   home.homeDirectory = "/home/ditadi";
   #home.keyboard.options = [ "compose:rctrl" "caps:none" ];
 
-  home.packages = [
-    pkgs.htop
-    pkgs.kitty # terminal emulator
-    pkgs.xclip
-    pkgs.hledger # cli accounting
-    pkgs.pass # cli accounting
-    pkgs.scrot # screenshots
-    pkgs.zip
-    pkgs.unzip
-    pkgs.alsaUtils
-    pkgs.spotify
-    pkgs.ranger # cli file manager
-    pkgs.slack
-    pkgs.zathura # pdf viewer
-    pkgs.signal-desktop
-    pkgs.albert # menu
-    pkgs.xlockmore
-    pkgs.copyq
+  home.packages = with pkgs; [
+    htop
+    kitty # terminal emulator
+    xclip
+    hledger # cli accounting
+    pass # cli accounting
+    scrot # screenshots
+    zip
+    unzip
+    alsaUtils
+    spotify
+    ranger # cli file manager
+    slack
+    zathura # pdf viewer
+    signal-desktop
+    gvfs
+    albert # menu
+    xlockmore
+    copyq
   ];
 
 
@@ -143,6 +148,7 @@ in
         config = pkgs.runCommand "xmonad.hs" {
           lockCmd = lockCmd;
           xmobar = "${pkgs.haskellPackages.xmobar}/bin/xmobar";
+          albert = "${pkgs.albert}/bin/albert";
           } ''
             substituteAll ${~/.config/xmonad/xmonad.hs} $out
           '';

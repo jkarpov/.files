@@ -1,10 +1,11 @@
-{ pkgs }:
+{ pkgs, ... }:
 
 let
   plugins = pkgs.callPackage ./plugins.nix {};
 in
 {
   allowUnfree = true;
+  allowBroken = true;
 
   packageOverrides = pkgs: rec {
 

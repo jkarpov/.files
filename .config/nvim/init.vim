@@ -31,10 +31,12 @@ set mousehide
 set mouse=a
 set noerrorbells
 set novisualbell
+set nonumber
 set guicursor=
 set termguicolors
-set background=dark
+set colorcolumn=81
 set noshowmode
+set background=dark
 "set background=light
 
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -58,17 +60,17 @@ endif
 "let g:solarized_visibility = "medium"
 "let g:solarized_extra_hi_groups=1
 "let g:airline_theme='solarized'
-"colorscheme NeoSolarized
+colorscheme NeoSolarized
 "let g:solarized_use16 = 1
 "colorscheme solarized8
 "
 "colorscheme mopkai
 
 "let ayucolor="mirage"
-let ayucolor="dark"
+"let ayucolor="dark"
 "let ayucolor="light"
 "let g:airline_theme='solarized'
-colorscheme ayu
+"colorscheme ayu
 "
 "highlight clear LineNr
 "highlight clear SignColumn
@@ -90,10 +92,9 @@ set cindent
 set autoindent
 set smarttab
 set expandtab
-set tabstop=2
+set tabstop=4
 set backspace=2
-set shiftwidth=2
-set backspace=2
+set shiftwidth=4
 set linespace=0
 "set inccommand=split
 
@@ -117,7 +118,6 @@ set smartcase
 set smarttab
 set hlsearch
 set incsearch
-set relativenumber
 
 set completeopt-=preview
 set omnifunc=syntaxcomplete#Complete
@@ -431,7 +431,7 @@ let g:ale_sign_column_always = 1
 
 let g:LanguageClient_serverCommands = {
       \ 'haskell': ['hie', '--lsp'],
-      \ 'fsharp': ['dotnet', '/home/ditadi/github/fsharp-language-server/src/FSharpLanguageServer/bin/Release/netcoreapp2.0/FSharpLanguageServer.dll'],
+      \ 'fsharp': ['dotnet', '/home/ditadi/src/fsharp-language-server/src/FSharpLanguageServer/bin/Release/netcoreapp2.0/FSharpLanguageServer.dll'],
       \ 'python': ['pyls']
       \ }
 
