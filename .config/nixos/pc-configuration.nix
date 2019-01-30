@@ -33,6 +33,13 @@
 
   networking.hostName = "tadyshev";
 
+  services.openssh = {
+      enable = true;
+      permitRootLogin = "no";
+      passwordAuthentication = false;
+      ports = [ 22 2222 ];
+  };
+
   services.xserver = {
     videoDrivers = [ "nvidia" ];
     screenSection = ''
