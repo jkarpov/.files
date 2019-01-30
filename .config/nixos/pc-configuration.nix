@@ -33,7 +33,12 @@
 
   networking.hostName = "tadyshev";
 
-  security.wrappers = { slock = { source = "${pkgs.slock}/bin/slock"; }; };
+  services.openssh = {
+      enable = true;
+      permitRootLogin = "no";
+      passwordAuthentication = false;
+      ports = [ 22 2222 ];
+  };
 
   services.xserver = {
     videoDrivers = [ "nvidia" ];
@@ -53,13 +58,7 @@
   #users.extraGroups.vboxusers.members = [ "ditadi" ];
 
   environment.systemPackages = with pkgs; [
-    irssi
-    qemu
     ntfs3g
-    linuxPackages.virtualbox
-    awscli
-    azure-cli
-    nodejs
   ];
 
   # Configure network proxy if necessary
