@@ -1,0 +1,9 @@
+# ~/.tmuxinator/comm.yml
+
+name: comm
+root: ~/
+
+
+windows:
+  - email: neomutt
+  - irc: weechat
