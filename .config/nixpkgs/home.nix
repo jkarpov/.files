@@ -51,7 +51,13 @@ in
         "mux" = "tmuxinator";
         "dot" = "git --git-dir=$HOME/.files/ --work-tree=$HOME";
         "r" = "ranger";
+        # view image in a terminal
+        "i" = "kitty +kitten icat";
+        # diff two files in a terminal
         "d" = "kitty +kitten diff";
+        # do git diff in a termial
+        "gd" = "git difftool --no-symlinks --dir-diff";
+        "pdf" = "termpdf";
       };
       initExtra = builtins.readFile ../bash/bashrc;
     };
@@ -133,10 +139,18 @@ in
       userEmail = "dmitriy@tadyshev.com";
       signing.key = "3762F98A01D3E704C1CCCF5F2605552C1DF82E49";
       signing.signByDefault = true;
-      extraConfig.diff.tool = "kitty";
-      extraConfig.diff.guitool = "kitty.gui";
-      extraConfig.difftool.prompt = false;
-      extraConfig.difftool.trustExitCode = true;
+      extraConfig=''
+        [diff]
+            tool = kitty
+            guitool = kitty.gui
+        [difftool]
+            prompt = false
+            trustExitCode = true
+        [difftool "kitty"]
+            cmd = kitty +kitten diff $LOCAL $REMOTE
+        [difftool "kitty.gui"]
+            cmd = kitty kitty +kitten diff $LOCAL $REMOTE
+      '';
     };
     tmux = {
       enable = true;

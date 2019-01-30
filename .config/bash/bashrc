@@ -61,6 +61,7 @@ set -o vi
 bind 'set show-all-if-ambiguous on'
 bind 'TAB:menu-complete'
 
+PATH=$PATH:~/src/terminal_dimensions/:~/src/termpdf
 
 
 # If set, the pattern "**" used in a pathname expansion context will
