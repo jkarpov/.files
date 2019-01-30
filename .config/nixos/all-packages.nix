@@ -14,19 +14,6 @@
 
   nixpkgs.config.allowUnfree = true;
   nix = {
-      binaryCaches = [
-        "https://cache.nixos.org/"
-        "https://cachix.cachix.org"
-        "https://nixcache.reflex-frp.org"
-        "http://hydra.qfpl.io"
-        "https://hie-nix.cachix.org"
-      ];
-      binaryCachePublicKeys = [
-        "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI="
-        "qfpl.io:xME0cdnyFcOlMD1nwmn6VrkkGgDNLLpMXoMYl58bz5g="
-        "hie-nix.cachix.org-1:EjBSHzF6VmDnzqlldGXbi0RM3HdjfTU3yDRi9Pd0jTY="
-        "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM="
-      ];
       trustedUsers = [ "root" "ditadi" ];
   };
 
