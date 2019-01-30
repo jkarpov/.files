@@ -42,7 +42,6 @@ in
     feh.enable = true;
     bash = {
       enable = true;
-      enableAutojump = true;
       historyControl = [ "erasedups" ];
       historyIgnore = [ "ls" "cd" "exit" ];
       profileExtra = "if [ -f ~/.bashrc ]; then\n . ~/.bashrc\n fi";
@@ -61,10 +60,10 @@ in
      profiles = {
        "default" = {
          fingerprint = {
-           eDP1 = "00ffffffffffff0028892a4200000000001b0104a51d147803de50a3544c99260f505400000001010101010101010101010101010101b798b8a0b0d03e700820080c25c41000001ab798b8a0b0d041720820080c25c41000001a000000fe004a444920202020202020202020000000fe004c504d3133394d3432324120200039";
+           eDP-1-1 = "00ffffffffffff0028892a4200000000001b0104a51d147803de50a3544c99260f505400000001010101010101010101010101010101b798b8a0b0d03e700820080c25c41000001ab798b8a0b0d041720820080c25c41000001a000000fe004a444920202020202020202020000000fe004c504d3133394d3432324120200039";
          };
          config = {
-           eDP1 = {
+           eDP-1-1 = {
              enable = true;
              mode = "3000x2000";
              rate = "60";

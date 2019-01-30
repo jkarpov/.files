@@ -33,8 +33,6 @@
 
   networking.hostName = "tadyshev";
 
-  security.wrappers = { slock = { source = "${pkgs.slock}/bin/slock"; }; };
-
   services.xserver = {
     videoDrivers = [ "nvidia" ];
     screenSection = ''
@@ -53,13 +51,7 @@
   #users.extraGroups.vboxusers.members = [ "ditadi" ];
 
   environment.systemPackages = with pkgs; [
-    irssi
-    qemu
     ntfs3g
-    linuxPackages.virtualbox
-    awscli
-    azure-cli
-    nodejs
   ];
 
   # Configure network proxy if necessary
