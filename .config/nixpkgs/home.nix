@@ -29,6 +29,7 @@ in
     signal-desktop
     gvfs
     albert # menu
+    insomnia
     xlockmore
     copyq
   ];
