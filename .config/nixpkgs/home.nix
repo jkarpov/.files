@@ -32,6 +32,7 @@ in
     insomnia
     xlockmore
     copyq
+    gnupg
   ];
 
 
