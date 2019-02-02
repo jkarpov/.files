@@ -10,8 +10,7 @@ in {
     };
     dependencies = [];
   };
-  "vim-ledger" = buildVimPlugin {
-    name = "vim-ledger";
+  "vim-ledger" = buildVimPlugin { name = "vim-ledger";
     src = fetchgit {
       url = "https://github.com/ledger/vim-ledger";
       rev = "6eb3bb21aa979cc295d0480b2179938c12b33d0d";
@@ -97,6 +96,15 @@ in {
       url = "https://github.com/kongo2002/fsharp-vim.git";
       rev = "64aec6089558ec290287a9c935b53feeedd0c974";
       sha256 = "0whbjmgavhn84w353s724m2191q49m8z61xvzrlm61xcz5mygnr2";
+    };
+    dependencies = [];
+  };
+  "vim-better-whitespace" = buildVimPlugin { 
+    name = "vim-better-whitespace";
+    src = fetchgit {
+      url = "https://github.com/ntpeters/vim-better-whitespace";
+      rev = "f5726c4bbe84a762d5ec62d57af439138a36af76";
+      sha256 = "0mk15jv0vsqvww0jk3469755lb4hhjmxqkbk7byvxch63ai8jlsy";
     };
     dependencies = [];
   };

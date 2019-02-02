@@ -27,6 +27,7 @@ autocmd BufEnter * set nocursorline
 autocmd BufLeave * set nocursorline
 set showmatch
 set matchtime=2
+set signcolumn=yes
 set mousehide
 set mouse=a
 set noerrorbells
@@ -60,17 +61,17 @@ endif
 "let g:solarized_visibility = "medium"
 "let g:solarized_extra_hi_groups=1
 "let g:airline_theme='solarized'
-colorscheme NeoSolarized
+"colorscheme NeoSolarized
 "let g:solarized_use16 = 1
 "colorscheme solarized8
 "
 "colorscheme mopkai
 
-"let ayucolor="mirage"
+let ayucolor="mirage"
 "let ayucolor="dark"
 "let ayucolor="light"
 "let g:airline_theme='solarized'
-"colorscheme ayu
+colorscheme ayu
 "
 "highlight clear LineNr
 "highlight clear SignColumn
@@ -133,13 +134,32 @@ let maplocalleader=","
 " ---------------
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#file#enable_buffer_path = 1
+let g:deoplete#enable_ignore_case = 'ignorecase'
+let g:deoplete#enable_smart_case = 'infercase'
+let g:deoplete#data_directory = '~/.cache/deoplete/'
+
+  " Don't squash types
+call deoplete#custom#source('_', 'converters', [])
+call deoplete#custom#source('LanguageClient', 'min_pattern_length', 1)
+
+  " <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+    return deoplete#mappings#smart_close_popup() . "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+set completeopt=longest,menuone
+set completeopt+=noinsert
+set completeopt+=noselect
 
 "let g:deoplete#omni#input_patterns = {}
 "let g:deoplete#omni#input_patterns.purescript = '[^. *\t]'
 "let g:deoplete#omni#input_patterns.haskell = '[^. *\t]'
 "let g:deoplete#omni#input_patterns.idris = '[^. *\t]'
 
-set completeopt=longest,menuone
+"set completeopt=longest,menuone
 "Amount of entries in completion popup
 "set pumheight=10
 "
@@ -477,3 +497,15 @@ noremap <Leader>y "*y
 noremap <Leader>p "*p
 noremap <Leader>Y "+y
 noremap <Leader>P "+p
+
+
+set noshowmode
+let g:echodoc#enable_at_startup = 1
+let g:echodoc#type = 'signature'
+
+
+" Don't highlight whitespace
+let g:better_whitespace_enabled=0
+let g:strip_whitespace_on_save=1
+
+set shortmess+=c
