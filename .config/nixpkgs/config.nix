@@ -48,8 +48,8 @@ in
                 "vimproc-vim"
 
                 "neoformat"
-                "vim-trailing-whitespace"
                 "gundo"
+                "vim-better-whitespace"
                 "UltiSnips"
                 "vim-snippets"
                 "sensible"
@@ -70,11 +70,9 @@ in
                 "github-colorscheme"
                 "gruvbox-haskell"
 
-                "vim-trailing-whitespace"
                 "deoplete-nvim"
                 "ale"
                 "LanguageClient-neovim"
-                "nvim-completion-manager"
                 "vim-nix"
                 "vim2nix"
                 "fsharp-vim"
@@ -84,7 +82,6 @@ in
                 "vim-pandoc-syntax"
                 "latex-live-preview"
                 "csv"
-                "echodoc-vim"
 
                 #{ name = "vim-airline"; }
                 #{ name = "vim-auto-save"; }

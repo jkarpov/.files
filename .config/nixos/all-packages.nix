@@ -10,6 +10,9 @@
     firewall.enable = true;
     firewall.allowedTCPPorts = [ 139 445 ];
     firewall.allowedUDPPorts = [ 137 138 ];
+    hosts = {
+      "172.31.98.1" = [ "aruba.odyssys.net" ];
+    };
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -50,6 +53,7 @@
       vistafonts
       terminus_font
       latinmodern-math
+      hack-font
     ];
   };
 

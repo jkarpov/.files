@@ -28,7 +28,7 @@
   hardware.bluetooth.enable = true;
   #hardware.bumblebee.enable = true;
   services.upower.enable = true;
-  services.logind.extraConfig = "HandleLidSwitch=hibernate";
+  services.logind.lidSwitch = "suspend";
 
   services.xserver = {
     synaptics = {

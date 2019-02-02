@@ -63,6 +63,7 @@ bind 'TAB:menu-complete'
 
 PATH=$PATH:~/src/terminal_dimensions/:~/src/termpdf
 
+export PATH="$PATH:/root/.dotnet/tools"
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
