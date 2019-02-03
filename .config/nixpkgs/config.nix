@@ -39,6 +39,7 @@ in
                 # git
                 "fugitive"
                 "vim-gitgutter"
+                "vim-rhubarb"
 
                 # files
                 "fzfWrapper"
@@ -51,11 +52,14 @@ in
                 "gundo"
                 "vim-better-whitespace"
                 "UltiSnips"
-                "vim-snippets"
+                "neosnippet-vim"
+                "neosnippet-snippets"
                 "sensible"
                 "vim-unimpaired"
                 "vim-ledger"
                 "tmux-navigator"
+                "vim-tmux-focus-events"
+                "vim-tmux-clipboard"
 
                 #themes
                 "goyo"
@@ -77,12 +81,18 @@ in
                 "vim2nix"
                 "fsharp-vim"
                 "echodoc-vim"
-                #"vim-markdown"
+                "vim-markdown"
                 "vim-pandoc"
                 "vim-pandoc-syntax"
                 "latex-live-preview"
                 "csv"
-
+                "vim-easy-align"
+                "vim-commentary"
+                "vim-obsession"
+                "neovim-fuzzy"
+                "lessspace.vim"
+                "hlsl.vim"
+                "gist-vim"
                 #{ name = "vim-airline"; }
                 #{ name = "vim-auto-save"; }
                 #{ name = "vim-airline-themes"; }

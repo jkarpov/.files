@@ -81,7 +81,7 @@ in {
     };
     dependencies = [];
   };
-  "github-colorscheme" = buildVimPlugin { 
+  "github-colorscheme" = buildVimPlugin {
     name = "github-colorscheme";
     src = fetchgit {
       url = "https://github.com/endel/vim-github-colorscheme.git";
@@ -90,7 +90,7 @@ in {
     };
     dependencies = [];
   };
-  "fsharp-vim" = buildVimPlugin { 
+  "fsharp-vim" = buildVimPlugin {
     name = "fsharp-vim";
     src = fetchgit {
       url = "https://github.com/kongo2002/fsharp-vim.git";
@@ -99,7 +99,7 @@ in {
     };
     dependencies = [];
   };
-  "vim-better-whitespace" = buildVimPlugin { 
+  "vim-better-whitespace" = buildVimPlugin {
     name = "vim-better-whitespace";
     src = fetchgit {
       url = "https://github.com/ntpeters/vim-better-whitespace";
@@ -107,6 +107,62 @@ in {
       sha256 = "0mk15jv0vsqvww0jk3469755lb4hhjmxqkbk7byvxch63ai8jlsy";
     };
     dependencies = [];
+  };
+  "vim-tmux-focus-events" = buildVimPlugin {
+    name = "vim-tmux-focus-events";
+    src = fetchgit {
+      url = "https://github.com/tmux-plugins/vim-tmux-focus-events";
+      rev = "32723c5d778905a2a2e40030990c80c17f456649";
+      sha256 = "0symr2xymxxxyplb3pa0zr7whzmwwpw8bz4alkaf65niik7jsnk2";
+    };
+  };
+  "vim-tmux-clipboard" = buildVimPlugin {
+    name = "vim-tmux-clipboard";
+    src = fetchgit {
+      url = "https://github.com/roxma/vim-tmux-clipboard";
+      rev = "24e636396cc02ee9b5a952cec1576c8309674ac2";
+      sha256 = "199akycz63qxq3cz3slb8n6ix60fpyn7pmygx318ba1r4im1dr3h";
+    };
+  };
+  "vim-obsession" = buildVimPlugin {
+    name = "vim-obsession";
+    src = fetchgit {
+      url = "https://github.com/tpope/vim-obsession";
+      rev = "d2f78ce466186839b1838c7e85115f96d051c7a5";
+      sha256 = "1027iln716cmycvl4zgkqp0ybzdy7r1bl32x5l776yyjby1ssmqb";
+    };
+  };
+  "vim-easy-align" = buildVimPlugin {
+    name = "vim-easy-align";
+    src = fetchgit {
+      url = "https://github.com/junegunn/vim-easy-align";
+      rev = "1cd724dc239c3a0f7a12e0fac85945cc3dbe07b0";
+      sha256 = "0bqk1sdqamfgagh31a60c7gvvsvjpg1xys7ivqh62iqlny5i9774";
+    };
+  };
+  "neovim-fuzzy" = buildVimPlugin {
+    name = "neovim-fuzzy";
+    src = fetchgit {
+      url = "https://github.com/cloudhead/neovim-fuzzy";
+      rev = "c177209678477d091ee4576e231c5b80b44514d0";
+      sha256 = "069phpy1p8dindi6whddsb9x5zyw1adzsnv7br7q955hf6x9bxxj";
+    };
+  };
+  "lessspace.vim" = buildVimPlugin {
+    name = "lessspace.vim";
+    src = fetchgit {
+      url = "https://github.com/thirtythreeforty/lessspace.vim";
+      rev = "fd16589b8b0a45a7ed5ce48f24c71fae21950057";
+      sha256 = "1kddb2vrvs6km15wwlygz8d2klb53nkbr7xfwx3bpg8r5d4iapa4";
+    };
+  };
+  "hlsl.vim" = buildVimPlugin {
+    name = "hlsl.vim";
+    src = fetchgit {
+      url = "https://github.com/beyondmarc/hlsl.vim";
+      rev = "f255936d1e37899f46cac92e39bfda1cd36be04b";
+      sha256 = "1adlfwxb2fgiksy8s0nz1139m6xj6xksrzsphc4qszwmyy8n6nsp";
+    };
   };
 }
 
