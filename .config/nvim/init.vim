@@ -5,6 +5,7 @@ syntax on
 syntax enable
 filetype plugin indent on
 
+
 " ---------------
 " Interface
 " ---------------
@@ -388,7 +389,10 @@ set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 " ---------------
 " FZF
 " ---------------
-nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":FZF\<cr>"
+"nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":FuzzyOpen\<cr>"
+nnoremap <Leader><Leader> :FuzzyOpen<CR>
+nnoremap <Leader><Leader><Leader> :FuzzyGrep<CR>
+"nnoremap <silent> <expr> <Leader><Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":FuzzyGrep\<cr>"
 
 " ---------------
 " Goyo - distraction free editing
@@ -489,7 +493,7 @@ noremap <Leader>Y "+y
 noremap <Leader>P "+p
 
 
-set noshowmode
+"set noshowmode
 let g:echodoc#enable_at_startup = 1
 let g:echodoc#type = 'signature'
 
@@ -499,3 +503,49 @@ let g:better_whitespace_enabled=0
 let g:strip_whitespace_on_save=1
 
 set shortmess+=c
+
+autocmd BufWrite *.md silent execute "! touch /tmp/bufwrite"
+set autoread
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+
+"fu! SaveSess()
+"    execute 'mksession! ' . getcwd() . '/.session.vim'
+"endfunction
+"
+"fu! RestoreSess()
+"if filereadable(getcwd() . '/.session.vim')
+"    execute 'so ' . getcwd() . '/.session.vim'
+"    if bufexists(1)
+"        for l in range(1, bufnr('$'))
+"            if bufwinnr(l) == -1
+"                exec 'sbuffer ' . l
+"            endif
+"        endfor
+"    endif
+"endif
+"endfunction
+"
+"autocmd BufEnter,VimLeavePre * call SaveSess()
+"autocmd VimEnter * nested call RestoreSess()
+
+noremap y "+y
+noremap p "+p
+noremap Y "*y
+noremap P "*p
+
+"function! ClipboardYank()
+"  call system('kitty +kitten clipboard', @@)
+"endfunction
+"function! ClipboardPaste()
+"  let @@ = system('kitty +kitten clipboard --get-clipboard')
+"endfunction
+"
+"vnoremap <silent> y y:call ClipboardYank()<cr>
+"vnoremap <silent> d d:call ClipboardYank()<cr>
+"nnoremap <silent> p :call ClipboardPaste()<cr>p
+"

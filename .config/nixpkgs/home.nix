@@ -17,6 +17,8 @@ in
     kitty # terminal emulator
     xclip
     hledger # cli accounting
+    hledger-ui
+    hledger-web
     pass # cli accounting
     scrot # screenshots
     zip
@@ -28,11 +30,14 @@ in
     zathura # pdf viewer
     signal-desktop
     gvfs
-    albert # menu
+    #albert # menu
     insomnia
     xlockmore
     copyq
     gnupg
+    inotify-tools
+    fzy
+    ripgrep
   ];
 
 
@@ -65,7 +70,7 @@ in
     autorandr = {
      enable = true;
      profiles = {
-       "default" = {
+       "laptop" = {
          fingerprint = {
            eDP-1-1 = "00ffffffffffff0028892a4200000000001b0104a51d147803de50a3544c99260f505400000001010101010101010101010101010101b798b8a0b0d03e700820080c25c41000001ab798b8a0b0d041720820080c25c41000001a000000fe004a444920202020202020202020000000fe004c504d3133394d3432324120200039";
          };
@@ -78,7 +83,7 @@ in
          };
        };
 
-       "work2" = {
+       "work" = {
          fingerprint = {
            DP-1-1 = "00ffffffffffff0010acbea0424544300f1c0104a5351e783ae245a8554da3260b5054a54b00714f8180a9c0a940d1c0e100d10001014dd000a0f0703e803e3035000f282100001a000000ff0035394a4a34383442304445420a000000fc0044454c4c205032343135510a20000000fd001d4c1e8c36000a202020202020012902031df150101f200514041312110302161507060123091f0783010000565e00a0a0a02950302035000f282100001a023a801871382d40582c25000f282100001e011d007251d01e206e2855000f282100001ea36600a0f0701f80302035000f282100001a0000000000000000000000000000000000000000000000000000eb";
            eDP-1-1 = "00ffffffffffff0028892a4200000000001b0104a51d147803de50a3544c99260f505400000001010101010101010101010101010101b798b8a0b0d03e700820080c25c41000001ab798b8a0b0d041720820080c25c41000001a000000fe004a444920202020202020202020000000fe004c504d3133394d3432324120200039";
@@ -94,16 +99,12 @@ in
          };
        };
 
-       "work" = {
+       "pc" = {
          fingerprint = {
-            eDP1 = "00ffffffffffff0028892a4200000000001b0104a51d147803de50a3544c99260f505400000001010101010101010101010101010101b798b8a0b0d03e700820080c25c41000001ab798b8a0b0d041720820080c25c41000001a000000fe004a444920202020202020202020000000fe004c504d3133394d3432324120200039";
-            DP1 = "00ffffffffffff0010acbea0424544300f1c0104a5351e783ae245a8554da3260b5054a54b00714f8180a9c0a940d1c0e100d10001014dd000a0f0703e803e3035000f282100001a000000ff0035394a4a34383442304445420a000000fc0044454c4c205032343135510a20000000fd001d4c1e8c36000a202020202020012902031df150101f200514041312110302161507060123091f0783010000565e00a0a0a02950302035000f282100001a023a801871382d40582c25000f282100001e011d007251d01e206e2855000f282100001ea36600a0f0701f80302035000f282100001a0000000000000000000000000000000000000000000000000000eb";
+            DP-2 = "00ffffffffffff0028892a4200000000001b0104a51d147803de50a3544c99260f505400000001010101010101010101010101010101b798b8a0b0d03e700820080c25c41000001ab798b8a0b0d041720820080c25c41000001a000000fe004a444920202020202020202020000000fe004c504d3133394d3432324120200039";
          };
          config = {
-           eDP1 = {
-             enable = false;
-           };
-           DP1 = {
+           DP-2 = {
              enable = true;
              mode = "3840x2160";
              rate = "60";
@@ -115,16 +116,13 @@ in
        "change-background" = "${pkgs.feh}/bin/feh --bg-fill -z ~/photo/wallpaper";
        "change-dpi" = ''
           case "$AUTORANDR_CURRENT_PROFILE" in
-            default)
+            laptop)
               DPI=170
               ;;
-            home)
+            pc)
               DPI=135
               ;;
             work)
-              DPI=135
-              ;;
-            work2)
               DPI=135
               ;;
             *)
@@ -182,7 +180,7 @@ in
         config = pkgs.runCommand "xmonad.hs" {
           lockCmd = lockCmd;
           xmobar = "${pkgs.haskellPackages.xmobar}/bin/xmobar";
-          albert = "${pkgs.albert}/bin/albert";
+          #albert = "${pkgs.albert}/bin/albert";
           } ''
             substituteAll ${~/.config/xmonad/xmonad.hs} $out
           '';
