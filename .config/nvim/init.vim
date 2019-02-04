@@ -1,16 +1,6 @@
 set nocompatible
 
 
-
-" git
-"call dein#add('tpope/vim-commentary')
-
-"call dein#add('diepm/vim-rest-console')
-
-
-" lang
-""call dein#add('lervag/vimtex')
-
 syntax on
 syntax enable
 filetype plugin indent on
