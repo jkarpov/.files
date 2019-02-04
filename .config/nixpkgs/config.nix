@@ -93,6 +93,7 @@ in
                 "lessspace.vim"
                 "hlsl.vim"
                 "gist-vim"
+                "vim-gnupg"
                 #{ name = "vim-airline"; }
                 #{ name = "vim-auto-save"; }
                 #{ name = "vim-airline-themes"; }

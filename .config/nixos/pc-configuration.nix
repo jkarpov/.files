@@ -38,6 +38,7 @@
       permitRootLogin = "no";
       passwordAuthentication = false;
       ports = [ 22 2222 ];
+      forwardX11 = true;
   };
 
   services.xserver = {

@@ -17,6 +17,8 @@ in
     kitty # terminal emulator
     xclip
     hledger # cli accounting
+    hledger-ui
+    hledger-web
     pass # cli accounting
     scrot # screenshots
     zip

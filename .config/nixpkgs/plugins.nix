@@ -164,5 +164,13 @@ in {
       sha256 = "1adlfwxb2fgiksy8s0nz1139m6xj6xksrzsphc4qszwmyy8n6nsp";
     };
   };
+  "vim-gnupg" = buildVimPlugin {
+    name = "vim-gnupg";
+    src = fetchgit {
+      url = "https://github.com/jamessan/vim-gnupg";
+      rev = "08c4f516e8a5dbfa187188d24ccd425c14d97011";
+      sha256 = "11m72nrjl0zf0i8ywpq1r4058lzlvgjydy6fvyxw5zfrd7mk4pdf";
+    };
+  };
 }
 

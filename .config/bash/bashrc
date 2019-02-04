@@ -91,6 +91,8 @@ shopt -s checkwinsize
 export HISTSIZE=10000
 export SAVEHIST=10000
 
+#export LEDGER_FILE=$HOME/fin/ledger.gpg
+
 # Save and reload the history after each command finishes
 HISTCONTROL=ignoredups:erasedups
 shopt -s histappend # append to history, don't overwrite it

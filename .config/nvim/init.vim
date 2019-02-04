@@ -15,6 +15,7 @@ syntax on
 syntax enable
 filetype plugin indent on
 
+
 " ---------------
 " Interface
 " ---------------
@@ -522,24 +523,39 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 
-fu! SaveSess()
-    execute 'mksession! ' . getcwd() . '/.session.vim'
-endfunction
+"fu! SaveSess()
+"    execute 'mksession! ' . getcwd() . '/.session.vim'
+"endfunction
+"
+"fu! RestoreSess()
+"if filereadable(getcwd() . '/.session.vim')
+"    execute 'so ' . getcwd() . '/.session.vim'
+"    if bufexists(1)
+"        for l in range(1, bufnr('$'))
+"            if bufwinnr(l) == -1
+"                exec 'sbuffer ' . l
+"            endif
+"        endfor
+"    endif
+"endif
+"endfunction
+"
+"autocmd BufEnter,VimLeavePre * call SaveSess()
+"autocmd VimEnter * nested call RestoreSess()
 
-fu! RestoreSess()
-if filereadable(getcwd() . '/.session.vim')
-    execute 'so ' . getcwd() . '/.session.vim'
-    if bufexists(1)
-        for l in range(1, bufnr('$'))
-            if bufwinnr(l) == -1
-                exec 'sbuffer ' . l
-            endif
-        endfor
-    endif
-endif
-endfunction
+noremap y "+y
+noremap p "+p
+noremap Y "*y
+noremap P "*p
 
-autocmd BufEnter,VimLeavePre * call SaveSess()
-autocmd VimEnter * nested call RestoreSess()
-
-let g:pandoc#modules#disabled = ["folding"]
+"function! ClipboardYank()
+"  call system('kitty +kitten clipboard', @@)
+"endfunction
+"function! ClipboardPaste()
+"  let @@ = system('kitty +kitten clipboard --get-clipboard')
+"endfunction
+"
+"vnoremap <silent> y y:call ClipboardYank()<cr>
+"vnoremap <silent> d d:call ClipboardYank()<cr>
+"nnoremap <silent> p :call ClipboardPaste()<cr>p
+"
