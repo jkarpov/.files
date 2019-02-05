@@ -6,8 +6,7 @@ syntax enable
 filetype plugin indent on
 
 
-" ---------------
-" Interface
+" --------------- Interface
 " ---------------
 set ruler
 set number
@@ -549,3 +548,89 @@ noremap P "*p
 "vnoremap <silent> d d:call ClipboardYank()<cr>
 "nnoremap <silent> p :call ClipboardPaste()<cr>p
 "
+ nnoremap <Leader> :GundoToggle<CR>
+
+if has('NVIM')
+    let s:editor_root=expand("~/.config/nvim")
+else
+    let s:editor_root=expand("~/.vim")
+endif
+
+" Save your backups to a less annoying place than the current directory.
+" If you have .vim-backup in the current directory, it'll use that.
+" Otherwise it saves it to ~/.vim/backup or . if all else fails.
+if isdirectory(s:editor_root . '/backup') == 0
+  call mkdir(s:editor_root . '/backup', 'p')
+endif
+set backupdir-=.
+set backupdir+=.
+set backupdir-=~/
+execute "set backupdir^=" . s:editor_root . '/backup//'
+set backupdir^=./.vim-backup//
+set backup
+
+" Save your swp files to a less annoying place than the current directory.
+" If you have .vim-swap in the current directory, it'll use that.
+" Otherwise it saves it to ~/.vim/swap, ~/tmp or .
+if isdirectory(s:editor_root . '/swap') == 0
+  call mkdir(s:editor_root . '/swap', 'p')
+endif
+set directory=./.vim-swap//
+execute "set directory+=" . s:editor_root . '/swap//'
+set directory+=~/tmp//
+set directory+=.
+
+if exists("+undofile")
+  " undofile - This allows you to use undos after exiting and restarting
+  " This, like swap and backups, uses .vim-undo first, then ~/.vim/undo
+  " :help undo-persistence
+  " This is only present in 7.3+
+  if isdirectory(s:editor_root . '/undo') == 0
+    call mkdir(s:editor_root . '/undo', 'p')
+  endif
+  set undodir=./.vim-undo//
+  execute "set undodir+=" . s:editor_root . '/undo//'
+  set undofile
+endif
+
+set hidden
+
+set tabpagemax=1000
+
+set ffs=unix,dos
+
+if has('nvim')
+  set inccommand=nosplit
+endif
+
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap w!! w !sudo tee > /dev/null %
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" viminfo / shada
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Tell vim to remember certain things when we exit
+"  '100  :  marks will be remembered for up to 10 previously edited files
+"  "1000 :  will save up to 100 lines for each register
+"  :200  :  up to 20 lines of command-line history will be remembered
+"  %    :  saves and restores the buffer list
+"  n... :  where to save the viminfo files
+set viminfo='1000,\"1000,:200,%,n~/.viminfo
+
+if has('nvim')
+  set shada='1000,/1000,:1000,@1000
+endif
+
+function! ResCur()
+  if line("'\"") <= line("$")
+    normal! g'"
+    return 1
+  endif
+endfunction
+
+augroup resCur
+  autocmd!
+  autocmd BufWinEnter * call ResCur()
+augroup END

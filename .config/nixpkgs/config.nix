@@ -13,6 +13,17 @@ in
 
     #weechat = pkgs.weechat.override { extraBuildInputs = [ pkgs.python27Packages.websocket_client ]; };
     #xpra = pkgs.xpra.override { };
+    fake-cli = pkgs.stdenv.mkDerivation {
+      name = "dotnet-fake-cli";
+      buildInputs = [
+        pkgs.dotnet-sdk
+      ];
+      src = null;
+      shellHook = ''
+        dotnet --version
+      '';
+    };
+
 
     haskellPackages = pkgs.haskellPackages.override {
       overrides = self: super:

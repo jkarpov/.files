@@ -6,6 +6,9 @@ self: super:
   dotnet-env = super.buildEnv {
     name = "dotnetEnv";
     paths = with super.pkgs; [ mono dotnet-sdk ];
+    shellHook = ''
+      dotnet --version
+    '';
   };
 
   # Albert Fix for firefox bookmarks
@@ -32,6 +35,9 @@ self: super:
     };
   });
 
+  google-chrome = super.google-chrome.override {
+    commandLineArgs = "--proxy-server='https=127.0.0.1:3128;http=127.0.0.1:3128'";
+  };
 
   python36 = super.python36.override {
     packageOverrides = python-self: python-super:
@@ -58,8 +64,8 @@ self: super:
 
       my_adal = python-super.adal.override { requests = my_requests; };
 
-      my_argcomplete = python-super.argcomplete.override { 
-        requests_toolbelt = python-super.requests_toolbelt.override { 
+      my_argcomplete = python-super.argcomplete.override {
+        requests_toolbelt = python-super.requests_toolbelt.override {
           requests = my_requests;
           betamax = python-super.betamax.override { requests = my_requests; };
         };
@@ -67,7 +73,7 @@ self: super:
 
 
     in
-    
+
     {
 
       applicationinsights = python-super.callPackage ./pkgs/development/python-modules/applicationinsights {};

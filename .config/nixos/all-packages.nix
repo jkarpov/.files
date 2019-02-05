@@ -26,6 +26,8 @@
     opengl.enable = true;
     opengl.driSupport32Bit = true;
     pulseaudio.enable = true;
+    pulseaudio.extraModules = [ pkgs.pulseaudio-modules-bt ];
+    pulseaudio.package = pkgs.pulseaudioFull;
     pulseaudio.support32Bit = true;
   };
 
@@ -59,6 +61,7 @@
 
 
   environment.systemPackages = with pkgs; [
+    blueman
     (texlive.combine {
         inherit (texlive)
         #scheme-minimal # plain

@@ -26,6 +26,10 @@
   networking.hostName = "matebook";
 
   hardware.bluetooth.enable = true;
+  hardware.bluetooth.extraConfig = "
+    [General]
+    Enable=Source,Sink,Media,Socket
+  ";
   #hardware.bumblebee.enable = true;
   services.upower.enable = true;
   services.logind.lidSwitch = "suspend";
