@@ -25,7 +25,7 @@ set novisualbell
 set nonumber
 set guicursor=
 set termguicolors
-set colorcolumn=81
+set colorcolumn=80
 set noshowmode
 "set background=dark
 set background=light
@@ -66,14 +66,7 @@ colorscheme ayu
 "highlight clear LineNr
 "highlight clear SignColumn
 "highlight LineNr ctermfg=DarkGrey
-
-"colorscheme ratazii
 "
-"autocmd BufEnter * colorscheme molokai
-"autocmd BufEnter *.hs colorscheme NeoSolarized
-"autocmd BufEnter *.hs SeiyaDisable
-"autocmd BufEnter *.cabal colorscheme NeoSolarized
-"autocmd BufEnter *.cabal SeiyaDisable
 
 " ---------------
 " Text format
@@ -132,8 +125,8 @@ let g:deoplete#data_directory = '~/.cache/deoplete/'
 call deoplete#custom#source('_', 'converters', [])
 call deoplete#custom#source('LanguageClient', 'min_pattern_length', 1)
 
-  " <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+" <CR>: close popup and save indent.
+"inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
     return deoplete#mappings#smart_close_popup() . "\<CR>"
 endfunction
@@ -144,146 +137,34 @@ set completeopt=longest,menuone
 set completeopt+=noinsert
 set completeopt+=noselect
 
-"let g:deoplete#omni#input_patterns = {}
-"let g:deoplete#omni#input_patterns.purescript = '[^. *\t]'
-"let g:deoplete#omni#input_patterns.haskell = '[^. *\t]'
-"let g:deoplete#omni#input_patterns.idris = '[^. *\t]'
 
-"set completeopt=longest,menuone
 "Amount of entries in completion popup
 "set pumheight=10
-"
 let g:deoplete#max_menu_width = -1
-"autocmd FileType purescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
-inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
-"imap <expr><TAB>
-"	 \ neosnippet#expandable_or_jumpable() ?
-"	 \    "\<Plug>(neosnippet_expand_or_jump)" :
-"         \ 	  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+
+" ---------------
+" NeoSnippet
+" ---------------
 "
-" deoplete tab-complete
-"inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+" Plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
 
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <expr><TAB>
+	 \ neosnippet#expandable_or_jumpable() ?
+	 \    "\<Plug>(neosnippet_expand_or_jump)" :
+     \ 	  pumvisible() ? "\<C-n>" : "\<TAB>"
 
-"ultisnips
-let g:UltiSnipsExpandTrigger="<c-tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-let g:UltiSnipsEditSplit="vertical"
-
-
-
-
-" ---------------
-" Haskell
-" ---------------
-
-"let g:haddock_browser="chromium"
-let g:haskellmode_completion_ghc = 0
-
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-
-
-"let g:haskell_conceal_wide = 1
-"let g:haskell_multiline_strings = 1
-let g:necoghc_enable_detailed_browse = 1
-
-
-au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>tp :GhcModInfoPreview<CR>
-au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>te :GhcModExpand<CR>
-au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>tt :GhcModType<CR>
-au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>tc :GhcModTypeClear<CR>
-au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>ti :GhcModTypeInsert<CR>
-
-au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>tg :GhcModSigCodegen<CR>
-au FileType haskell,lhaskell nnoremap <buffer> <silent> <LocalLeader>ts :GhcModSplitFunCase<CR>
-
-
-
-let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
-let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
-let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
-let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
-let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
-let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
-let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
-
-" tags
-
-" Automatically generate tags for haskell files
-"augroup tags
-"au BufWritePost *.hs            silent !haskdogs
-"au BufWritePost *.hsc           silent !haskdogs
-"augroup END
-
-let g:tagbar_type_haskell = {
-    \ 'ctagsbin'  : 'hasktags',
-    \ 'ctagsargs' : '-x -c -o-',
-    \ 'kinds'     : [
-        \  'm:modules:0:1',
-        \  'd:data: 0:1',
-        \  'd_gadt: data gadt:0:1',
-        \  't:type names:0:1',
-        \  'nt:new types:0:1',
-        \  'c:classes:0:1',
-        \  'cons:constructors:1:1',
-        \  'c_gadt:constructor gadt:1:1',
-        \  'c_a:constructor accessors:1:1',
-        \  'ft:function types:1:1',
-        \  'fi:function implementations:0:1',
-        \  'o:others:0:1'
-    \ ],
-    \ 'sro'        : '.',
-    \ 'kind2scope' : {
-        \ 'm' : 'module',
-        \ 'c' : 'class',
-        \ 'd' : 'data',
-        \ 't' : 'type'
-    \ },
-    \ 'scope2kind' : {
-        \ 'module' : 'm',
-        \ 'class'  : 'c',
-        \ 'data'   : 'd',
-        \ 'type'   : 't'
-    \ }
-\ }
-
-
-
-" ---------------
-" Idris
-" ---------------
-au FileType idris nnoremap <buffer> <silent> <LocalLeader>r :call IdrisReload(0)<ENTER>
-au FileType idris nnoremap <buffer> <silent> <LocalLeader>c :call IdrisCaseSplit()<ENTER>
-au FileType idris nnoremap <buffer> <silent> <LocalLeader>d 0:call search(":")<ENTER>b:call IdrisAddClause(0)<ENTER>w
-au FileType idris nnoremap <buffer> <silent> <LocalLeader>b 0:call IdrisAddClause(0)<ENTER>
-au FileType idris nnoremap <buffer> <silent> <LocalLeader>m :call IdrisAddMissing()<ENTER>
-au FileType idris nnoremap <buffer> <silent> <LocalLeader>md 0:call search(":")<ENTER>b:call IdrisAddClause(1)<ENTER>w
-au FileType idris nnoremap <buffer> <silent> <LocalLeader>f :call IdrisRefine()<ENTER>
-au FileType idris nnoremap <buffer> <silent> <LocalLeader>o :call IdrisProofSearch(0)<ENTER>
-au FileType idris nnoremap <buffer> <silent> <LocalLeader>p :call IdrisProofSearch(1)<ENTER>
-au FileType idris nnoremap <buffer> <silent> <LocalLeader>l :call IdrisMakeLemma()<ENTER>
-au FileType idris nnoremap <buffer> <silent> <LocalLeader>e :call IdrisEval()<ENTER>
-au FileType idris nnoremap <buffer> <silent> <LocalLeader>w 0:call IdrisMakeWith()<ENTER>
-au FileType idris nnoremap <buffer> <silent> <LocalLeader>mc :call IdrisMakeCase()<ENTER>
-au FileType idris nnoremap <buffer> <silent> <LocalLeader>i 0:call IdrisResponseWin()<ENTER>
-au FileType idris nnoremap <buffer> <silent> <LocalLeader>h :call IdrisShowDoc()<ENTER>
-
-
-" ---------------
-" PureScript
-" ---------------
-au FileType purescript nmap <leader>t :PSCIDEtype<CR>
-au FileType purescript nmap <leader>s :PSCIDEapplySuggestion<CR>
-au FileType purescript nmap <leader>a :PSCIDEaddTypeAnnotation<CR>
-au FileType purescript nmap <leader>i :PSCIDEimportIdentifier<CR>
-au FileType purescript nmap <leader>r :PSCIDEload<CR>
-au FileType purescript nmap <leader>p :PSCIDEpursuit<CR>
-au FileType purescript nmap <leader>c :PSCIDEcaseSplit<CR>
-au FileType purescript nmap <leader>qd :PSCIDEremoveImportQualifications<CR>
-au FileType purescript nmap <leader>qa :PSCIDEaddImportQualifications<CR><Paste>
-autocmd FileType purescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
 
 
 " ---------------
@@ -359,7 +240,6 @@ let g:markdown_composer_browser = "firefox"
 " ---------------
 set updatetime=250
 
-"imap jj <Esc>
 
 
 " ---------------
@@ -390,7 +270,7 @@ set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 " ---------------
 "nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":FuzzyOpen\<cr>"
 nnoremap <Leader><Leader> :FuzzyOpen<CR>
-nnoremap <Leader><Leader><Leader> :FuzzyGrep<CR>
+"nnoremap <Leader>e :FuzzyGrep<CR>
 "nnoremap <silent> <expr> <Leader><Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":FuzzyGrep\<cr>"
 
 " ---------------
@@ -437,15 +317,16 @@ autocmd BufEnter,BufNew *.hledger* set filetype=ledger
 "----
 " Ale
 ""-----
-highlight clear ALEErrorSign
-highlight clear ALEWarningSign
+"highlight clear ALEErrorSign
+"highlight clear ALEWarningSign
 let g:ale_sign_column_always = 1
 
 
+"\ 'haskell': ['hie', '--lsp'],
 let g:LanguageClient_serverCommands = {
-      \ 'haskell': ['hie', '--lsp'],
       \ 'fsharp': ['dotnet', '/home/ditadi/src/fsharp-language-server/src/FSharpLanguageServer/bin/Release/netcoreapp2.0/FSharpLanguageServer.dll'],
-      \ 'python': ['pyls']
+      \ 'python': ['pyls'],
+      \ 'haskell': ['hie-wrapper']
       \ }
 
 let g:seiya_target_groups = has('nvim') ? ['guibg'] : ['ctermbg']
@@ -634,3 +515,11 @@ augroup resCur
   autocmd!
   autocmd BufWinEnter * call ResCur()
 augroup END
+
+let g:pandoc#syntax#codeblocks#embeds#langs = ["ruby","fsharp", "bash=sh"]
+
+
+hi link ALEError Error
+hi Warning term=underline cterm=underline ctermfg=Yellow gui=undercurl guisp=Gold
+hi link ALEWarning Warning
+hi link ALEInfo SpellCap

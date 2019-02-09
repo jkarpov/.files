@@ -30,7 +30,7 @@
     [General]
     Enable=Source,Sink,Media,Socket
   ";
-  #hardware.bumblebee.enable = true;
+  hardware.bumblebee.enable = true;
   services.upower.enable = true;
   services.logind.lidSwitch = "suspend";
 
@@ -42,12 +42,12 @@
       minSpeed = "1.0";
       maxSpeed = "2.0";
     };
-    videoDrivers = [ "nvidia" ];
+    #videoDrivers = [ "nvidia" ];
   };
 
-  hardware.nvidia.optimus_prime.enable = true;
-  hardware.nvidia.optimus_prime.nvidiaBusId = "PCI:1:0:0";
-  hardware.nvidia.optimus_prime.intelBusId = "PCI:0:2:0";
+  #hardware.nvidia.optimus_prime.enable = true;
+  #hardware.nvidia.optimus_prime.nvidiaBusId = "PCI:1:0:0";
+  #hardware.nvidia.optimus_prime.intelBusId = "PCI:0:2:0";
   virtualisation.docker.enable = true;
 
   environment.systemPackages = with pkgs; [

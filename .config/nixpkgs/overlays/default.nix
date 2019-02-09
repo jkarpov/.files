@@ -5,10 +5,7 @@ self: super:
   # Environment for Dotnet development
   dotnet-env = super.buildEnv {
     name = "dotnetEnv";
-    paths = with super.pkgs; [ mono dotnet-sdk ];
-    shellHook = ''
-      dotnet --version
-    '';
+    paths = with super.pkgs; [ mono dotnet-sdk icu ];
   };
 
   # Albert Fix for firefox bookmarks
@@ -25,19 +22,43 @@ self: super:
 
   # Get a not-yet-available version of dotnet core sdk
   dotnet-sdk = super.dotnet-sdk.overrideAttrs (old: rec {
-    version = "2.2.102";
+    version = "2.2.103";
     netCoreVersion = "2.2";
     name = "dotnet-sdk-${version}";
     src = self.fetchurl {
       url = "https://dotnetcli.azureedge.net/dotnet/Sdk/${version}/dotnet-sdk-${version}-linux-x64.tar.gz";
       # use sha512 from the download page
-      sha512 = "14gkwwrcq8wgx2bwi28y3wd1b1qz1y3qrlzflg2vdvmqfjanys44kgkhwb4p5570mcwnn87413gd69v5c3i3xispg07mc72xyh7dvfp";
+      sha512 = "777ac6dcd0200ba447392e451a1779f0fbfa548bd620a7bba3eebdf35892236c3f10b19ff81d4f64b5bc134923cb47f9cc45ee6b004140e1249582249944db69";
     };
   });
 
-  google-chrome = super.google-chrome.override {
-    commandLineArgs = "--proxy-server='https=127.0.0.1:3128;http=127.0.0.1:3128'";
+  myHaskellEnv =
+    super.haskellPackages.ghcWithHoogle
+          (haskellPackages: with haskellPackages; [
+            # libraries
+            xmonad
+            xmonad-contrib
+            xmonad-extras
+            # tools
+            cabal-install
+          ]);
+
+
+  haskell-env = self.buildEnv {
+      name = "haskell-environment";
+      paths = with self; [
+        #cabal2nix
+        #ctags
+        #cachix
+        #haskellPackages.xmonad
+        #haskell.compiler.ghc863Binary
+        stack
+        myHaskellEnv
+        #cabal-install
+        (import (builtins.fetchTarball https://github.com/domenkozar/hie-nix/tarball/master ) {}).hie86
+      ];
   };
+
 
   python36 = super.python36.override {
     packageOverrides = python-self: python-super:

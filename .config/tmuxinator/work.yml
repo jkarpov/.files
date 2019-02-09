@@ -60,4 +60,5 @@ windows:
       root: ~/work/maas2
       layout: main-vertical
       panes:
-        - nix-shell ~/.config/nixpkgs/azure.nix
+          #- nix-shell ~/.config/nixpkgs/azure.nix
+          -
