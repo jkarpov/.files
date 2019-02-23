@@ -15,15 +15,9 @@ windows:
           - ranger
         - src:
           - jupyter notebook stop 8888
-          - cd proj1 && jupyter notebook --no-browser --port=8888 &>.jupyter.log &
-          - cd proj1/src
+          - cd proj2 && jupyter notebook --no-browser --port=8888 &>.jupyter.log &
+          - cd proj2/src
           - ranger
-  - ml-report:
-      layout: main-vertical
-      root: ~/edu/ml/proj1/report
-      pre: nix-shell
-      panes:
-        - ranger
   - ml4t:
       layout: main-vertical
       root: ~/edu/ml4t
@@ -33,4 +27,7 @@ windows:
         - main:
           - jupyter notebook stop 8889
           - jupyter notebook --no-browser --port=8889 &>.jupyter.log &
+          - cd proj3/src
+        - report:
+          - cd proj3/report
           - ranger

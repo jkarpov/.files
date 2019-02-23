@@ -30,7 +30,7 @@ in
     zathura # pdf viewer
     signal-desktop
     gvfs
-    albert # menu
+    #albert # menu
     insomnia
     xlockmore
     copyq
@@ -180,7 +180,7 @@ in
         config = pkgs.runCommand "xmonad.hs" {
           lockCmd = lockCmd;
           xmobar = "${pkgs.haskellPackages.xmobar}/bin/xmobar";
-          albert = "${pkgs.albert}/bin/albert";
+          #albert = "${pkgs.albert}/bin/albert";
           } ''
             substituteAll ${~/.config/xmonad/xmonad.hs} $out
           '';
