@@ -10,13 +10,19 @@ windows:
       pre:
         - nix-shell
       panes:
-        - report:
-          - cd proj1/report
-          - ranger
         - src:
           - jupyter notebook stop 8888
-          - cd proj2 && jupyter notebook --no-browser --port=8888 &>.jupyter.log &
-          - cd proj2/src
+          - cd proj3 && jupyter notebook --no-browser --port=8888 &>.jupyter.log &
+          - cd proj3/src
+          - ranger
+  - report:
+      layout: main-vertical
+      root: ~/edu/ml
+      pre:
+        - nix-shell
+      panes:
+        - report:
+          - cd proj3/report
           - ranger
   - ml4t:
       layout: main-vertical
