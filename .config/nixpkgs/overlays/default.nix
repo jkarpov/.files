@@ -8,17 +8,29 @@ self: super:
     paths = with super.pkgs; [ mono dotnet-sdk icu ];
   };
 
-  # Albert Fix for firefox bookmarks
-  albert = super.albert.overrideAttrs (old: rec {
-    version = "0.20.0";
-    src = self.fetchFromGitHub {
-      owner  = "albertlauncher";
-      repo   = "albert";
-      rev    = "a1181c74c50938b340d27d6c5f944f2816d17de5";
-      sha256 = "063z9yq6bsxcsqsw1n93ks5dzhzv6i252mjz1d5mxhxvgmqlfk0v";
-      fetchSubmodules = true;
-    };
-  });
+  # Environment for nixops
+  nixops-env = super.buildEnv {
+    name = "nixopsEnv";
+    paths = with super.pkgs; [ nixops ];
+  };
+
+  # Environment for nixops
+  inklings-env = super.buildEnv {
+    name = "inklingsEnv";
+    paths = with super.pkgs; [ pgcli leiningen ];
+  };
+
+  ## Albert Fix for firefox bookmarks
+  #albert = super.albert.overrideAttrs (old: rec {
+  #  version = "0.20.1";
+  #  src = super.fetchFromGitHub {
+  #    owner  = "albertlauncher";
+  #    repo   = "albert";
+  #    rev    = "cb2a79ed54a4602dc664c152e384af0f1a15abd8";
+  #    sha256 = "063z9yq6bsxcsqsw1n93ks5dzhzv6i252mjz1d5mxhxvgmqlfk0v";
+  #    fetchSubmodules = true;
+  #  };
+  #});
 
   # Get a not-yet-available version of dotnet core sdk
   dotnet-sdk = super.dotnet-sdk.overrideAttrs (old: rec {

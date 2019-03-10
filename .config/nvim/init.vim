@@ -44,6 +44,7 @@ endif
 "let g:gruvbox_italic=1
 "colorscheme gruvbox
 
+
 "let g:neosolarized_bold = 1
 "let g:neosolarized_underline = 1
 "let g:neosolarized_italic = 1
@@ -56,6 +57,7 @@ colorscheme NeoSolarized
 "colorscheme solarized8
 "
 "colorscheme mopkai
+"colorscheme molokai
 
 "let ayucolor="mirage"
 "let ayucolor="dark"

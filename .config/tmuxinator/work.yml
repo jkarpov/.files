@@ -50,12 +50,13 @@ windows:
       panes:
         - api:
           - ranger
-  - maas-root:
-      root: ~/work/maas2
+  - serve:
+      root: ~/work/maas2/src/api
       pre: nix-shell -p dotnet-env
       layout: main-vertical
       panes:
-        -
+        - serve:
+            - dotnet watch run
   - azure:
       root: ~/work/maas2
       layout: main-vertical
