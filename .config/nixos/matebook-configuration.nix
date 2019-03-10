@@ -15,6 +15,29 @@
   networking.networkmanager.enable = true;
   networking.hostId = "664d4279";
 
+  networking.nat = {
+    enable = true;
+    internalInterfaces = [ "wg0" ];
+    externalInterface = "wlp60s0";
+  };
+  networking.wireguard.interfaces = {
+    wg0 = {
+      ips = [ "10.13.13.102/32" ];
+      listenPort = 51820;
+      privateKey = "eDgfrU1hKqtXNttZJm2ayHHiuF2FGG+V7LyecA92uHs=";
+      allowedIPsAsRoutes = false;
+      peers = [
+        {
+          publicKey = "bcPctKwpG9Wp0SE1I5jxoXdUjd1Kct+58VzsagJdjyg=";
+          presharedKey = "Hz4xwmyJZvr224QVn5wNxj/oUgO5kOSXXP3yrVRQAjY=";
+          allowedIPs = [ "10.13.13.1" ];
+          endpoint = "lfo6dacsshyqo.southcentralus.cloudapp.azure.com:51820";
+          persistentKeepalive = 25;
+        }
+      ];
+    };
+  };
+
   services.zfs.autoSnapshot = {
     enable = true;
     frequent = 16; # keep the latest eight 15-minute snapshots (instead of four)
@@ -30,7 +53,7 @@
     [General]
     Enable=Source,Sink,Media,Socket
   ";
-  hardware.bumblebee.enable = true;
+  hardware.bumblebee.enable = false;
   services.upower.enable = true;
   services.logind.lidSwitch = "suspend";
 
@@ -42,7 +65,7 @@
       minSpeed = "1.0";
       maxSpeed = "2.0";
     };
-    #videoDrivers = [ "nvidia" ];
+    videoDrivers = [ "intel" ];
   };
 
   #hardware.nvidia.optimus_prime.enable = true;

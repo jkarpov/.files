@@ -44,6 +44,7 @@ endif
 "let g:gruvbox_italic=1
 "colorscheme gruvbox
 
+
 "let g:neosolarized_bold = 1
 "let g:neosolarized_underline = 1
 "let g:neosolarized_italic = 1
@@ -51,17 +52,18 @@ endif
 "let g:solarized_visibility = "medium"
 "let g:solarized_extra_hi_groups=1
 "let g:airline_theme='solarized'
-"colorscheme NeoSolarized
+colorscheme NeoSolarized
 "let g:solarized_use16 = 1
 "colorscheme solarized8
 "
 "colorscheme mopkai
+"colorscheme molokai
 
-let ayucolor="mirage"
+"let ayucolor="mirage"
 "let ayucolor="dark"
 "let ayucolor="light"
 "let g:airline_theme='solarized'
-colorscheme ayu
+"colorscheme ayu
 "
 "highlight clear LineNr
 "highlight clear SignColumn

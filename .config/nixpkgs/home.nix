@@ -19,7 +19,7 @@ in
     hledger # cli accounting
     hledger-ui
     hledger-web
-    pass # cli accounting
+    pass
     scrot # screenshots
     zip
     unzip
@@ -113,6 +113,8 @@ in
        };
      };
      hooks.postswitch = {
+       "restart-xmonad" = "xmonad --restart";
+       "kill-albert" = "pkill albert";
        "change-background" = "${pkgs.feh}/bin/feh --bg-fill -z ~/photo/wallpaper";
        "change-dpi" = ''
           case "$AUTORANDR_CURRENT_PROFILE" in

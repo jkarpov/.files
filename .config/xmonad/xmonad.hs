@@ -55,13 +55,17 @@ main = do
     layouts   = (tiled Tall ||| (tiled Wide ||| Full)) ||| ThreeColMid 1 (3/100) (3/4)
     modifiers = avoidStruts . smartBorders
     myStartupHook = spawn "@albert@"
-    myScratchPads = [ NS "htop" "kitty htop" (title =? "htop") defaultFloating ]
+    myScratchPads =
+        [NS "dot" "kitty tmuxinator dot"   (title =? "dot") defaultFloating
+        ,NS "work" "kitty tmuxinator work" (title =? "work") defaultFloating
+        ,NS "ranger" "kitty ranger"        (title =? "ranger") defaultFloating
+        ]
     mykeys (XConfig {modMask = modm}) = M.fromList $
         [((modm .|. shiftMask, xK_Return), spawnHere =<< asks (terminal . config))
         ,((modm .|. shiftMask, xK_c     ), kill1)
         ,((modm .|. shiftMask .|. controlMask, xK_c     ), kill)
         ,((modm .|. shiftMask, xK_0     ), windows $ copyToAll)
-        ,((modm,               xK_z     ), layoutScreens 2 $ TwoPane 0.5 0.5)
+        ,((modm,               xK_z     ), layoutScreens 3 $ ThreeColMid 1 (3/100) (30/100))
         ,((modm .|. shiftMask, xK_z     ), rescreen)
         ,((modm .|. controlMask, xK_l   ), spawn "@lockCmd@")
         ,((modm,               xK_b     ), sendMessage ToggleStruts)
@@ -70,10 +74,14 @@ main = do
         ,((0, xF86XK_AudioMute          ), spawn "amixer set Master toggle")
         ,((0, xF86XK_AudioLowerVolume   ), spawn "amixer set Master 5%- unmute")
         ,((0, xF86XK_AudioRaiseVolume   ), spawn "amixer set Master 5%+ unmute")
-        ,((modm,                 xK_o   ), namedScratchpadAction myScratchPads "htop")
+        ,((modm,                 xK_o   ), namedScratchpadAction myScratchPads "dot")
+        ,((modm,            xK_Return   ), namedScratchpadAction myScratchPads "ranger")
         ,((modm .|. controlMask, xK_m   ), spawn "amixer -q set Master toggle")
         ,((modm .|. controlMask, xK_j   ), spawn "amixer -q set Master 5%-")
         ,((modm .|. controlMask, xK_k   ), spawn "amixer -q set Master 5%+")
         ,((modm, xK_n                   ), sendMessage NextLayout)
-        ]
+        ] ++
+        [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
+            | (key, sc) <- zip [xK_w, xK_q, xK_e] [0..]
+            , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
