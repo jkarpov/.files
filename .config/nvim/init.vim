@@ -27,8 +27,8 @@ set guicursor=
 set termguicolors
 set colorcolumn=80
 set noshowmode
-"set background=dark
-set background=light
+set background=dark
+"set background=light
 
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
@@ -415,10 +415,12 @@ nmap ga <Plug>(EasyAlign)
 "autocmd BufEnter,VimLeavePre * call SaveSess()
 "autocmd VimEnter * nested call RestoreSess()
 
-noremap y "+y
-noremap p "+p
-noremap Y "*y
-noremap P "*p
+"noremap y "+y
+"noremap p "+p
+"noremap Y "*y
+"noremap P "*p
+"
+set clipboard+=unnamedplus
 
 "function! ClipboardYank()
 "  call system('kitty +kitten clipboard', @@)
