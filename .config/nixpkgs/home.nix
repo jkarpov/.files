@@ -1,16 +1,22 @@
 { config, pkgs, ... }:
 let
   lockCmd = "xlock -mode blank -erasedelay 0";
-in
-{
+  batch-explorer = pkgs.callPackage ./batch-explorer.nix { };
+  sqlpackage = pkgs.callPackage ./sqlpackage.nix { };
+  msbuild = pkgs.callPackage ./msbuild.nix { };
+  nuget = pkgs.callPackage ./nuget.nix { };
+  fsharp10 = import ./fsharp.nix { pkgs = pkgs; msbuild = msbuild; fetchNuGet = nuget; };
 
-  #nixpkgs.overlays = [ (import ./overlays)];
+in rec {
 
-  #xdg.configFile."nixpkgs/config.nix".source = ./config.nix;
+  imports = with builtins;
+    map (name: ./configurations + "/${name}") (attrNames (readDir ./configurations));
+
+  nixpkgs.config.allowUnfree = true;
+
 
   home.username = "ditadi";
   home.homeDirectory = "/home/ditadi";
-  #home.keyboard.options = [ "compose:rctrl" "caps:none" ];
 
   home.packages = with pkgs; [
     htop
@@ -30,7 +36,7 @@ in
     zathura # pdf viewer
     signal-desktop
     gvfs
-    #albert # menu
+    albert # menu
     insomnia
     xlockmore
     copyq
@@ -38,35 +44,73 @@ in
     inotify-tools
     fzy
     ripgrep
+    batch-explorer
+    sqlpackage
+    fsharp10
+    msbuild
   ];
 
 
   programs = {
+    neovim.enable = true;
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
     firefox.enable = true;
     feh.enable = true;
-    bash = {
+    direnv.enable = true;
+    direnv.enableZshIntegration = true;
+    fzf.enable = true;
+
+    tmux = {
       enable = true;
-      historyControl = [ "erasedups" ];
-      historyIgnore = [ "ls" "cd" "exit" ];
-      profileExtra = "if [ -f ~/.bashrc ]; then\n . ~/.bashrc\n fi";
+      tmuxinator.enable = true;
+    };
+    browserpass = {
+      enable = true;
+      browsers = [ "firefox" ];
+    };
+    zsh = {
+      enable = true;
+      enableAutosuggestions = true;
+      #defaultKeymap = "vicmd";
+      dotDir = ".config/zsh";
+      history.share = false;
+      oh-my-zsh.enable = true;
+      oh-my-zsh.plugins = [ "git" "sudo" "colorize" "colored-man-pages" ];
+      oh-my-zsh.theme = "bira";
       shellAliases = {
         ".." = "cd ..";
         "ll" = "ls -l";
         "mux" = "tmuxinator";
         "dot" = "git --git-dir=$HOME/.files/ --work-tree=$HOME";
         "r" = "ranger";
-        # view image in a terminal
-        "i" = "kitty +kitten icat";
         # diff two files in a terminal
         "d" = "kitty +kitten diff";
         # do git diff in a termial
         "gd" = "git difftool --no-symlinks --dir-diff";
-        "pdf" = "termpdf";
       };
-      initExtra = builtins.readFile ../bash/bashrc;
+      initExtra = builtins.readFile ../zsh/zshrc;
     };
+    #bash = {
+    #  enable = true;
+    #  enableAutojump = true;
+    #  historyControl = [ "ignoredups" "erasedups" ];
+    #  historyIgnore = [ "ls" "cd" "exit" ];
+    #  profileExtra = "if [ -f ~/.bashrc ]; then\n . ~/.bashrc\n fi";
+    #  shellAliases = {
+    #    ".." = "cd ..";
+    #    "ll" = "ls -l";
+    #    "mux" = "tmuxinator";
+    #    "dot" = "git --git-dir=$HOME/.files/ --work-tree=$HOME";
+    #    "r" = "ranger";
+    #    # diff two files in a terminal
+    #    "d" = "kitty +kitten diff";
+    #    # do git diff in a termial
+    #    "gd" = "git difftool --no-symlinks --dir-diff";
+    #  };
+    #  initExtra = builtins.readFile ../bash/bashrc;
+    #};
+
     autorandr = {
      enable = true;
      profiles = {
@@ -136,10 +180,6 @@ in
         '';
       };
     };
-    fzf = {
-      enable = true;
-      enableBashIntegration = true;
-    };
     git = {
       enable = true;
       userName = "Dmitriy Tadyshev";
@@ -159,14 +199,6 @@ in
             cmd = kitty kitty +kitten diff $LOCAL $REMOTE
       '';
     };
-    tmux = {
-      enable = true;
-      tmuxinator.enable = true;
-    };
-    browserpass = {
-      enable = true;
-      browsers = [ "firefox" ];
-    };
   };
 
   xsession = {
@@ -182,7 +214,7 @@ in
         config = pkgs.runCommand "xmonad.hs" {
           lockCmd = lockCmd;
           xmobar = "${pkgs.haskellPackages.xmobar}/bin/xmobar";
-          #albert = "${pkgs.albert}/bin/albert";
+          albert = "${pkgs.albert}/bin/albert";
           } ''
             substituteAll ${~/.config/xmonad/xmonad.hs} $out
           '';
