@@ -2,10 +2,10 @@
 let
   lockCmd = "xlock -mode blank -erasedelay 0";
   batch-explorer = pkgs.callPackage ./batch-explorer.nix { };
-  sqlpackage = pkgs.callPackage ./sqlpackage.nix { };
-  msbuild = pkgs.callPackage ./msbuild.nix { };
-  nuget = pkgs.callPackage ./nuget.nix { };
-  fsharp10 = import ./fsharp.nix { pkgs = pkgs; msbuild = msbuild; fetchNuGet = nuget; };
+  #sqlpackage = pkgs.callPackage ./sqlpackage.nix { };
+  #msbuild = pkgs.callPackage ./msbuild.nix { };
+  #nuget = pkgs.callPackage ./nuget.nix { };
+  #fsharp10 = import ./fsharp.nix { pkgs = pkgs; msbuild = msbuild; fetchNuGet = nuget; };
 
 in rec {
 
@@ -45,9 +45,9 @@ in rec {
     fzy
     ripgrep
     batch-explorer
-    sqlpackage
-    fsharp10
-    msbuild
+    #sqlpackage
+    #fsharp10
+    #msbuild
   ];
 
 

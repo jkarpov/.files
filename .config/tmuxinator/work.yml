@@ -1,29 +1,35 @@
 # ~/.tmuxinator/work.yml
 
 name: work
-root: ~/work/maas2
+root: ~/code/tachyus/
 
 windows:
   - maas2:
-      root: ~/work/maas2/src/api
+      root: ~/code/tachyus/maas2/
       layout: main-vertical
       panes:
         - api:
           - ranger
-  - manage:
-      root: ~/work/maas2/
+        - serve:
+            - cd ~/code/tachyus/maas2/maas2-api
+            - dotnet watch run
+        - lorri:
+          - lorri watch
+  - flood-engine:
+      root: ~/code/tachyus/flood-engine
       layout: main-vertical
       panes:
         - install:
           -
-        - serve:
-            - cd ~/work/maas2/src/api
-            - dotnet watch run
-        - lorri:
-          - lorri watch
-  - tests:
-      root: ~/work/maas2/test/integration
+  - locsim:
+      root: ~/code/tachyus/locsim
       layout: main-vertical
       panes:
-        - integration:
-          - ranger
+        - install:
+          -
+  - MaaS:
+      root: ~/code/tachyus/MaaS
+      layout: main-vertical
+      panes:
+        - install:
+          -

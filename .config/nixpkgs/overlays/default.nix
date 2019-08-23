@@ -20,17 +20,17 @@ self: super:
     paths = with super.pkgs; [ pgcli leiningen ];
   };
 
-  # Albert Fix for firefox bookmarks
-  albert = super.albert.overrideAttrs (old: rec {
-    version = "0.20.1";
-    src = super.fetchFromGitHub {
-      owner  = "albertlauncher";
-      repo   = "albert";
-      rev    = "cb2a79ed54a4602dc664c152e384af0f1a15abd8";
-      sha256 = "063z9yq6bsxcsqsw1n93ks5dzhzv6i252mjz1d5mxhxvgmqlfk0v";
-      fetchSubmodules = true;
-    };
-  });
+  ## Albert Fix for firefox bookmarks
+  #albert = super.albert.overrideAttrs (old: rec {
+  #  version = "0.20.1";
+  #  src = super.fetchFromGitHub {
+  #    owner  = "albertlauncher";
+  #    repo   = "albert";
+  #    rev    = "cb2a79ed54a4602dc664c152e384af0f1a15abd8";
+  #    sha256 = "063z9yq6bsxcsqsw1n93ks5dzhzv6i252mjz1d5mxhxvgmqlfk0v";
+  #    fetchSubmodules = true;
+  #  };
+  #});
 
   ## Get a not-yet-available version of dotnet core sdk
   #dotnet-sdk = super.dotnet-sdk.overrideAttrs (old: rec {
@@ -44,18 +44,18 @@ self: super:
   #  };
   #});
 
+  ## Get a not-yet-available version of dotnet core sdk
+  #dotnet-sdk = super.dotnet-sdk.overrideAttrs (old: rec {
+  #  version = "2.2.401";
+  #  netCoreVersion = "3.2";
+  #  name = "dotnet-sdk-${version}";
+  #  src = self.fetchurl {
+  #    url = "https://dotnetcli.azureedge.net/dotnet/Sdk/${version}/dotnet-sdk-${version}-linux-x64.tar.gz";
+  #    # use sha512 from the download page
+  #    sha512 = "08E1FCAFA4F898C80FF5E88EEB40C7497B4F5651AF3B8EC85F65A3DAA2F1509A766D833477358D3FF83D179E014034AB0C48120847EF24736C8D1A5B67FEC10B";
+  #  };
+  #});
 
-  # Get a not-yet-available version of dotnet core sdk
-  dotnet-sdk = super.dotnet-sdk.overrideAttrs (old: rec {
-    version = "2.2.300";
-    netCoreVersion = "2.2";
-    name = "dotnet-sdk-${version}";
-    src = self.fetchurl {
-      url = "https://dotnetcli.azureedge.net/dotnet/Sdk/${version}/dotnet-sdk-${version}-linux-x64.tar.gz";
-      # use sha512 from the download page
-      sha512 = "1D660A323180DF3DA8C6E0EA3F439D6BBEC29670D498AC884F38BF3CDFFBB041C7AFFF66171CDFD24C82394B845B135B057404DEF1FCE9F206853726382BC42B";
-    };
-  });
 
   myHaskellEnv =
     super.haskellPackages.ghcWithHoogle

@@ -422,9 +422,8 @@ let g:ale_sign_column_always = 1
 
 "\ 'haskell': ['hie', '--lsp'],
 let g:LanguageClient_serverCommands = {
-      \ 'fsharp': ['dotnet', '/home/ditadi/src/fsharp-language-server/src/FSharpLanguageServer/bin/Release/netcoreapp2.0/FSharpLanguageServer.dll'],
+      \ 'fsharp': ['dotnet', '/home/ditadi/code/fsprojects/fsharp-language-server/src/FSharpLanguageServer/bin/Release/netcoreapp2.0/FSharpLanguageServer.dll'],
       \ 'python': ['pyls'],
-      \ 'haskell': ['hie-wrapper']
       \ }
 
 let g:seiya_target_groups = has('nvim') ? ['guibg'] : ['ctermbg']
@@ -529,7 +528,7 @@ set clipboard+=unnamedplus
 "vnoremap <silent> d d:call ClipboardYank()<cr>
 "nnoremap <silent> p :call ClipboardPaste()<cr>p
 "
- nnoremap <Leader> :GundoToggle<CR>
+" nnoremap <Leader> :GundoToggle<CR>
 
 if has('NVIM')
     let s:editor_root=expand("~/.config/nvim")
@@ -623,3 +622,6 @@ hi link ALEError Error
 hi Warning term=underline cterm=underline ctermfg=Yellow gui=undercurl guisp=Gold
 hi link ALEWarning Warning
 hi link ALEInfo SpellCap
+
+
+let g:vim_json_syntax_conceal = 0
