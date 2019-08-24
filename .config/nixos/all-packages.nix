@@ -17,6 +17,7 @@
   };
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowBroken = true;
   nix = {
       trustedUsers = [ "root" "ditadi" ];
   };
@@ -61,15 +62,18 @@
   };
 
 
+  # zsh completion for system wide packages e.g., systemd
+  environment.pathsToLink = [ "/share/zsh" ];
+
   environment.systemPackages = with pkgs; [
     blueman
     (texlive.combine {
         inherit (texlive)
         #scheme-minimal # plain
-        #scheme-basic   # + latex
+        scheme-basic   # + latex
         #scheme-small   # + xetex
         #scheme-medium  # + packages
-        scheme-full    # + more packages
+        #scheme-full    # + more packages
         adjustbox algorithm2e anyfontsize
         babel babel-greek booktabs boondox
         bussproofs caption cbfonts ccicons

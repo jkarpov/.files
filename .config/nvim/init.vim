@@ -12,7 +12,6 @@ set ruler
 set number
 set nowrap
 set laststatus=2
-set cmdheight=1
 autocmd BufEnter * set nocursorline
 autocmd BufLeave * set nocursorline
 set showmatch
@@ -28,6 +27,7 @@ set termguicolors
 "set colorcolumn=80
 set noshowmode
 set background=dark
+set shell=/bin/sh
 "set background=light
 
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -39,7 +39,7 @@ if &diff
   let g:seiya_auto_enable=0
   colorscheme github
 endif
-"colorscheme monodark
+colorscheme monodark
 
 "let g:gruvbox_italic=1
 "colorscheme gruvbox
@@ -108,36 +108,132 @@ set incsearch
 set completeopt-=preview
 set omnifunc=syntaxcomplete#Complete
 
-"let mapleader="\<Space>"
-"let maplocalleader="\<Space>"
-
 let mapleader=","
 let maplocalleader=","
 
 " ---------------
+" coc
+" ---------------
+
+set cmdheight=1
+set updatetime=300
+set shortmess+=c
+set signcolumn=yes
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+inoremap <silent><expr> <c-space> coc#refresh()
+" Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use `[c` and `]c` for navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K for show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Remap for format selected region
+vmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+" Use `:Format` for format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` for fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+
+" Add diagnostic info for https://github.com/itchyny/lightline.vim
+function! CocCurrentFunction()
+    return get(b:, 'coc_current_function', '')
+endfunction
+
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'cocstatus', 'currentfunction', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'cocstatus': 'coc#status',
+      \   'currentfunction': 'CocCurrentFunction'
+      \ }
+      \ }
+
+
+
+" Using CocList
+" Show all diagnostics
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+
+" ---------------
 " deoplete
 " ---------------
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#file#enable_buffer_path = 1
-let g:deoplete#enable_ignore_case = 'ignorecase'
-let g:deoplete#enable_smart_case = 'infercase'
-let g:deoplete#data_directory = '~/.cache/deoplete/'
-
-  " Don't squash types
-call deoplete#custom#source('_', 'converters', [])
-call deoplete#custom#source('LanguageClient', 'min_pattern_length', 1)
+"let g:deoplete#enable_at_startup = 1
+"let g:deoplete#file#enable_buffer_path = 1
+"let g:deoplete#enable_ignore_case = 'ignorecase'
+"let g:deoplete#enable_smart_case = 'infercase'
+"let g:deoplete#data_directory = '~/.cache/deoplete/'
+"
+"  " Don't squash types
+"call deoplete#custom#source('_', 'converters', [])
+"call deoplete#custom#source('LanguageClient', 'min_pattern_length', 1)
 
 " <CR>: close popup and save indent.
 "inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-    return deoplete#mappings#smart_close_popup() . "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-set completeopt=longest,menuone
-set completeopt+=noinsert
-set completeopt+=noselect
+"function! s:my_cr_function()
+"    return deoplete#mappings#smart_close_popup() . "\<CR>"
+"endfunction
+"" <TAB>: completion.
+"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+"inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+"set completeopt=longest,menuone
+"set completeopt+=noinsert
+"set completeopt+=noselect
 
 
 "Amount of entries in completion popup
@@ -249,7 +345,7 @@ set updatetime=250
 " ---------------
 nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gc :Gcommit<CR>
-nnoremap <Leader>gd :Gdiff<CR>
+"nnoremap <Leader>gd :Gdiff<CR>
 nnoremap <Leader>gD :Gdiff<CR>
 nnoremap <Leader>gb :Gblame<CR>
 nnoremap <Leader>gL :exe ':!cd ' . expand('%:p:h') . '; git la'<CR>
@@ -324,12 +420,10 @@ autocmd BufEnter,BufNew *.hledger* set filetype=ledger
 let g:ale_sign_column_always = 1
 
 
-"\ 'haskell': ['hie', '--lsp'],
 let g:LanguageClient_serverCommands = {
-      \ 'fsharp': ['dotnet', '/home/ditadi/src/fsharp-language-server/src/FSharpLanguageServer/bin/Release/netcoreapp2.0/FSharpLanguageServer.dll'],
-      \ 'clojure': ['/home/ditadi/src/clojure-lsp/target/clojure-lsp'],
+      \ 'fsharp': ['dotnet', '/home/ditadi/code/fsprojects/fsharp-language-server/src/FSharpLanguageServer/bin/Release/netcoreapp2.0/FSharpLanguageServer.dll'],
+      \ 'clojure': ['/home/ditadi/code/snoe/clojure-lsp/target/clojure-lsp'],
       \ 'python': ['pyls'],
-      \ 'haskell': ['hie-wrapper']
       \ }
 
 let g:seiya_target_groups = has('nvim') ? ['guibg'] : ['ctermbg']
@@ -434,7 +528,7 @@ set clipboard+=unnamedplus
 "vnoremap <silent> d d:call ClipboardYank()<cr>
 "nnoremap <silent> p :call ClipboardPaste()<cr>p
 "
- nnoremap <Leader> :GundoToggle<CR>
+" nnoremap <Leader> :GundoToggle<CR>
 
 if has('NVIM')
     let s:editor_root=expand("~/.config/nvim")
@@ -528,3 +622,6 @@ hi link ALEError Error
 hi Warning term=underline cterm=underline ctermfg=Yellow gui=undercurl guisp=Gold
 hi link ALEWarning Warning
 hi link ALEInfo SpellCap
+
+
+let g:vim_json_syntax_conceal = 0

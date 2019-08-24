@@ -15,28 +15,32 @@
   networking.networkmanager.enable = true;
   networking.hostId = "664d4279";
 
-  networking.nat = {
-    enable = true;
-    internalInterfaces = [ "wg0" ];
-    externalInterface = "wlp60s0";
-  };
-  networking.wireguard.interfaces = {
-    wg0 = {
-      ips = [ "10.13.13.102/32" ];
-      listenPort = 51820;
-      privateKey = "eDgfrU1hKqtXNttZJm2ayHHiuF2FGG+V7LyecA92uHs=";
-      allowedIPsAsRoutes = false;
-      peers = [
-        {
-          publicKey = "bcPctKwpG9Wp0SE1I5jxoXdUjd1Kct+58VzsagJdjyg=";
-          presharedKey = "Hz4xwmyJZvr224QVn5wNxj/oUgO5kOSXXP3yrVRQAjY=";
-          allowedIPs = [ "10.13.13.1" ];
-          endpoint = "lfo6dacsshyqo.southcentralus.cloudapp.azure.com:51820";
-          persistentKeepalive = 25;
-        }
-      ];
-    };
-  };
+ # networking.wireguard.interfaces = {
+ #   wg0 = {
+ #     ips = [ "10.13.13.104/32" ];
+
+ #     privateKey = "+IJRGez3DFq1wXnVZcUpqaTTEnvXcSl37DzYgegQ9Wc=";
+ #     listenPort = 56650;
+
+ #     peers = [
+ #       #{
+ #       #  publicKey = "bcPctKwpG9Wp0SE1I5jxoXdUjd1Kct+58VzsagJdjyg=";
+ #       #  ##publicKey = "9UqfnyzSY7cTA8PVDLGOnWJRQ7giHw8/qKQlN7YZnCg=";
+
+ #       #  allowedIPs = [ "10.13.13.100/24" ];
+
+ #       #  endpoint = "40.124.55.226:51820";
+ #       #  persistentKeepalive = 25;
+ #       #}
+ #     ];
+ #   };
+ # };
+
+  #networking.nat = {
+  #  enable = true;
+  #  internalInterfaces = [ "wg0" ];
+  #  externalInterface = "wlp60s0";
+  #};
 
   services.zfs.autoSnapshot = {
     enable = true;
@@ -75,6 +79,7 @@
 
   environment.systemPackages = with pkgs; [
     xorg.xbacklight
+    wireguard
   ];
 
   # This value determines the NixOS release with which your system is to be
