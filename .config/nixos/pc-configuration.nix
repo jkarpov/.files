@@ -17,6 +17,8 @@
   # boot.loader.efi.canTouchEfiVariables = true;
 
   boot.loader.grub.devices = [ "/dev/nvme1n1" "/dev/nvme2n1" ];
+  boot.loader.grub.splashImage = null;
+  boot.loader.grub.configurationLimit = 1;
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.enableUnstable = true;
   nixpkgs.system = "x86_64-linux";
@@ -38,7 +40,7 @@
       permitRootLogin = "no";
       passwordAuthentication = false;
       ports = [ 22 2222 ];
-      forwardX11 = true;
+      forwardX11 = false;
   };
 
   services.xserver = {
@@ -60,6 +62,7 @@
 
   environment.systemPackages = with pkgs; [
     ntfs3g
+    steam
   ];
 
   # Configure network proxy if necessary
@@ -127,6 +130,6 @@
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
   # should.
-  system.stateVersion = "18.09"; # Did you read the comment?
+  system.stateVersion = "19.03"; # Did you read the comment?
 
 }

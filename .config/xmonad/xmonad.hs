@@ -66,7 +66,7 @@ main = do
         ,((modm .|. shiftMask .|. controlMask, xK_c     ), kill)
         ,((modm .|. shiftMask, xK_0     ), windows $ copyToAll)
         ,((modm,               xK_c     ), layoutScreens 3 $ ThreeColMid 1 (3/100) (70/100))
-        ,((modm,               xK_x     ), layoutScreens 3 $ ThreeColMid 1 (3/100) (30/100))
+        ,((modm,               xK_x     ), layoutScreens 3 $ ThreeColMid 1 (3/100) (27/64))
         ,((modm,               xK_z     ), layoutScreens 3 $ ThreeColMid 1 (3/100) (8/100))
         ,((modm .|. shiftMask, xK_z     ), rescreen)
         ,((modm .|. controlMask, xK_l   ), spawn "@lockCmd@")

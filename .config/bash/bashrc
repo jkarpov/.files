@@ -75,7 +75,7 @@ set -o vi
 bind 'set show-all-if-ambiguous on'
 bind 'TAB:menu-complete'
 
-PATH=$PATH:~/src/terminal_dimensions/:~/src/termpdf
+PATH=$PATH:~/src/terminal_dimensions/:~/src/termpdf:~/.npm-packages/bin
 
 export PATH="$PATH:/root/.dotnet/tools"
 

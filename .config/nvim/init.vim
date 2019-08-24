@@ -25,7 +25,7 @@ set novisualbell
 set nonumber
 set guicursor=
 set termguicolors
-set colorcolumn=80
+"set colorcolumn=80
 set noshowmode
 set background=dark
 "set background=light
@@ -34,7 +34,7 @@ let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
 "colorscheme molokai
-let g:seiya_auto_enable=0
+let g:seiya_auto_enable=1
 if &diff
   let g:seiya_auto_enable=0
   colorscheme github
@@ -52,7 +52,7 @@ endif
 "let g:solarized_visibility = "medium"
 "let g:solarized_extra_hi_groups=1
 "let g:airline_theme='solarized'
-colorscheme NeoSolarized
+"colorscheme NeoSolarized
 "let g:solarized_use16 = 1
 "colorscheme solarized8
 "
@@ -63,7 +63,7 @@ colorscheme NeoSolarized
 "let ayucolor="dark"
 "let ayucolor="light"
 "let g:airline_theme='solarized'
-"colorscheme ayu
+colorscheme ayu
 "
 "highlight clear LineNr
 "highlight clear SignColumn
@@ -327,6 +327,7 @@ let g:ale_sign_column_always = 1
 "\ 'haskell': ['hie', '--lsp'],
 let g:LanguageClient_serverCommands = {
       \ 'fsharp': ['dotnet', '/home/ditadi/src/fsharp-language-server/src/FSharpLanguageServer/bin/Release/netcoreapp2.0/FSharpLanguageServer.dll'],
+      \ 'clojure': ['/home/ditadi/src/clojure-lsp/target/clojure-lsp'],
       \ 'python': ['pyls'],
       \ 'haskell': ['hie-wrapper']
       \ }

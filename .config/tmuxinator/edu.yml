@@ -12,8 +12,8 @@ windows:
       panes:
         - src:
           - jupyter notebook stop 8888
-          - cd proj3 && jupyter notebook --no-browser --port=8888 &>.jupyter.log &
-          - cd proj3/src
+          - cd proj4 && jupyter notebook --no-browser --port=8888 &>.jupyter.log &
+          - cd proj4/src
           - ranger
   - report:
       layout: main-vertical
@@ -22,7 +22,7 @@ windows:
         - nix-shell
       panes:
         - report:
-          - cd proj3/report
+          - cd proj4/report
           - ranger
   - ml4t:
       layout: main-vertical
@@ -33,7 +33,26 @@ windows:
         - main:
           - jupyter notebook stop 8889
           - jupyter notebook --no-browser --port=8889 &>.jupyter.log &
-          - cd proj3/src
-        - report:
-          - cd proj3/report
+          - cd proj6/src
           - ranger
+  - ml4t-report:
+      layout: main-vertical
+      root: ~/edu/ml4t
+      pre:
+        - nix-shell
+      panes:
+        - main:
+          - jupyter notebook stop 8889
+          - jupyter notebook --no-browser --port=8889 &>.jupyter.log &
+          - cd proj6/report
+          - ranger
+        - side:
+          - cd proj6/report/.report
+  - ml4t-run:
+      layout: main-vertical
+      root: ~/edu/ml4t
+      pre:
+        - nix-shell
+      panes:
+        - main:
+          - cd proj5/src
