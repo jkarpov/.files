@@ -1,35 +1,28 @@
 # ~/.tmuxinator/work.yml
 
-name: work
+name: tachyus
 root: ~/code/tachyus/
 
 windows:
-  - maas2:
-      root: ~/code/tachyus/maas2/
+  - maas-api:
+      root: ~/code/tachyus/maas/
       layout: main-vertical
       panes:
         - api:
-          - ranger
-        - serve:
-            - cd ~/code/tachyus/maas2/maas2-api
-            - dotnet watch run
-        - lorri:
-          - lorri watch
+          - clear
   - flood-engine:
       root: ~/code/tachyus/flood-engine
       layout: main-vertical
       panes:
         - install:
-          -
+          - clear
   - locsim:
       root: ~/code/tachyus/locsim
-      layout: main-vertical
+      layout: main-horizontal
       panes:
-        - install:
-          -
-  - MaaS:
-      root: ~/code/tachyus/MaaS
-      layout: main-vertical
-      panes:
-        - install:
-          -
+        - main:
+          - clear
+        - transform:
+          - cd ./contract/Contracts/src/Transform/
+          - clear
+

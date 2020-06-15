@@ -23,15 +23,18 @@ set noerrorbells
 set novisualbell
 set nonumber
 set guicursor=
-set termguicolors
-"set colorcolumn=80
+"set termguicolors
+set colorcolumn=80
 set noshowmode
-set background=dark
-set shell=/bin/sh
+"set background=dark
 "set background=light
+set shell=/bin/sh
 
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+if exists('+termguicolors')
+    let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+    set termguicolors
+endif
 
 "colorscheme molokai
 let g:seiya_auto_enable=1
@@ -39,7 +42,7 @@ if &diff
   let g:seiya_auto_enable=0
   colorscheme github
 endif
-colorscheme monodark
+"colorscheme monodark
 
 "let g:gruvbox_italic=1
 "colorscheme gruvbox
@@ -59,7 +62,7 @@ colorscheme monodark
 "colorscheme mopkai
 "colorscheme molokai
 
-"let ayucolor="mirage"
+let ayucolor="mirage"
 "let ayucolor="dark"
 "let ayucolor="light"
 "let g:airline_theme='solarized'
@@ -151,7 +154,7 @@ function! s:show_documentation()
   if &filetype == 'vim'
     execute 'h '.expand('<cword>')
   else
-    call CocAction('doHover')
+    call CocActionAsync('doHover')
   endif
 endfunction
 
@@ -159,7 +162,7 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>r <Plug>(coc-rename)
 
 " Remap for format selected region
 vmap <leader>f  <Plug>(coc-format-selected)
@@ -417,14 +420,13 @@ autocmd BufEnter,BufNew *.hledger* set filetype=ledger
 ""-----
 "highlight clear ALEErrorSign
 "highlight clear ALEWarningSign
-let g:ale_sign_column_always = 1
-
-
-let g:LanguageClient_serverCommands = {
-      \ 'fsharp': ['dotnet', '/home/ditadi/code/fsprojects/fsharp-language-server/src/FSharpLanguageServer/bin/Release/netcoreapp2.0/FSharpLanguageServer.dll'],
-      \ 'clojure': ['/home/ditadi/code/snoe/clojure-lsp/target/clojure-lsp'],
-      \ 'python': ['pyls'],
-      \ }
+"/bin/sh: jjjjkkjq: command not found
+"
+""\ 'haskell': ['hie', '--lsp'],
+"let g:LanguageClient_serverCommands = {
+"      \ 'fsharp': ['dotnet', '/home/ditadi/code/fsprojects/fsharp-language-server/src/FSharpLanguageServer/bin/Release/netcoreapp2.0/FSharpLanguageServer.dll'],
+"      \ 'python': ['pyls'],
+"      \ }
 
 let g:seiya_target_groups = has('nvim') ? ['guibg'] : ['ctermbg']
 
@@ -618,10 +620,11 @@ augroup END
 let g:pandoc#syntax#codeblocks#embeds#langs = ["ruby","fsharp", "bash=sh"]
 
 
-hi link ALEError Error
-hi Warning term=underline cterm=underline ctermfg=Yellow gui=undercurl guisp=Gold
-hi link ALEWarning Warning
-hi link ALEInfo SpellCap
+"hi link ALEError Error
+"hi Warning term=underline cterm=underline ctermfg=Yellow gui=undercurl guisp=Gold
+"hi link ALEWarning Warning
+"hi link ALEInfo SpellCap
 
 
 let g:vim_json_syntax_conceal = 0
+

@@ -1,7 +1,6 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 {
@@ -12,10 +11,6 @@
       ./all-users.nix
     ];
 
-  # Use the systemd-boot EFI boot loader.
-  # boot.loader.systemd-boot.enable = true;
-  # boot.loader.efi.canTouchEfiVariables = true;
-
   boot.loader.grub.devices = [ "/dev/nvme1n1" "/dev/nvme2n1" ];
   boot.loader.grub.splashImage = null;
   boot.loader.grub.configurationLimit = 1;
@@ -23,16 +18,20 @@
   boot.zfs.enableUnstable = true;
   nixpkgs.system = "x86_64-linux";
 
-  # networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.hostId = "dec1f65b";
 
   nixpkgs.config.allowUnfree = true;
-
-
+  nixpkgs.overlays =
+      [ (self: super:
+        {
+          # override with newer version from nixpkgs-unstable
+          qemu = super.qemu.overrideAttrs (old: rec {
+            patches = old.patches ++ [ ./qemu.patch ];
+          });
+        })
+      ];
 
   time.timeZone = "US/Central";
-
   networking.hostName = "tadyshev";
 
   services.openssh = {
@@ -45,9 +44,9 @@
 
   services.xserver = {
     videoDrivers = [ "nvidia" ];
-    screenSection = ''
-      Option         "metamodes" "nvidia-auto-select +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On}"
-    '';
+    #screenSection = ''
+      #Option         "metamodes" "nvidia-auto-select +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On}"
+    #'';
   };
 
   services.zfs.autoSnapshot = {
@@ -56,80 +55,55 @@
     monthly = 12;  # keep only one monthly snapshot (instead of twelve)
   };
 
-  virtualisation.docker.enable = true;
-  #virtualisation.virtualbox.host.enable = true;
-  #users.extraGroups.vboxusers.members = [ "ditadi" ];
+  virtualisation = {
+    docker.enable = true;
+    virtualbox.guest = {
+      enable = false;
+      x11 = false;
+    };
+    virtualbox.host = {
+      enable = false;
+      headless = true;
+    };
+    libvirtd = {
+      enable = true;
+      #onBoot = "ignore";
+      onShutdown = "shutdown";
+      extraOptions = [ "--verbose" ];
+      qemuVerbatimConfig = ''
+          namespaces = []
+          user = "ditadi"
+          group = "kvm"
+          cgroup_device_acl = [
+              "/dev/null", "/dev/full", "/dev/zero",
+              "/dev/random", "/dev/urandom",
+              "/dev/ptmx", "/dev/kvm",
+              "/dev/rtc","/dev/hpet",
+              "/dev/input/by-path/pci-0000:44:00.3-usb-0:4:1.0-event-kbd",
+              "/dev/input/by-path/pci-0000:44:00.3-usb-0:3.1:1.2-event-mouse"
+          ]
+      '';
+    };
+  };
 
-  environment.systemPackages = with pkgs; [
-    ntfs3g
-    steam
+  users.extraGroups.vboxusers.members = [ "ditadi" ];
+  users.groups.libvirtd.members = [ "ditadi" ];
+
+  environment = {
+    systemPackages = with pkgs; [
+      ntfs3g
+      virtmanager
+      #looking-glass-client
+    ];
+    variables = {
+        #QT_AUTO_SCREEN_SCALE_FACTOR= "2";
+        QT_SCALE_FACTOR = "1.25";
+    };
+  };
+
+  systemd.tmpfiles.rules = [
+    "f /dev/shm/looking-glass 0660 ditadi qemu-libvirtd -"
   ];
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Select internationalisation properties.
-  # i18n = {
-  #   consoleFont = "Lat2-Terminus16";
-  #   consoleKeyMap = "us";
-  #   defaultLocale = "en_US.UTF-8";
-  # };
-
-  # Set your time zone.
-  # time.timeZone = "Europe/Amsterdam";
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  # environment.systemPackages = with pkgs; [
-  #   wget vim
-  # ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable sound.
-  # sound.enable = true;
-  # hardware.pulseaudio.enable = true;
-
-  # Enable the X11 windowing system.
-  # services.xserver.enable = true;
-  # services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e";
-
-  # Enable touchpad support.
-  # services.xserver.libinput.enable = true;
-
-  # Enable the KDE Desktop Environment.
-  # services.xserver.displayManager.sddm.enable = true;
-  # services.xserver.desktopManager.plasma5.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  # users.users.guest = {
-  #   isNormalUser = true;
-  #   uid = 1000;
-  # };
-
-  # This value determines the NixOS release with which your system is to be
-  # compatible, in order to avoid breaking some software such as database
-  # servers. You should change this only after NixOS release notes say you
-  # should.
-  system.stateVersion = "19.03"; # Did you read the comment?
-
+  system.stateVersion = "19.09";
 }

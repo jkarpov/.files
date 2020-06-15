@@ -1,17 +1,11 @@
 # ~/.tmuxinator/ink.yml
 
 name: ink
-root: ~/src/inklings
+root: ~/code/ditadi/inklings/
 
 windows:
   - code:
-      root: ~/src/inklings/perelandra/src/perelandra
-      pre: nix-shell -p inklings-env
+      root: ~/code/ditadi/inklings/
       layout: main-vertical
       panes:
-        - ranger
-  - serve:
-      root: ~/src/inklings/perelandra/
-      pre: nix-shell -p inklings-env
-      panes:
-        - lein figwheel
+        -

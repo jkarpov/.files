@@ -1,11 +1,9 @@
 { config, pkgs, ... }:
 let
   lockCmd = "xlock -mode blank -erasedelay 0";
-  batch-explorer = pkgs.callPackage ./batch-explorer.nix { };
-  #sqlpackage = pkgs.callPackage ./sqlpackage.nix { };
-  #msbuild = pkgs.callPackage ./msbuild.nix { };
+  #batch-explorer = pkgs.callPackage ./batch-explorer.nix { };
   #nuget = pkgs.callPackage ./nuget.nix { };
-  #fsharp10 = import ./fsharp.nix { pkgs = pkgs; msbuild = msbuild; fetchNuGet = nuget; };
+  #pkgsUnstable = import <nixpkgs-unstable> {};
 
 in rec {
 
@@ -19,35 +17,41 @@ in rec {
   home.homeDirectory = "/home/ditadi";
 
   home.packages = with pkgs; [
-    htop
-    kitty # terminal emulator
-    xclip
-    hledger # cli accounting
-    hledger-ui
-    hledger-web
-    pass
-    scrot # screenshots
-    zip
-    unzip
+    hledger hledger-ui hledger-web
+    scrot
+    zip unzip
     alsaUtils
     spotify
-    ranger # cli file manager
+    ranger
     slack
-    zathura # pdf viewer
-    signal-desktop
-    gvfs
     albert # menu
-    insomnia
+
     xlockmore
+    xclip
     copyq
+
     gnupg
     inotify-tools
     fzy
     ripgrep
-    batch-explorer
+    #batch-explorer
+    discord
+    postman
+
+    vlc
+    mitmproxy
+    tmux-mine
+    tmuxinator
+    #haskellPackages.arbtt
+    google-chrome
+
+    #cortex-cli
+
     #sqlpackage
     #fsharp10
     #msbuild
+    zoom-us
+    libreoffice
   ];
 
 
@@ -55,16 +59,60 @@ in rec {
     neovim.enable = true;
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
+    obs-studio.enable = true;
     firefox.enable = true;
+    qutebrowser.enable = true;
     feh.enable = true;
     direnv.enable = true;
     direnv.enableZshIntegration = true;
     fzf.enable = true;
+    jq.enable = true;
+    alacritty.enable = true;
+    zathura.enable = true;
+    htop.enable = true;
 
-    tmux = {
+    gpg.enable = true;
+    password-store = {
       enable = true;
-      tmuxinator.enable = true;
+      settings = {
+          PASSWORD_STORE_DIR = "/home/ditadi/.password-store";
+      };
     };
+
+    #tmux = {
+    #  enable = true;
+    #  tmuxinator.enable = true;
+    #};
+
+    irssi = {
+      enable = true;
+      networks = {
+        freenode = {
+          nick = "ditadi";
+          server = {
+            address = "chat.freenode.net";
+            port = 6697;
+            autoConnect = true;
+            ssl = {
+              enable = true;
+              verify = true;
+            };
+          };
+          channels = {
+            nixos.autoJoin = true;
+            haskell.autoJoin = true;
+            hledger.autoJoin = true;
+          };
+        };
+      };
+      extraConfig = ''
+        ignores = ({
+          level = "JOINS PARTS QUITS NICKS";
+          channels = ("#nixos", "#haskell", "#hledger");
+        });
+      '';
+    };
+
     browserpass = {
       enable = true;
       browsers = [ "firefox" ];
@@ -73,11 +121,23 @@ in rec {
       enable = true;
       enableAutosuggestions = true;
       #defaultKeymap = "vicmd";
-      dotDir = ".config/zsh";
+      #dotDir = ".config/zsh";
       history.share = false;
+      history.expireDuplicatesFirst = true;
+      history.ignoreDups = true;
       oh-my-zsh.enable = true;
       oh-my-zsh.plugins = [ "git" "sudo" "colorize" "colored-man-pages" ];
       oh-my-zsh.theme = "bira";
+
+      sessionVariables = {
+        EDITOR = "nvim";
+        SSH_AUTH_SOCK = "$(${pkgs.gnupg}/bin/gpgconf --list-dirs agent-ssh-socket)";
+        LEDGER_FILE = "/home/ditadi/notes/current.journal";
+        DISABLE_AUTO_TITLE = true;
+        #HISTCONTROL = "ignoreboth:erasedups";
+        #PASSWORD_STORE_DIR = "$($HOME/.password-store)";
+      };
+
       shellAliases = {
         ".." = "cd ..";
         "ll" = "ls -l";
@@ -88,6 +148,7 @@ in rec {
         "d" = "kitty +kitten diff";
         # do git diff in a termial
         "gd" = "git difftool --no-symlinks --dir-diff";
+        "home-update" = "home-manager -I nixpkgs=/nix/var/nix/profiles/per-user/$USER/channels/nixpkgs-unstable switch";
       };
       initExtra = builtins.readFile ../zsh/zshrc;
     };
@@ -145,10 +206,11 @@ in rec {
 
        "5k2k" = {
          fingerprint = {
-            DP-0 = "00ffffffffffff001e6d2077a53c0200021d0104b55021789e09c1ae5044af260e50542108007140818081c0a9c0d1c0810001010101e77c70a0d0a0295030203a00204a3100001a9d6770a0d0a0225030203a00204a3100001a000000fd00303d1e874c000a202020202020000000fc004c472048445220354b0a20202002e50203197144900403012309070783010000e305c000e30605014dd000a0f0703e803020650c204a3100001a286800a0f0703e800890650c204a3100001a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e37012790300030028701d0186ff136801188060006f083d002f000800b88e0086ff136801188060006f083d002f000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ab90";
+            #DP-0 = "00ffffffffffff001e6d2077a53c0200021d0104b55021789e09c1ae5044af260e50542108007140818081c0a9c0d1c0810001010101e77c70a0d0a0295030203a00204a3100001a9d6770a0d0a0225030203a00204a3100001a000000fd00303d1e874c000a202020202020000000fc004c472048445220354b0a20202002e50203197144900403012309070783010000e305c000e30605014dd000a0f0703e803020650c204a3100001a286800a0f0703e800890650c204a3100001a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e37012790300030028701d0186ff136801188060006f083d002f000800b88e0086ff136801188060006f083d002f000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ab90";
+            DP-2 = "00ffffffffffff001e6d2077a53c0200021d0104b55021789e09c1ae5044af260e50542108007140818081c0a9c0d1c0810001010101e77c70a0d0a0295030203a00204a3100001a9d6770a0d0a0225030203a00204a3100001a000000fd00303d1e874c000a202020202020000000fc004c472048445220354b0a20202002e50203197144900403012309070783010000e305c000e30605014dd000a0f0703e803020650c204a3100001a286800a0f0703e800890650c204a3100001a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e37012790300030028701d0186ff136801188060006f083d002f000800b88e0086ff136801188060006f083d002f000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ab90";
          };
          config = {
-           DP-0 = {
+           DP-2 = {
              enable = true;
              mode = "5120x2160";
              rate = "60.00";
@@ -202,18 +264,7 @@ in rec {
       userEmail = "dmitriy@tadyshev.com";
       signing.key = "3762F98A01D3E704C1CCCF5F2605552C1DF82E49";
       signing.signByDefault = true;
-      extraConfig=''
-        [diff]
-            tool = kitty
-            guitool = kitty.gui
-        [difftool]
-            prompt = false
-            trustExitCode = true
-        [difftool "kitty"]
-            cmd = kitty +kitten diff $LOCAL $REMOTE
-        [difftool "kitty.gui"]
-            cmd = kitty kitty +kitten diff $LOCAL $REMOTE
-      '';
+      ignores = [ "shell.nix" ".envrc" "local.appsettings.json" ];
     };
   };
 
@@ -252,10 +303,24 @@ in rec {
     #  passwordAuthentication = false;
     #  ports = [ 22 2222 ];
     #};
+    password-store-sync.enable = true;
+    lorri.enable = true;
 
     gpg-agent = {
       enable = true;
       enableSshSupport = true;
+      defaultCacheTtl = 900;
+      maxCacheTtl = 7200;
+      defaultCacheTtlSsh = 3600;
+      maxCacheTtlSsh = 86400;
+      enableExtraSocket = true;
+      sshKeys = [
+        "9C6B531D7F8F5B250E863FD52990013F0E0B92FB"
+      ];
+      #pinentryFlavor = "qt";
+      #extraConfig = ''
+      #  pinentry-program ${pkgs.pinentry.qt}/bin/pinentry
+      #'';
     };
 
     screen-locker = {
@@ -263,21 +328,53 @@ in rec {
       lockCmd = lockCmd;
     };
 
-    compton = {
-      enable = true;
-      fade = false;
-      shadow = true;
-      fadeDelta = 4;
-      extraOptions = ''
-        no-dock-shadow = true;
-      '';
-    };
+    #compton = {
+    #  enable = false;
+    #  fade = false;
+    #  shadow = false;
+    #  fadeDelta = 4;
+    #};
 
     redshift = {
       enable = true;
       latitude = "29.8";
       longitude = "-95.4";
     };
+  };
+
+  xdg.configFile."direnv/direnvrc".text = ''
+    use_nix () {
+        eval "$(lorri direnv)"
+    }
+  '';
+
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "application/pdf" = "org.pwmt.zathura.desktop";
+      "application/x-pdf" = "org.pwmt.zathura.desktop";
+
+      "text/csv" = "calc.desktop";
+      "text/x-csv" = "calc.desktop";
+      "text/plain" = "nvim.desktop";
+      "text/x-script.python" = "nvim.desktop";
+      "text/x-script.sh" = "nvim.desktop";
+      "text/html" = "nvim.desktop";
+      "text/css" = "nvim.desktop";
+      "text/xml" = "nvim.desktop";
+
+      "x-scheme-handler/https" = "org.qutebrowser.qutebrowser.desktop";
+      "x-scheme-handler/http" = "org.qutebrowser.qutebrowser.desktop";
+      "x-scheme-handler/chrome" = "org.qutebrowser.qutebrowser.desktop";
+
+      "x-scheme-handler/postman" = "org.qutebrowser.qutebrowser.desktop";
+      "x-scheme-handler/zoommtg" = "us.zoom.Zoom.desktop";
+    };
+    #associations.added = {
+    #  "text/x-emacs-lisp" = "emacs.desktop";
+    #  "text/plain" = "emacs.desktop";
+    #  "text/html" = "org.gnome.gedit.desktop";
+    #};
   };
 
   home.file = {

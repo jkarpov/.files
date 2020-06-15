@@ -1,29 +1,24 @@
 # ~/.tmuxinator/dot.yml
 
-name: dot
-root: ~/
+name: config
+root: ~/.config
 
 # Controls whether the tmux session should be attached to automatically. Defaults to true.
 # attach: false
 
 windows:
-  - vim:
-      root: ~/.config/nvim
-      layout: main-vertical
-      panes:
-        - $EDITOR init.vim
-  - nix:
+  - home:
       root: ~/.config/nixpkgs
-      layout: main-vertical
+      layout: even-horizontal
       panes:
-        - ranger
-  - tmux:
-      root: ~/.config/tmuxinator
-      layout: main-vertical
+        - $EDITOR home.nix
+  - os:
+      root: ~/.config/nixpkgs/
+      layout: even-horizontal
       panes:
-      - ranger
-  - xmonad:
-      root: ~/.config/xmonad
-      layout: main-vertical
+        - $EDITOR ~/.config/nixos/pc-configuration.nix
+  - other:
+      root: ~/.config
+      layout: even-horizontal
       panes:
-        - ranger
+        -

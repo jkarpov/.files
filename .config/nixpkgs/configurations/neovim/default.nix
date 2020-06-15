@@ -12,19 +12,19 @@ let
 in
 {
 
-  nixpkgs.overlays = [
-      (self: super: {
-        neovim-unwrapped = super.neovim-unwrapped.overrideAttrs (oldattrs: {
-          version = "0.4.0";
-        src = pkgs.fetchFromGitHub {
-            owner = "neovim";
-            repo = "neovim";
-            rev = "36762a00a8010c5e14ad4347ab8287d1e8e7e064";
-            sha256 = "0n7i3mp3wpl8jkm5z0ifhaha6ljsskd32vcr2wksjznsmfgvm6p4";
-          };
-        });
-      })
-  ];
+  #nixpkgs.overlays = [
+  #    (self: super: {
+  #      neovim-unwrapped = super.neovim-unwrapped.overrideAttrs (oldattrs: {
+  #        version = "0.5.0";
+  #          src = pkgs.fetchFromGitHub {
+  #          owner = "neovim";
+  #          repo = "neovim";
+  #          rev = "36762a00a8010c5e14ad4347ab8287d1e8e7e064";
+  #          sha256 = "0n7i3mp3wpl8jkm5z0ifhaha6ljsskd32vcr2wksjznsmfgvm6p4";
+  #        };
+  #      });
+  #    })
+  #];
 
   programs.neovim = {
     viAlias = true;
@@ -90,7 +90,7 @@ in
             # deal with trailing whitespace
             lessspace.vim
             #hlsl.vim
-            gist-vim
+            #gist-vim
             vim-gnupg
             vim-json
         ];

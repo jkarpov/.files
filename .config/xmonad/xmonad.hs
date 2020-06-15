@@ -29,8 +29,8 @@ import qualified Data.Map as M
 main = do
   xmproc <- spawnPipe "@xmobar@ ~/.config/xmobar/xmobar.conf"
   xmonad $ docks $ ewmh $ defaultConfig
-    { terminal = "kitty"
-    , workspaces = ["src", "web"] ++ map show [3 .. 8 :: Int] ++ ["tv"]
+    { terminal = "alacritty"
+    , workspaces = ["1-main", "2-chat", "3-web"] ++ map show [4 .. 8 :: Int] ++ ["tv"]
     , mouseBindings = \(XConfig {modMask = modm}) -> M.fromList $
             [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w))
             , ((modm, button2), (\w -> focus w >> windows W.swapMaster))
@@ -56,18 +56,19 @@ main = do
     modifiers = avoidStruts . smartBorders
     myStartupHook = spawn "@albert@"
     myScratchPads =
-        [NS "dot" "kitty tmuxinator dot"   (title =? "dot") defaultFloating
-        ,NS "work" "kitty tmuxinator work" (title =? "work") defaultFloating
-        ,NS "ranger" "kitty ranger"        (title =? "ranger") defaultFloating
+        [NS "dot" "alacritty -e tmuxinator dot"    (title =? "dot") defaultFloating
+        ,NS "work" "alacritty -e tmuxinator work"  (title =? "work") defaultFloating
+        ,NS "ranger" "alacritty -e ranger"         (title =? "ranger") defaultFloating
+        ,NS "notes" "alacrity -e tmuxinator notes" (title =? "tmux | notes | todo") defaultFloating
         ]
     mykeys (XConfig {modMask = modm}) = M.fromList $
         [((modm .|. shiftMask, xK_Return), spawnHere =<< asks (terminal . config))
         ,((modm .|. shiftMask, xK_c     ), kill1)
         ,((modm .|. shiftMask .|. controlMask, xK_c     ), kill)
         ,((modm .|. shiftMask, xK_0     ), windows $ copyToAll)
-        ,((modm,               xK_c     ), layoutScreens 3 $ ThreeColMid 1 (3/100) (70/100))
+        ,((modm,               xK_c     ), layoutScreens 3 $ ThreeColMid 1 (3/100) (58/100))
         ,((modm,               xK_x     ), layoutScreens 3 $ ThreeColMid 1 (3/100) (27/64))
-        ,((modm,               xK_z     ), layoutScreens 3 $ ThreeColMid 1 (3/100) (8/100))
+        ,((modm,               xK_z     ), layoutScreens 3 $ ThreeColMid 1 (3/100) (20/100))
         ,((modm .|. shiftMask, xK_z     ), rescreen)
         ,((modm .|. controlMask, xK_l   ), spawn "@lockCmd@")
         ,((modm,               xK_b     ), sendMessage ToggleStruts)
@@ -76,7 +77,7 @@ main = do
         ,((0, xF86XK_AudioMute          ), spawn "amixer set Master toggle")
         ,((0, xF86XK_AudioLowerVolume   ), spawn "amixer set Master 5%- unmute")
         ,((0, xF86XK_AudioRaiseVolume   ), spawn "amixer set Master 5%+ unmute")
-        ,((modm,                 xK_o   ), namedScratchpadAction myScratchPads "dot")
+        ,((modm,                 xK_o   ), namedScratchpadAction myScratchPads "notes")
         ,((modm,            xK_Return   ), namedScratchpadAction myScratchPads "ranger")
         ,((modm .|. controlMask, xK_m   ), spawn "amixer -q set Master toggle")
         ,((modm .|. controlMask, xK_j   ), spawn "amixer -q set Master 5%-")
