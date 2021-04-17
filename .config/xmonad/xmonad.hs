@@ -59,7 +59,8 @@ main = do
         [NS "dot" "alacritty -e tmuxinator dot"    (title =? "dot") defaultFloating
         ,NS "work" "alacritty -e tmuxinator work"  (title =? "work") defaultFloating
         ,NS "ranger" "alacritty -e ranger"         (title =? "ranger") defaultFloating
-        ,NS "notes" "alacrity -e tmuxinator notes" (title =? "tmux | notes | todo") defaultFloating
+        ,NS "notes" "alacritty -e tmuxinator notes" (title =? "mux | notes") defaultFloating
+        ,NS "me" "alacritty -e tmuxinator me"       (title =? "mux | me") defaultFloating
         ]
     mykeys (XConfig {modMask = modm}) = M.fromList $
         [((modm .|. shiftMask, xK_Return), spawnHere =<< asks (terminal . config))
@@ -78,7 +79,7 @@ main = do
         ,((0, xF86XK_AudioLowerVolume   ), spawn "amixer set Master 5%- unmute")
         ,((0, xF86XK_AudioRaiseVolume   ), spawn "amixer set Master 5%+ unmute")
         ,((modm,                 xK_o   ), namedScratchpadAction myScratchPads "notes")
-        ,((modm,            xK_Return   ), namedScratchpadAction myScratchPads "ranger")
+        ,((modm,            xK_Return   ), namedScratchpadAction myScratchPads "me")
         ,((modm .|. controlMask, xK_m   ), spawn "amixer -q set Master toggle")
         ,((modm .|. controlMask, xK_j   ), spawn "amixer -q set Master 5%-")
         ,((modm .|. controlMask, xK_k   ), spawn "amixer -q set Master 5%+")

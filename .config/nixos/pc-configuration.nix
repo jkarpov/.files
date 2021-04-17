@@ -65,45 +65,45 @@
       enable = false;
       headless = true;
     };
-    libvirtd = {
-      enable = true;
+    #libvirtd = {
+      #enable = true;
       #onBoot = "ignore";
-      onShutdown = "shutdown";
-      extraOptions = [ "--verbose" ];
-      qemuVerbatimConfig = ''
-          namespaces = []
-          user = "ditadi"
-          group = "kvm"
-          cgroup_device_acl = [
-              "/dev/null", "/dev/full", "/dev/zero",
-              "/dev/random", "/dev/urandom",
-              "/dev/ptmx", "/dev/kvm",
-              "/dev/rtc","/dev/hpet",
-              "/dev/input/by-path/pci-0000:44:00.3-usb-0:4:1.0-event-kbd",
-              "/dev/input/by-path/pci-0000:44:00.3-usb-0:3.1:1.2-event-mouse"
-          ]
-      '';
-    };
+      #onShutdown = "shutdown";
+      #extraOptions = [ "--verbose" ];
+      #qemuVerbatimConfig = ''
+      #    namespaces = []
+      #    user = "ditadi"
+      #    group = "kvm"
+      #    cgroup_device_acl = [
+      #        "/dev/null", "/dev/full", "/dev/zero",
+      #        "/dev/random", "/dev/urandom",
+      #        "/dev/ptmx", "/dev/kvm",
+      #        "/dev/rtc","/dev/hpet",
+      #        "/dev/input/by-path/pci-0000:44:00.3-usb-0:4:1.0-event-kbd",
+      #        "/dev/input/by-path/pci-0000:44:00.3-usb-0:3.1:1.2-event-mouse"
+      #    ]
+      #'';
+    #};
   };
 
   users.extraGroups.vboxusers.members = [ "ditadi" ];
   users.groups.libvirtd.members = [ "ditadi" ];
 
-  environment = {
-    systemPackages = with pkgs; [
-      ntfs3g
-      virtmanager
-      #looking-glass-client
-    ];
-    variables = {
-        #QT_AUTO_SCREEN_SCALE_FACTOR= "2";
-        QT_SCALE_FACTOR = "1.25";
-    };
-  };
+  #environment = {
+  #  systemPackages = with pkgs; [
+  #    ntfs3g
+  #    virtmanager
+  #    #looking-glass-client
+  #  ];
+  #  variables = {
+  #      #QT_AUTO_SCREEN_SCALE_FACTOR= "2";
+  #      QT_SCALE_FACTOR = "1.25";
+  #  };
+  #};
 
-  systemd.tmpfiles.rules = [
-    "f /dev/shm/looking-glass 0660 ditadi qemu-libvirtd -"
-  ];
+  #systemd.tmpfiles.rules = [
+  #  "f /dev/shm/looking-glass 0660 ditadi qemu-libvirtd -"
+  #];
 
-  system.stateVersion = "19.09";
+  system.stateVersion = "20.09";
 }

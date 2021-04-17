@@ -9,51 +9,51 @@ let
   }) {};
 in {
 
-  # source https://github.com/Jomik/dotfiles/blob/cf8cc47db018fa29e8072dbbee9d521fdc7403e5/.config/nixpkgs/configurations/neovim/plugins.nix
-  coc-nvim = let
-      pname = "coc.nvim";
-      version = "0.0.73";
+  ## source https://github.com/Jomik/dotfiles/blob/cf8cc47db018fa29e8072dbbee9d521fdc7403e5/.config/nixpkgs/configurations/neovim/plugins.nix
+  #coc-nvim = let
+  #    pname = "coc.nvim";
+  #    version = "0.0.79";
 
-      #src = pkgs.fetchFromGitHub {
-      #  owner = "neoclide";
-      #  repo = pname;
-      #  rev = "v${version}";
-      #  sha256 = "03y8xq3g3psra9f2804czgvzyb4kslajbqdlm718r728z6iis66c";
-      #};
+  #    #src = pkgs.fetchFromGitHub {
+  #    #  owner = "neoclide";
+  #    #  repo = pname;
+  #    #  rev = "v${version}";
+  #    #  sha256 = "03y8xq3g3psra9f2804czgvzyb4kslajbqdlm718r728z6iis66c";
+  #    #};
 
-      src = pkgs.fetchFromGitHub {
-        owner = "neoclide";
-        repo = "coc.nvim";
-        rev = "065d4d034d8133789cf1ed52fb3b8e8bac89f370";
-        sha256 = "1mfbp5hz36mv0x2bvz6vd7zgz0qv31nqj2wb502pywrc4gwpaq37";
-      };
+  #    src = pkgs.fetchFromGitHub {
+  #      owner = "neoclide";
+  #      repo = "coc.nvim";
+  #      rev = "6242534f300920296ca27bbecd9d13a0aebbcdbe";
+  #      sha256 = "1mfbp5hz36mv0x2bvz6vd7zgz0qv31nqj2wb502pywrc4gwpaq37";
+  #    };
 
-      deps = yarn2nix.mkYarnModules rec {
-        inherit version pname;
-        name = "${pname}-modules-${version}";
-        packageJSON = src + "/package.json";
-        yarnLock = src + "/yarn.lock";
-      };
-    in buildVimPlugin {
-      inherit version pname src;
+  #    deps = yarn2nix.mkYarnModules rec {
+  #      inherit version pname;
+  #      name = "${pname}-modules-${version}";
+  #      packageJSON = src + "/package.json";
+  #      yarnLock = src + "/yarn.lock";
+  #    };
+  #  in buildVimPlugin {
+  #    inherit version pname src;
 
-      configurePhase = ''
-        mkdir -p node_modules
-        ln -s ${deps}/node_modules/* node_modules/
-        ln -s ${deps}/node_modules/.bin node_modules/
-      '';
+  #    configurePhase = ''
+  #      mkdir -p node_modules
+  #      ln -s ${deps}/node_modules/* node_modules/
+  #      ln -s ${deps}/node_modules/.bin node_modules/
+  #    '';
 
-      buildPhase = ''
-        ${pkgs.yarn}/bin/yarn build
-      '';
+  #    buildPhase = ''
+  #      ${pkgs.yarn}/bin/yarn build
+  #    '';
 
-      postFixup = ''
-        substituteInPlace $target/autoload/coc/util.vim \
-          --replace "'yarnpkg'" "'${pkgs.yarn}/bin/yarnpkg'"
-        substituteInPlace $target/autoload/health/coc.vim \
-          --replace "'yarnpkg'" "'${pkgs.yarn}/bin/yarnpkg'"
-      '';
-  };
+  #    postFixup = ''
+  #      substituteInPlace $target/autoload/coc/util.vim \
+  #        --replace "'yarnpkg'" "'${pkgs.yarn}/bin/yarnpkg'"
+  #      substituteInPlace $target/autoload/health/coc.vim \
+  #        --replace "'yarnpkg'" "'${pkgs.yarn}/bin/yarnpkg'"
+  #    '';
+  #};
 
   vim-unimpaired = buildVimPlugin {
     name = "vim-unimpaired";

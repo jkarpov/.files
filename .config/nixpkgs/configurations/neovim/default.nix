@@ -76,8 +76,11 @@ in
             github-colorscheme
             gruvbox-haskell
 
+            haskell-vim
+
             coc-nvim
-            ale
+            coc-tsserver
+            #ale
             vim-nix
             vim2nix
             fsharp-vim
@@ -90,7 +93,7 @@ in
             # deal with trailing whitespace
             lessspace.vim
             #hlsl.vim
-            #gist-vim
+            vim-gist
             vim-gnupg
             vim-json
         ];

@@ -34,11 +34,10 @@
   };
 
   services = {
-    fail2ban.enable = true;
+    #fail2ban.enable = true;
     timesyncd.enable = true;
-    arbtt.enable = true;
     xserver = {
-      enable = true;
+      enable = false;
       xkbOptions = "ctrl:nocaps";
     };
   };
@@ -46,7 +45,6 @@
   fonts = {
     enableFontDir = true;
     enableGhostscriptFonts = true;
-    fontconfig.ultimate.enable = true;
     fonts = with pkgs; [
       corefonts
       inconsolata
