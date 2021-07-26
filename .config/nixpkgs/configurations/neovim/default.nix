@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let
-    plugins = pkgs.vimPlugins // pkgs.callPackage ./plugins.nix {};
+    plugins = pkgs.vimPlugins;
 
     fzf = plugins.fzfWrapper.overrideAttrs (old: {
         postFixup = ''
@@ -12,93 +12,131 @@ let
 in
 {
 
-  #nixpkgs.overlays = [
-  #    (self: super: {
-  #      neovim-unwrapped = super.neovim-unwrapped.overrideAttrs (oldattrs: {
-  #        version = "0.5.0";
-  #          src = pkgs.fetchFromGitHub {
-  #          owner = "neovim";
-  #          repo = "neovim";
-  #          rev = "36762a00a8010c5e14ad4347ab8287d1e8e7e064";
-  #          sha256 = "0n7i3mp3wpl8jkm5z0ifhaha6ljsskd32vcr2wksjznsmfgvm6p4";
-  #        };
-  #      });
-  #    })
-  #];
-
   programs.neovim = {
     viAlias = true;
     vimAlias = true;
     withNodeJs = true;
-    withPython = true;
     withPython3 = true;
 
-    configure = {
-      customRC = ''source ~/.config/nvim/init.vim'';
+    extraConfig = ''source ~/.config/nvim/myinit.vim'';
 
-      packages.myVimPackages = with plugins; {
-        start = [
-            fugitive
-            vim-gitgutter
-            vim-rhubarb
+    extraPackages = with pkgs; [
+        gcc
+        tree-sitter
 
-            fzfWrapper
-            fzf-vim
+        # Needed by Telescope
+        bat
+        fd
+        ripgrep
 
-            vimproc
-            vimproc-vim
-            direnv-vim
+        # For nvim-dap
+        #lldb
 
-            neoformat
-            gundo
-            #vim-better-whitespace
-            UltiSnips
-            neosnippet-vim
-            neosnippet-snippets
-            sensible
-            vim-unimpaired
-            vim-ledger
-            tmux-navigator
-            vim-tmux-focus-events
-            vim-tmux-clipboard
+        # Various language servers
+        #rust-analyzer
+        nodePackages.bash-language-server
+        nodePackages.svelte-language-server
+        #clang-tools
+        nodePackages.vscode-css-languageserver-bin
+        nodePackages.dockerfile-language-server-nodejs
+        #gopls
+        nodePackages.vscode-html-languageserver-bin
+        nodePackages.pyright
+        rnix-lsp
+        haskellPackages.tree-sitter-haskell
+        #terraform-ls
+        #nodePackages.typescript
+        #nodePackages.typescript-language-server
+      ];
 
-            goyo
-            limelight-vim
-            lightline-vim
-            #eleline.vim
-            seiya
-            neo-solarized
-            solarized8
-            ayu
-            molokai
-            monodark
-            mopkai
-            github-colorscheme
-            gruvbox-haskell
+    plugins = with plugins; [
+      # 0.5
+      #nvim-lspconfig
+      nvim-lspconfig
+            (
+              nvim-treesitter.withPlugins (
+                grammars:
+                  [
+                    # TODO: package tree-sitter-comment
+                    grammars.tree-sitter-bash
+                    grammars.tree-sitter-c
+                    grammars.tree-sitter-cpp
+                    grammars.tree-sitter-css
+                    grammars.tree-sitter-go
+                    grammars.tree-sitter-html
+                    grammars.tree-sitter-java
+                    grammars.tree-sitter-javascript
+                    grammars.tree-sitter-jsdoc
+                    grammars.tree-sitter-json
+                    grammars.tree-sitter-lua
+                    grammars.tree-sitter-markdown
+                    grammars.tree-sitter-nix
+                    grammars.tree-sitter-php
+                    grammars.tree-sitter-python
+                    grammars.tree-sitter-regex
+                    grammars.tree-sitter-ruby
+                    grammars.tree-sitter-rust
+                    grammars.tree-sitter-tsx
+                    grammars.tree-sitter-typescript
+                    grammars.tree-sitter-yaml
+                    grammars.tree-sitter-haskell
+                  ]
+              )
+            )
 
-            haskell-vim
+      nvim-compe
+      lspsaga-nvim
 
-            coc-nvim
-            coc-tsserver
-            #ale
-            vim-nix
-            vim2nix
-            fsharp-vim
-            echodoc-vim
-            vim-easy-align
-            vim-commentary
-            vim-obsession
-            # file finding in neovim
-            neovim-fuzzy
-            # deal with trailing whitespace
-            lessspace.vim
-            #hlsl.vim
-            vim-gist
-            vim-gnupg
-            vim-json
-        ];
-      };
+      #nvim-treesitter
 
-    };
+      # below .5
+      #fugitive
+      #vim-gitgutter
+      #vim-rhubarb
+
+      fzfWrapper
+      fzf-vim
+
+      #vimproc
+      #vimproc-vim
+      direnv-vim
+
+      #neoformat
+      gundo
+      #UltiSnips
+      #neosnippet-vim
+      #neosnippet-snippets
+      #sensible
+      #vim-unimpaired
+      tmux-navigator
+      #vim-tmux-focus-events
+      #vim-tmux-clipboard
+
+      #goyo
+      #limelight-vim
+      lightline-vim
+      #eleline.vim
+      #solarized8
+      #ayu
+      molokai
+
+      #haskell-vim
+
+      #coc-nvim
+      #coc-tsserver
+      #ale
+      vim-nix
+      vim2nix
+      #echodoc-vim
+      #vim-easy-align
+      #vim-commentary
+      #vim-obsession
+      # file finding in neovim
+      #neovim-fuzzy
+      # deal with trailing whitespace
+      #hlsl.vim
+      #vim-json
+    ];
+
   };
 }
