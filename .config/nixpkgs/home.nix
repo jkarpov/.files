@@ -96,7 +96,7 @@ in rec {
       userName = "Dmitriy Tadyshev";
       userEmail = "dmitriy@tadyshev.com";
       signing.key = "3762F98A01D3E704C1CCCF5F2605552C1DF82E49";
-      signing.signByDefault = true;
+      signing.signByDefault = false;
       ignores = [ "shell.nix" ".envrc" "local.appsettings.json" ];
     };
   };

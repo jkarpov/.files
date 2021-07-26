@@ -43,8 +43,5 @@ self: super: {
   # latest version of dotnet-sdk
   dotnet-sdk = self.dotnet-sdk-3_1_300;
 
-
-  cortex-cli = super.callPackage ./../cortex-cli.nix { };
-
 }
 
