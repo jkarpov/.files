@@ -19,7 +19,7 @@
   boot.kernelModules = [ "kvm-amd" "wl" ];
   boot.kernelParams = [ "amd_iommu=on" "pcie_aspm=off" "kvm.ignore_msrs=1" ];
   #boot.blacklistedKernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
+  #boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
 
   fileSystems."/" =
     { device = "mypool/root/nixos";

@@ -32,7 +32,7 @@
       ];
 
   time.timeZone = "US/Central";
-  networking.hostName = "tadyshev";
+  networking.hostName = "pc";
 
   services.openssh = {
       enable = true;
@@ -54,6 +54,8 @@
     frequent = 16; # keep the latest eight 15-minute snapshots (instead of four)
     monthly = 12;  # keep only one monthly snapshot (instead of twelve)
   };
+
+  services.tailscale.enable = true;
 
   virtualisation = {
     docker.enable = true;
@@ -89,6 +91,7 @@
   users.extraGroups.vboxusers.members = [ "ditadi" ];
   users.groups.libvirtd.members = [ "ditadi" ];
 
+  environment.systemPackages = [ pkgs.tailscale ];
   #environment = {
   #  systemPackages = with pkgs; [
   #    ntfs3g
