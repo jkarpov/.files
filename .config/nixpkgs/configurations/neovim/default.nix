@@ -47,45 +47,42 @@ in
         #terraform-ls
         #nodePackages.typescript
         #nodePackages.typescript-language-server
+        deno
       ];
 
     plugins = with plugins; [
       # 0.5
       #nvim-lspconfig
       nvim-lspconfig
-            (
-              nvim-treesitter.withPlugins (
-                grammars:
-                  [
-                    # TODO: package tree-sitter-comment
-                    grammars.tree-sitter-bash
-                    grammars.tree-sitter-c
-                    grammars.tree-sitter-cpp
-                    grammars.tree-sitter-css
-                    grammars.tree-sitter-go
-                    grammars.tree-sitter-html
-                    grammars.tree-sitter-java
-                    grammars.tree-sitter-javascript
-                    grammars.tree-sitter-jsdoc
-                    grammars.tree-sitter-json
-                    grammars.tree-sitter-lua
-                    grammars.tree-sitter-markdown
-                    grammars.tree-sitter-nix
-                    grammars.tree-sitter-php
-                    grammars.tree-sitter-python
-                    grammars.tree-sitter-regex
-                    grammars.tree-sitter-ruby
-                    grammars.tree-sitter-rust
-                    grammars.tree-sitter-tsx
-                    grammars.tree-sitter-typescript
-                    grammars.tree-sitter-yaml
-                    grammars.tree-sitter-haskell
-                  ]
-              )
-            )
+      (nvim-treesitter.withPlugins (
+          p:
+            [
+              p.tree-sitter-bash
+              p.tree-sitter-c
+              p.tree-sitter-css
+              p.tree-sitter-html
+              p.tree-sitter-java
+              p.tree-sitter-javascript
+              p.tree-sitter-jsdoc
+              p.tree-sitter-json
+              p.tree-sitter-lua
+              p.tree-sitter-markdown
+              p.tree-sitter-nix
+              p.tree-sitter-python
+              p.tree-sitter-regex
+              p.tree-sitter-ruby
+              p.tree-sitter-rust
+              p.tree-sitter-typescript
+              p.tree-sitter-yaml
+              p.tree-sitter-haskell
+            ]
+        )
+      )
 
       nvim-compe
       lspsaga-nvim
+
+      telescope-nvim
 
       #nvim-treesitter
 
