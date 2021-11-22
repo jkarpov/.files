@@ -21,15 +21,6 @@
   networking.hostId = "dec1f65b";
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.overlays =
-      [ (self: super:
-        {
-          # override with newer version from nixpkgs-unstable
-          qemu = super.qemu.overrideAttrs (old: rec {
-            patches = old.patches ++ [ ./qemu.patch ];
-          });
-        })
-      ];
 
   time.timeZone = "US/Central";
   networking.hostName = "pc";
