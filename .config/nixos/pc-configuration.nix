@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./pc-hardware-configuration.nix
       ./all-packages.nix
       ./all-users.nix
@@ -26,24 +27,21 @@
   networking.hostName = "pc";
 
   services.openssh = {
-      enable = true;
-      permitRootLogin = "no";
-      passwordAuthentication = false;
-      ports = [ 22 2222 ];
-      forwardX11 = false;
+    enable = true;
+    permitRootLogin = "no";
+    passwordAuthentication = false;
+    ports = [ 22 2222 ];
+    forwardX11 = false;
   };
 
   services.xserver = {
     videoDrivers = [ "nvidia" ];
-    #screenSection = ''
-      #Option         "metamodes" "nvidia-auto-select +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On}"
-    #'';
   };
 
   services.zfs.autoSnapshot = {
     enable = true;
     frequent = 16; # keep the latest eight 15-minute snapshots (instead of four)
-    monthly = 12;  # keep only one monthly snapshot (instead of twelve)
+    monthly = 12; # keep only one monthly snapshot (instead of twelve)
   };
 
   services.tailscale.enable = true;
@@ -58,46 +56,12 @@
       enable = false;
       headless = true;
     };
-    #libvirtd = {
-      #enable = true;
-      #onBoot = "ignore";
-      #onShutdown = "shutdown";
-      #extraOptions = [ "--verbose" ];
-      #qemuVerbatimConfig = ''
-      #    namespaces = []
-      #    user = "ditadi"
-      #    group = "kvm"
-      #    cgroup_device_acl = [
-      #        "/dev/null", "/dev/full", "/dev/zero",
-      #        "/dev/random", "/dev/urandom",
-      #        "/dev/ptmx", "/dev/kvm",
-      #        "/dev/rtc","/dev/hpet",
-      #        "/dev/input/by-path/pci-0000:44:00.3-usb-0:4:1.0-event-kbd",
-      #        "/dev/input/by-path/pci-0000:44:00.3-usb-0:3.1:1.2-event-mouse"
-      #    ]
-      #'';
-    #};
   };
 
   users.extraGroups.vboxusers.members = [ "ditadi" ];
   users.groups.libvirtd.members = [ "ditadi" ];
 
   environment.systemPackages = [ pkgs.tailscale ];
-  #environment = {
-  #  systemPackages = with pkgs; [
-  #    ntfs3g
-  #    virtmanager
-  #    #looking-glass-client
-  #  ];
-  #  variables = {
-  #      #QT_AUTO_SCREEN_SCALE_FACTOR= "2";
-  #      QT_SCALE_FACTOR = "1.25";
-  #  };
-  #};
-
-  #systemd.tmpfiles.rules = [
-  #  "f /dev/shm/looking-glass 0660 ditadi qemu-libvirtd -"
-  #];
 
   system.stateVersion = "20.09";
 }
