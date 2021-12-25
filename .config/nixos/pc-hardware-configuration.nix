@@ -8,16 +8,17 @@
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" "vfio-pci" ];
-  boot.initrd.preDeviceCommands = ''
-    DEVS="0000:09:00.0 0000:09:00.1"
-    for DEV in $DEVS; do
-      echo "vfio-pci" > /sys/bus/pci/devices/$DEV/driver_override
-    done
-    modprobe -i vfio-pci
-  '';
-  boot.kernelModules = [ "kvm-amd" "wl" ];
-  boot.kernelParams = [ "amd_iommu=on" "pcie_aspm=off" "kvm.ignore_msrs=1" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
+  #boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" "vfio-pci" ];
+  #boot.initrd.preDeviceCommands = ''
+  #  DEVS="0000:09:00.0 0000:09:00.1"
+  #  for DEV in $DEVS; do
+  #    echo "vfio-pci" > /sys/bus/pci/devices/$DEV/driver_override
+  #  done
+  #  modprobe -i vfio-pci
+  #'';
+  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelParams = [ "amd_iommu=on" "pcie_aspm=off" "kvm.ignore_msrs=1" "nohibernate" ];
   #boot.blacklistedKernelModules = [ "kvm-amd" ];
   #boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
 

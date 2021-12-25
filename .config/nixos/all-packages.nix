@@ -27,6 +27,10 @@
   nixpkgs.config.allowBroken = true;
   nix = {
     trustedUsers = [ "root" "ditadi" ];
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
   };
 
   hardware = {
@@ -46,23 +50,28 @@
     };
   };
 
-  fonts = {
-    enableFontDir = true;
-    enableGhostscriptFonts = true;
-    fonts = with pkgs; [
-      corefonts
-      inconsolata
-      hasklig
-      fira-code
-      powerline-fonts
-      ttf_bitstream_vera
-      dejavu_fonts
-      vistafonts
-      terminus_font
-      latinmodern-math
-      hack-font
-    ];
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    supportedLocales = [ "en_US.UTF-8/UTF-8" ];
   };
+
+  #fonts = {
+  #  enableFontDir = true;
+  #  enableGhostscriptFonts = true;
+  #  fonts = with pkgs; [
+  #    #corefonts
+  #    inconsolata
+  #    #hasklig
+  #    #fira-code
+  #    #powerline-fonts
+  #    #ttf_bitstream_vera
+  #    #dejavu_fonts
+  #    #vistafonts
+  #    #terminus_font
+  #    #latinmodern-math
+  #    #hack-font
+  #  ];
+  #};
 
   # zsh completion for system wide packages e.g., systemd
   environment.pathsToLink = [ "/share/zsh" ];

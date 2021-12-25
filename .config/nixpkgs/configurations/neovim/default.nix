@@ -95,7 +95,7 @@ in
       #vim-easy-align
       #vim-commentary
       #vim-obsession
-      neovim-ayu
+      #neovim-ayu
       molokai
       NeoSolarized
     ];

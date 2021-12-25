@@ -15,9 +15,12 @@
   boot.loader.grub.devices = [ "/dev/nvme1n1" "/dev/nvme2n1" ];
   boot.loader.grub.splashImage = null;
   boot.loader.grub.configurationLimit = 1;
+  boot.loader.grub.copyKernels = false;
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.enableUnstable = true;
   nixpkgs.system = "x86_64-linux";
+
+  boot.kernelPackages = pkgs.linuxPackages_5_4;
 
   networking.hostId = "dec1f65b";
 
