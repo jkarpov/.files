@@ -16,7 +16,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.ditadi = import ./home.nix;
+          home-manager.users.ditadi = import ./home.ditadi.nix;
         }
       ];
     };
