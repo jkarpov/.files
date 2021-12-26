@@ -1,3 +1,35 @@
+{ config, pkgs, ... }:
+{
+  nixpkgs.config.allowUnfree = true;
+
+  home.username = "ditadi";
+  home.homeDirectory = "/home/ditadi";
+
+  home.packages = with pkgs; [
+    hledger
+    hledger-ui
+    hledger-web
+    zip
+    unzip
+    ranger
+    gnupg
+    fzy
+    ripgrep
+    nodePackages.node2nix
+    mitmproxy
+    tmux
+    tmuxinator
+  ];
+
+  programs = {
+    neovim = {
+      enable = true;
+      viAlias = true;
+      vimAlias = true;
+      withNodeJs = true;
+      withPython3 = true;
+
+      extraConfig = ''
 set nocompatible
 
 
@@ -344,19 +376,9 @@ nnoremap <Leader>sl :Git stash list<CR>:e<CR>o
 
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
-" ---------------
-" FZF
-" ---------------
-"nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":FuzzyOpen\<cr>"
-nnoremap <Leader><Leader> :Telescope<CR>
-"nnoremap <Leader>e :FuzzyGrep<CR>
-"nnoremap <silent> <expr> <Leader><Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":FuzzyGrep\<cr>"
-
-
 
 let g:ledger_bin="hledger"
 autocmd BufEnter,BufNew *.hledger* set filetype=ledger
-
 
 
 :imap jj <Esc>
@@ -477,3 +499,165 @@ augroup resCur
   autocmd!
   autocmd BufWinEnter * call ResCur()
 augroup END
+'';
+
+      extraPackages = with pkgs; [
+        gcc
+        tree-sitter
+
+        # Needed by Telescope
+        bat
+        fd
+        ripgrep
+
+        # Various language servers
+        #rust-analyzer
+        #nodePackages.bash-language-server
+        #nodePackages.svelte-language-server
+        #clang-tools
+        #nodePackages.vscode-css-languageserver-bin
+        #nodePackages.dockerfile-language-server-nodejs
+        #gopls
+        #nodePackages.vscode-html-languageserver-bin
+        #nodePackages.pyright
+        rnix-lsp
+        haskellPackages.tree-sitter-haskell
+        #terraform-ls
+        #nodePackages.typescript
+        #nodePackages.typescript-language-server
+        deno
+      ];
+
+      plugins = with pkgs.vimPlugins; [
+        nvim-lspconfig
+        (nvim-treesitter.withPlugins (
+          p:
+          [
+            p.tree-sitter-bash
+            p.tree-sitter-c
+            p.tree-sitter-css
+            p.tree-sitter-html
+            p.tree-sitter-java
+            p.tree-sitter-javascript
+            p.tree-sitter-jsdoc
+            p.tree-sitter-json
+            p.tree-sitter-lua
+            p.tree-sitter-markdown
+            p.tree-sitter-nix
+            p.tree-sitter-python
+            p.tree-sitter-regex
+            p.tree-sitter-ruby
+            p.tree-sitter-rust
+            p.tree-sitter-typescript
+            p.tree-sitter-yaml
+            p.tree-sitter-haskell
+          ]
+        )
+        )
+        cmp-nvim-lsp
+        cmp-buffer
+        cmp-path
+        cmp-cmdline
+        nvim-cmp
+
+        cmp-vsnip
+        vim-vsnip
+        lsp_signature-nvim
+        telescope-nvim
+        fugitive
+        vim-gitgutter
+        vim-rhubarb
+        fzfWrapper
+        fzf-vim
+        direnv-vim
+        gundo
+        tmux-navigator
+        lightline-vim
+        vim-nix
+        vim2nix
+        #vim-easy-align
+        #vim-commentary
+        #vim-obsession
+        neovim-ayu
+        molokai
+        NeoSolarized
+      ];
+    };
+
+
+    home-manager.enable = true;
+    direnv.enable = true;
+    direnv.enableZshIntegration = true;
+    fzf.enable = true;
+    jq.enable = true;
+    htop.enable = true;
+
+    gpg.enable = true;
+    password-store = {
+      enable = true;
+      settings = {
+        PASSWORD_STORE_DIR = "/home/ditadi/.password-store";
+      };
+    };
+
+    zsh = {
+      enable = true;
+      enableAutosuggestions = true;
+      history = {
+        share = false;
+        expireDuplicatesFirst = true;
+        ignoreDups = true;
+        extended = true;
+      };
+      oh-my-zsh = {
+        enable = true;
+        plugins = [ "git" "sudo" "colorize" "colored-man-pages" ];
+        theme = "bira";
+      };
+
+      sessionVariables = {
+        EDITOR = "nvim";
+        SSH_AUTH_SOCK = "$(${pkgs.gnupg}/bin/gpgconf --list-dirs agent-ssh-socket)";
+        LEDGER_FILE = "/home/ditadi/notes/current.journal";
+        DISABLE_AUTO_TITLE = true;
+        #PASSWORD_STORE_DIR = "$($HOME/.password-store)";
+      };
+
+      shellAliases = {
+        ".." = "cd ..";
+        "ll" = "ls -l";
+        "mux" = "tmuxinator";
+        "dot" = "git --git-dir=$HOME/.files/ --work-tree=$HOME";
+        "r" = "ranger";
+        "gd" = "git difftool --no-symlinks --dir-diff";
+      };
+      #initExtra = builtins.readFile ../zsh/zshrc;
+    };
+
+    git = {
+      enable = true;
+      userName = "Dmitriy Tadyshev";
+      userEmail = "dmitriy@tadyshev.com";
+      signing.key = "3762F98A01D3E704C1CCCF5F2605552C1DF82E49";
+      signing.signByDefault = false;
+    };
+  };
+
+  services = {
+    password-store-sync.enable = true;
+    lorri.enable = true;
+
+    gpg-agent = {
+      enable = true;
+      enableSshSupport = true;
+      defaultCacheTtl = 900;
+      maxCacheTtl = 7200;
+      defaultCacheTtlSsh = 3600;
+      maxCacheTtlSsh = 86400;
+      enableExtraSocket = true;
+      sshKeys = [
+        "9C6B531D7F8F5B250E863FD52990013F0E0B92FB"
+      ];
+    };
+  };
+}
