@@ -32,11 +32,9 @@
       extraConfig = ''
 set nocompatible
 
-
 syntax on
 syntax enable
 filetype plugin indent on
-
 
 " --------------- 
 "  Interface
@@ -56,11 +54,9 @@ set noerrorbells
 set novisualbell
 set nonumber
 set guicursor=
-"set termguicolors
 set colorcolumn=80
 set noshowmode
 set background=dark
-"set background=light
 set shell=/bin/sh
 
 if exists('+termguicolors')
@@ -69,42 +65,10 @@ if exists('+termguicolors')
     set termguicolors
 endif
 
-"colorscheme molokai
-let g:seiya_auto_enable=1
-if &diff
-  let g:seiya_auto_enable=0
-  colorscheme github
-endif
-"colorscheme monodark
-
-"let g:gruvbox_italic=1
-"colorscheme gruvbox
-
-
-"let g:neosolarized_bold = 1
-"let g:neosolarized_underline = 1
-"let g:neosolarized_italic = 1
-"let g:neosolarized_contrast = "medium"
-"let g:solarized_visibility = "medium"
-"let g:solarized_extra_hi_groups=1
-"let g:airline_theme='solarized'
-"colorscheme NeoSolarized
-"let g:solarized_use16 = 1
-"colorscheme solarized8
-"
-"colorscheme mopkai
-"colorscheme molokai
-
 "let ayucolor="mirage"
 "let ayucolor="dark"
 "let ayucolor="light"
-"let g:airline_theme='solarized'
 colorscheme ayu
-"
-"highlight clear LineNr
-"highlight clear SignColumn
-"highlight LineNr ctermfg=DarkGrey
-"
 
 " ---------------
 " Text format
@@ -143,11 +107,8 @@ set incsearch
 
 set completeopt=menuone,noinsert,noselect
 
-
 let mapleader=","
 let maplocalleader=","
-
-
 
 lua << EOF
 local nvim_lsp = require('lspconfig')
@@ -295,24 +256,15 @@ require'nvim-treesitter.configs'.setup {
 }
 EOF
 
-
-
 " ---------------
-" Quick spelling fix (first item in z= list)
+" Telescope
 " ---------------
-function! QuickSpellingFix()
-  if &spell
-    normal 1z=
-  else
-    " Enable spelling mode and do the correction
-    set spell
-    normal 1z=
-    set nospell
-  endif
-endfunction
 
-command! QuickSpellingFix call QuickSpellingFix()
-nmap <silent> <leader>z :QuickSpellingFix<CR>
+nnoremap <leader><leader> <cmd>Telescope <cr>
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 
 " ---------------
@@ -346,7 +298,6 @@ nmap <leader>ep <Plug>(ale_previous_wrap)
 nmap <leader>en <Plug>(ale_next_wrap)
 
 
-
 " ---------------
 " Gitgutter
 " ---------------
@@ -354,29 +305,8 @@ set updatetime=250
 
 
 " ---------------
-" Git
+" hledger
 " ---------------
-nnoremap <Leader>gs :Gstatus<CR>
-nnoremap <Leader>gc :Gcommit<CR>
-"nnoremap <Leader>gd :Gdiff<CR>
-nnoremap <Leader>gD :Gdiff<CR>
-nnoremap <Leader>gb :Gblame<CR>
-nnoremap <Leader>gL :exe ':!cd ' . expand('%:p:h') . '; git la'<CR>
-nnoremap <Leader>gl :exe ':!cd ' . expand('%:p:h') . '; git las'<CR>
-nnoremap <Leader>gh :silent Glog<CR>:set nofoldenable<CR>
-nnoremap <Leader>gH :silent Glog<CR>
-nnoremap <Leader>ge :Gedit<CR>
-nnoremap <Leader>gr :Gread<CR>
-nnoremap <Leader>gw :Gwrite<CR>
-nnoremap <Leader>gp :Git push<CR>
-nnoremap <Leader>ss :silent Git stash<CR>:e<CR>
-nnoremap <Leader>sa :silent Git stash apply<CR>:e<CR>o
-nnoremap <Leader>sp :silent Git stash pop<CR>:e<CR>o
-nnoremap <Leader>sl :Git stash list<CR>:e<CR>o
-
-set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
-
-
 let g:ledger_bin="hledger"
 autocmd BufEnter,BufNew *.hledger* set filetype=ledger
 
@@ -418,11 +348,7 @@ noremap P "*p
 set clipboard+=unnamedplus
 
 
-if has('NVIM')
-    let s:editor_root=expand("~/.config/nvim")
-else
-    let s:editor_root=expand("~/.vim")
-endif
+let s:editor_root=expand("~/.config/nvim")
 
 " Save your backups to a less annoying place than the current directory.
 " If you have .vim-backup in the current directory, it'll use that.
@@ -511,18 +437,13 @@ augroup END
         ripgrep
 
         # Various language servers
-        #rust-analyzer
         #nodePackages.bash-language-server
         #nodePackages.svelte-language-server
-        #clang-tools
         #nodePackages.vscode-css-languageserver-bin
-        #nodePackages.dockerfile-language-server-nodejs
-        #gopls
         #nodePackages.vscode-html-languageserver-bin
         #nodePackages.pyright
         rnix-lsp
         haskellPackages.tree-sitter-haskell
-        #terraform-ls
         #nodePackages.typescript
         #nodePackages.typescript-language-server
         deno
